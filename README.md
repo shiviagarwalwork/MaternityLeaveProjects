@@ -5,7 +5,7 @@ A curated collection of 25 skills and 14 plugins for Claude Code that enhance yo
 ## Quick Install
 
 ```bash
-git clone https://github.com/YOUR_USERNAME/claude-skills-pack.git
+git clone https://github.com/atalovesyou/claude-skills-pack.git
 cd claude-skills-pack
 ./install.sh
 ```
