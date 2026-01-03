@@ -707,7 +707,7 @@ How to start:
 Pro tip: Don't check your phone for the first hour. Your notifications will still be there, but your peace of mind won't.`,
     category: 'Daily Routine',
     readTime: '4 min',
-    imageUrl: 'https://images.unsplash.com/photo-1470252649378-9c29740c9fa8?w=800&h=400&fit=crop',
+    imageUrl: '/images/blogs/sunrise-morning.jpg',
     tags: ['Morning Routine', 'Sleep', 'Productivity', 'Meditation'],
     author: 'Ayurveda Knowledge Portal',
     publishedDate: '2025-01-01'
@@ -740,7 +740,7 @@ The Perfect Recipe:
 Heat, blend, enjoy before bed. Your body will thank you tomorrow.`,
     category: 'Nutrition',
     readTime: '3 min',
-    imageUrl: 'https://images.unsplash.com/photo-1615485500834-bc10199bc6c5?w=800&h=400&fit=crop',
+    imageUrl: '/images/blogs/golden-milk.jpg',
     tags: ['Turmeric', 'Recipes', 'Anti-inflammatory', 'Sleep'],
     author: 'Ayurveda Knowledge Portal',
     publishedDate: '2024-12-28'
@@ -770,7 +770,7 @@ Take ginger 30 minutes before meals to ignite your digestive fire (agni). It's l
 Warning: Ginger is powerful. Start small if you're new to it!`,
     category: 'Herbs & Spices',
     readTime: '3 min',
-    imageUrl: 'https://images.unsplash.com/photo-1599909533879-63dc859e99b0?w=800&h=400&fit=crop',
+    imageUrl: '/images/blogs/ginger-fresh.jpg',
     tags: ['Ginger', 'Digestion', 'Anti-inflammatory', 'Remedies'],
     author: 'Ayurveda Knowledge Portal',
     publishedDate: '2024-12-25'
@@ -805,7 +805,7 @@ Best For:
 Be Patient: Brahmi works, but it takes 4-6 weeks to feel the full effects. This isn't coffee - it's building long-term brain health.`,
     category: 'Herbs & Spices',
     readTime: '4 min',
-    imageUrl: 'https://images.unsplash.com/photo-1516975080664-ed2fc6a32937?w=800&h=400&fit=crop',
+    imageUrl: '/images/blogs/herbs-spices.jpg',
     tags: ['Brahmi', 'Nootropics', 'Memory', 'Focus', 'Mental Health'],
     author: 'Ayurveda Knowledge Portal',
     publishedDate: '2024-12-22'
@@ -841,7 +841,7 @@ Mix with ghee (clarified butter) and honey to increase effectiveness. Ancient wi
 Heads Up: If you're on thyroid meds or pregnant, check with your doctor first. Ashwagandha is powerful stuff.`,
     category: 'Herbs & Spices',
     readTime: '3 min',
-    imageUrl: 'https://images.unsplash.com/photo-1509667270410-62c823818030?w=800&h=400&fit=crop',
+    imageUrl: '/images/blogs/ashwagandha.jpg',
     tags: ['Ashwagandha', 'Stress Relief', 'Adaptogens', 'Sleep'],
     author: 'Ayurveda Knowledge Portal',
     publishedDate: '2024-12-20'
@@ -878,7 +878,7 @@ Pro Tips:
 You'll see white/yellow coating come off - that's the toxins (ama) your body eliminated overnight. Gross? Yes. Effective? Absolutely.`,
     category: 'Daily Routine',
     readTime: '3 min',
-    imageUrl: 'https://images.unsplash.com/photo-1606811841689-23dfddce3e95?w=800&h=400&fit=crop',
+    imageUrl: '/images/blogs/herbs-spices.jpg',
     tags: ['Oral Health', 'Morning Routine', 'Detox', 'Hygiene'],
     author: 'Ayurveda Knowledge Portal',
     publishedDate: '2024-12-18'
@@ -917,7 +917,7 @@ Do This First Thing:
 Before water, coffee, or brushing. Empty stomach is key for detox benefits.`,
     category: 'Daily Routine',
     readTime: '3 min',
-    imageUrl: 'https://images.unsplash.com/photo-1474690455603-a369ec1293f0?w=800&h=400&fit=crop',
+    imageUrl: '/images/blogs/turmeric-golden.jpg',
     tags: ['Oil Pulling', 'Oral Health', 'Detox', 'Coconut Oil'],
     author: 'Ayurveda Knowledge Portal',
     publishedDate: '2024-12-15'
@@ -961,7 +961,7 @@ Best For:
 Give it 2-4 weeks to see results. This is preventive medicine, not a quick fix.`,
     category: 'Herbs & Spices',
     readTime: '4 min',
-    imageUrl: 'https://images.unsplash.com/photo-1505751172876-fa1923c5c528?w=800&h=400&fit=crop',
+    imageUrl: '/images/blogs/herbs-spices.jpg',
     tags: ['Triphala', 'Digestion', 'Detox', 'Gut Health'],
     author: 'Ayurveda Knowledge Portal',
     publishedDate: '2024-12-12'
@@ -1004,7 +1004,7 @@ Start Small:
 Can't do full body? Just feet before bed. It's incredibly grounding and helps sleep.`,
     category: 'Self-Care',
     readTime: '4 min',
-    imageUrl: 'https://images.unsplash.com/photo-1544161515-4ab6ce6db874?w=800&h=400&fit=crop',
+    imageUrl: '/images/blogs/oil-massage.jpg',
     tags: ['Abhyanga', 'Self-Care', 'Stress Relief', 'Skin Health'],
     author: 'Ayurveda Knowledge Portal',
     publishedDate: '2024-12-10'
@@ -1048,7 +1048,7 @@ Once You Know:
 Eat, exercise, and live according to your nature. Swimming against your dosha is exhausting.`,
     category: 'Basics',
     readTime: '5 min',
-    imageUrl: 'https://images.unsplash.com/photo-1506126613408-eca07ce68773?w=800&h=400&fit=crop',
+    imageUrl: '/images/blogs/meditation-calm.jpg',
     tags: ['Dosha', 'Body Type', 'Personalized Health', 'Vata', 'Pitta', 'Kapha'],
     author: 'Ayurveda Knowledge Portal',
     publishedDate: '2024-12-08'
@@ -1096,7 +1096,7 @@ Average diet + strong agni = health
 Focus on the fire, not just the food.`,
     category: 'Digestion',
     readTime: '4 min',
-    imageUrl: 'https://images.unsplash.com/photo-1525385133512-2f3bdd039054?w=800&h=400&fit=crop',
+    imageUrl: '/images/blogs/turmeric-golden.jpg',
     tags: ['Agni', 'Digestion', 'Metabolism', 'Gut Health'],
     author: 'Ayurveda Knowledge Portal',
     publishedDate: '2024-12-05'
@@ -1150,7 +1150,7 @@ Sleep is When You Heal:
 Ayurveda says sleep deprivation is more harmful than food deprivation. Treat sleep as non-negotiable.`,
     category: 'Sleep & Rest',
     readTime: '4 min',
-    imageUrl: 'https://images.unsplash.com/photo-1541781774459-bb2af2f05b55?w=800&h=400&fit=crop',
+    imageUrl: '/images/blogs/meditation-calm.jpg',
     tags: ['Sleep', 'Evening Routine', 'Rest', 'Insomnia'],
     author: 'Ayurveda Knowledge Portal',
     publishedDate: '2024-12-03'
@@ -1202,7 +1202,7 @@ Start Simple:
 Notice what grows near you each season. Nature provides what you need when you need it.`,
     category: 'Nutrition',
     readTime: '5 min',
-    imageUrl: 'https://images.unsplash.com/photo-1542838132-92c53300491e?w=800&h=400&fit=crop',
+    imageUrl: '/images/blogs/seasonal-nature.jpg',
     tags: ['Seasonal Eating', 'Nutrition', 'Ritucharya', 'Balance'],
     author: 'Ayurveda Knowledge Portal',
     publishedDate: '2024-12-01'
@@ -1255,7 +1255,7 @@ Ancient Wisdom:
 Your great-grandmother was right about butter.`,
     category: 'Nutrition',
     readTime: '4 min',
-    imageUrl: 'https://images.unsplash.com/photo-1589985270826-4b7bb135bc9d?w=800&h=400&fit=crop',
+    imageUrl: '/images/blogs/ghee.jpg',
     tags: ['Ghee', 'Healthy Fats', 'Brain Health', 'Digestion'],
     author: 'Ayurveda Knowledge Portal',
     publishedDate: '2024-11-28'
@@ -1308,7 +1308,7 @@ Your Phone Can Wait:
 The email, the notification, the video - they'll all be there in 20 minutes. Your digestion won't wait.`,
     category: 'Mindfulness',
     readTime: '4 min',
-    imageUrl: 'https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=800&h=400&fit=crop',
+    imageUrl: '/images/blogs/herbs-spices.jpg',
     tags: ['Mindful Eating', 'Digestion', 'Habits', 'Wellness'],
     author: 'Ayurveda Knowledge Portal',
     publishedDate: '2024-11-25'
