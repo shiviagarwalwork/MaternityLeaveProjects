@@ -400,7 +400,7 @@ Your senses are doorways. Keep them healthy.`,
   {
     id: 'anxiety-vata-modern-life',
     title: '😰 Why Modern Life Makes You Anxious (Ayurvedic Explanation)',
-    excerpt: 'Anxiety, restlessness, racing thoughts - Ayurveda says this is Vata imbalance. Here's what that means.',
+    excerpt: "Anxiety, restlessness, racing thoughts - Ayurveda says this is Vata imbalance. Here's what that means.",
     content: `Can't sit still. Mind racing. Constantly worried about what's next.
 
 Ayurveda calls this Vata imbalance - the air and space elements gone wild.
@@ -533,7 +533,7 @@ Vata needs an anchor. Be the anchor.`,
   {
     id: 'digital-dinacarya-routine',
     title: '⏰ The Ancient Daily Routine That Actually Works for Modern Life',
-    excerpt: 'Dinacarya - the Ayurvedic daily schedule. Not rigid rules, but alignment with your body's natural rhythms.',
+    excerpt: "Dinacarya - the Ayurvedic daily schedule. Not rigid rules, but alignment with your body's natural rhythms.",
     content: `Your body has a clock. Ayurveda figured it out 5,000 years ago.
 
 It's called **dinacarya** - daily routine aligned with nature's rhythms.
