@@ -1,19 +1,39 @@
 'use client';
 
 import { BookOpen, Heart, Lightbulb, Target, Users, Zap } from 'lucide-react';
+import Image from 'next/image';
 
 export default function AboutPage() {
   return (
     <div className="max-w-4xl mx-auto px-4 py-8">
-      {/* Hero Section */}
+      {/* Hero Section with Featured Image */}
       <div className="text-center mb-12">
         <h1 className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-[var(--accent-primary)] via-[var(--accent-secondary)] to-[var(--accent-tertiary)] bg-clip-text text-transparent mb-4">
           Ancient Wisdom for Your Digital Life
         </h1>
-        <p className="text-xl text-[var(--foreground)] max-w-2xl mx-auto">
+        <p className="text-xl text-[var(--foreground)] max-w-2xl mx-auto mb-8">
           Making 5,000-year-old Ayurvedic knowledge relevant for screen addiction,
           sensory overload, and modern mental health challenges.
         </p>
+
+        {/* Featured Manuscript Image */}
+        <div className="relative mx-auto max-w-md mb-4">
+          <div className="border-4 border-[var(--accent-primary)] rounded-lg overflow-hidden shadow-2xl">
+            <Image
+              src="/images/manuscripts/ayurvedic-body-chakras-1800.jpg"
+              alt="18th century Ayurvedic anatomical painting showing human body with chakras and energy systems"
+              width={600}
+              height={800}
+              className="w-full h-auto"
+              priority
+            />
+          </div>
+          <p className="text-xs text-[var(--text-muted)] mt-2 italic">
+            Ayurvedic anatomical painting (ca. 1800, Nepal) showing the microcosm-macrocosm connection
+            <br />
+            <span className="text-[var(--accent-primary)]">Source: Wellcome Collection, Public Domain</span>
+          </p>
+        </div>
       </div>
 
       {/* Core Question */}
@@ -225,18 +245,42 @@ export default function AboutPage() {
         </div>
       </section>
 
-      {/* Vision */}
+      {/* Vision with Sanskrit Manuscript Image */}
       <section className="mb-12">
-        <div className="bg-gradient-to-r from-[var(--card-bg)] via-[var(--card-bg-light)] to-[var(--card-bg)] border-2 border-[var(--accent-primary)] rounded-lg p-8 text-center">
-          <h2 className="text-2xl font-bold text-[var(--accent-secondary)] mb-4">Our Vision</h2>
-          <p className="text-lg text-[var(--foreground)] max-w-2xl mx-auto mb-4">
-            Make Charaka Samhita the primary mental health framework for the digital age.
-          </p>
-          <p className="text-[var(--foreground)] opacity-80">
-            Just as mindfulness went from Buddhist practice to mainstream mental health tool,
-            we want Ayurvedic concepts like prajñāparādha, ojas, and svastha to become
-            common language for discussing digital wellbeing.
-          </p>
+        <div className="bg-gradient-to-r from-[var(--card-bg)] via-[var(--card-bg-light)] to-[var(--card-bg)] border-2 border-[var(--accent-primary)] rounded-lg p-8">
+          <h2 className="text-2xl font-bold text-[var(--accent-secondary)] mb-6 text-center">Our Vision</h2>
+
+          <div className="grid md:grid-cols-2 gap-8 items-center">
+            {/* Sanskrit Manuscript Image */}
+            <div>
+              <div className="border-2 border-[var(--accent-secondary)] rounded-lg overflow-hidden shadow-xl">
+                <Image
+                  src="/images/manuscripts/sanskrit-palm-leaf-miniatures.jpg"
+                  alt="Ancient Sanskrit palm leaf manuscript with traditional miniatures and calligraphy"
+                  width={500}
+                  height={300}
+                  className="w-full h-auto"
+                />
+              </div>
+              <p className="text-xs text-[var(--text-muted)] mt-2 italic text-center">
+                Sanskrit palm leaf manuscript with miniatures
+                <br />
+                <span className="text-[var(--accent-secondary)]">Source: Wellcome Collection, CC BY 4.0</span>
+              </p>
+            </div>
+
+            {/* Vision Text */}
+            <div className="text-center md:text-left">
+              <p className="text-lg text-[var(--foreground)] mb-4">
+                Make Charaka Samhita the primary mental health framework for the digital age.
+              </p>
+              <p className="text-[var(--foreground)] opacity-80">
+                Just as mindfulness went from Buddhist practice to mainstream mental health tool,
+                we want Ayurvedic concepts like prajñāparādha, ojas, and svastha to become
+                common language for discussing digital wellbeing.
+              </p>
+            </div>
+          </div>
         </div>
       </section>
 
