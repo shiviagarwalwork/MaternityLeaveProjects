@@ -13,6 +13,189 @@ export interface BlogPost {
 
 export const blogPosts: BlogPost[] = [
   {
+    id: 'prajnaparadha-digital-age',
+    title: '📱 Prajñāparādha: Why You Keep Scrolling (Even Though You Know It Hurts)',
+    excerpt: "The Charaka Samhita identified the root of all disease 2,000 years ago: doing what you know harms you. Sound familiar?",
+    content: `You know scrolling at 2 AM destroys your sleep. You do it anyway.
+
+You know comparing yourself on Instagram makes you miserable. You keep opening the app.
+
+You know binge-watching while eating makes digestion terrible. Netflix autoplays.
+
+The ancient Ayurvedic physician Charaka called this **prajñāparādha** (प्रज्ञापराध) - literally "crimes against wisdom." Not ignorance. Not accidents. Knowingly acting against your own better judgment.
+
+### What the Charaka Saṃhitā Says
+
+*"प्रज्ञापराधः सर्वेषां व्याधीनां मूलम्"*
+
+Translation: "Prajñāparādha is the root cause of all diseases."
+
+Not bacteria. Not genes. Not bad luck. **The gap between knowing and doing.**
+
+### The Three Types (From Sutrasthana 11.37-40)
+
+**1. Kāyika (कायिक) - Crimes of the Body**
+- Modern: Sitting all day despite knowing you need movement
+- Ancient: Suppressing natural urges (sneezing, urination, sleep)
+- Result: Physical disease, stiffness, pain
+
+**2. Vācika (वाचिक) - Crimes of Speech**
+- Modern: Doom-scrolling news, engaging with online trolls
+- Ancient: Harsh speech, gossip, lies
+- Result: Mental agitation, damaged relationships
+
+**3. Mānasika (मानसिक) - Crimes of Mind**
+- Modern: Endless comparison, rumination, worry spirals
+- Ancient: Dwelling on past regrets, future anxieties
+- Result: Depression, anxiety, insomnia
+
+### Your Digital Prajñāparādha Patterns
+
+Check honestly - which do you do **knowing** it harms you?
+
+**Screen Time:**
+- ☐ Scrolling first thing in morning (before even peeing)
+- ☐ Phone in bed disrupting sleep
+- ☐ "Quick check" that becomes 2 hours
+- ☐ Watching screens while eating
+
+**Social Media:**
+- ☐ Comparing your real life to others' highlight reels
+- ☐ Reading comments you know will enrage you
+- ☐ Staying in toxic online spaces
+- ☐ Seeking validation through likes
+
+**Work & Productivity:**
+- ☐ Multitasking despite knowing it makes everything worse
+- ☐ Not taking breaks when exhausted
+- ☐ Checking email at midnight
+- ☐ Saying yes when you mean no
+
+**Food & Body:**
+- ☐ Eating while distracted (TV, phone, computer)
+- ☐ Eating past fullness
+- ☐ Skipping meals then binging
+- ☐ Choosing convenience over nourishment
+
+### Why We Do It (Ayurvedic Psychology)
+
+The Charaka Saṃhitā explains we commit prajñāparādha when our **buddhi** (intellect) is overpowered by:
+
+**Rāga (राग) - Attachment/Craving**
+- "Just one more video..."
+- The dopamine hit of notifications
+- FOMO keeping you scrolling
+
+**Dveṣa (द्वेष) - Aversion/Hatred**
+- Hate-reading news
+- Engaging with content that enrages you
+- Picking fights in comment sections
+
+**Moha (मोह) - Delusion/Confusion**
+- "This time will be different"
+- "Just 5 more minutes"
+- Believing you can multitask effectively
+
+### The Path Back to Wisdom (Ayurvedic Solutions)
+
+**1. Svastha Vṛtta (स्वस्थ वृत्त) - Establish Yourself in Self**
+
+Before reaching for your phone, pause. Ask:
+- "Is this producing sukha (happiness) or duḥkha (suffering)?"
+- "Am I choosing this, or is the craving choosing for me?"
+- "What do I actually need right now?"
+
+**2. Sadācāra (सदाचार) - Right Conduct**
+
+The text prescribes daily routines that **prevent** prajñāparādha:
+- Wake at Brahma Muhurta (5-6 AM, when mind is clear)
+- No screens first hour after waking
+- Meals at consistent times, without distraction
+- Digital sunset at 8 PM
+- Bed by 10 PM (Kapha time = natural sleep)
+
+**3. Dhī Dhṛti Smṛti (धी धृति स्मृति) - The Three Pillars**
+
+To overcome prajñāparādha, cultivate:
+- **Dhī** (धी) - Wisdom: Understanding what truly serves you
+- **Dhṛti** (धृति) - Courage/Restraint: Ability to say no to harmful urges
+- **Smṛti** (स्मृति) - Memory: Remembering consequences of past choices
+
+**4. Sattvāvajaya (सत्त्वावजय) - Mind Training**
+
+The Charaka Saṃhitā's term for cognitive behavioral therapy, 2000 years early:
+- Redirect mind from harmful patterns
+- Replace destructive habits with nourishing ones
+- Train attention like you'd train a muscle
+
+### Practical Digital-Age Protocol
+
+**Morning Protection (First 90 Minutes):**
+1. No phone before gratitude practice
+2. Tongue scraping, oil pulling (grounds you in body)
+3. Drink warm water with lemon
+4. 10 minutes meditation or pranayama
+5. Movement before screens
+
+**Throughout Day:**
+1. Phone on airplane mode during deep work
+2. Eat one meal daily with ZERO distractions
+3. Set screen time limits (and honor them)
+4. Walk outside without phone once daily
+5. Notice the gap between urge and action
+
+**Evening Wind-Down:**
+1. Digital sunset (8 PM)
+2. Replace scrolling with reading physical books
+3. Self-oil massage (abhyanga) - reconnects you to body
+4. Reflect: "Where did I choose wisdom today? Where did I choose harm?"
+5. Forgive yourself, plan better tomorrow
+
+### The Ancient Question for Modern Life
+
+Charaka didn't say "delete your apps" (obviously). The question is deeper:
+
+**"Are your senses and mind under YOUR guidance, or are you being pulled by them?"**
+
+When you pick up your phone at 2 AM, is **you** choosing, or is rāga (craving) choosing?
+
+When you doom-scroll despite exhaustion, is **you** deciding, or is moha (delusion) deciding?
+
+Prajñāparādha is the space between knowing better and doing better.
+
+The cure isn't more information. It's **re-establishing yourself as the decision-maker** in your own life.
+
+### Start Here (One Prajñāparādha at a Time)
+
+Pick ONE pattern from your list above. Just one.
+
+For the next 3 days:
+- Notice when the urge arises
+- Pause before acting
+- Ask: "Is this wisdom or prajñāparādha?"
+- Choose consciously (even if you choose the harmful thing)
+
+The goal isn't perfection. It's **closing the gap between knowing and doing.**
+
+One conscious choice at a time.
+
+### The Promise (From Sutrasthana)
+
+*"One who has control over one's self, who follows the path of dhī, dhṛti, and smṛti, remains free from disease and attains longevity, wealth, and fame."*
+
+Not because the universe rewards you. Because **you stop harming yourself.**
+
+---
+
+**Your Turn:** What's ONE digital prajñāparādha pattern you're ready to address? Share in our community or start tracking privately. The Charaka Saṃhitā says awareness is the first step to wisdom.`,
+    category: 'Digital Wellness',
+    readTime: '8 min',
+    imageUrl: 'https://images.unsplash.com/photo-1516585427167-9f4af9627e6c?w=800&h=400&fit=crop',
+    tags: ['Prajñāparādha', 'Digital Detox', 'Screen Addiction', 'Mental Health', 'Charaka Samhita'],
+    author: 'Ayurveda Knowledge Portal',
+    publishedDate: '2025-01-03'
+  },
+  {
     id: 'brahma-muhurta-magic',
     title: '🌅 Wake Up at Brahma Muhurta: The Ancient Secret to Your Best Life',
     excerpt: 'Ever wonder why successful people wake up at 4 AM? Ayurveda knew about the "ambrosial hours" 5,000 years ago.',
