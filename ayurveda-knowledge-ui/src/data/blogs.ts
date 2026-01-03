@@ -174,6 +174,126 @@ You might still scroll. That's okay. The goal is **closing the gap between knowi
     publishedDate: '2025-01-03'
   },
   {
+    id: 'ojas-vital-energy',
+    title: '✨ Why You Feel Drained (And How to Get Your Energy Back)',
+    excerpt: 'Ancient Ayurveda identified "ojas" - your vital essence. Modern life depletes it fast. Here's how to rebuild it.',
+    content: `Ever feel exhausted even after sleeping 8 hours?
+
+Brain fog that won't lift? Catch every cold going around? Feel emotionally fragile?
+
+The Charaka Samhita says you're low on **ojas** - your vital essence.
+
+Think of it like your body's battery charge. When it's full, you feel vibrant, clear, resilient. When it's depleted, everything feels hard.
+
+### What is Ojas?
+
+The ancient texts describe ojas as the subtle essence that:
+- Gives you immunity (physical & emotional)
+- Creates mental clarity
+- Produces that glow healthy people have
+- Makes you feel grounded and content
+
+Modern science might call it: robust immune function + balanced hormones + neurotransmitter health + cellular energy.
+
+### What Depletes Ojas (Fast)
+
+**Digital Life:**
+- Constant screen time
+- Doom-scrolling and outrage
+- Lack of real human connection
+- Information overload
+
+**Lifestyle:**
+- Chronic stress and worry
+- Not enough quality sleep
+- Overscheduling, no downtime
+- Processed food diet
+
+**Emotional:**
+- Suppressed grief or trauma
+- Chronic anxiety
+- Lack of purpose
+
+That's why you're tired.
+
+### Your Rebuild Protocol
+
+**Sleep First**
+- Bed by 10 PM
+- Wake around 6 AM
+- No screens 1 hour before bed
+- Dark, cool room
+
+**Eat for Building**
+- Warm, cooked foods
+- Ghee daily
+- Sweet fruits: dates, figs
+- Almonds soaked overnight
+
+**Herbs**
+- Ashwagandha (300mg 2x daily)
+- Amla (vitamin C)
+- Chyawanprash
+
+**Daily Practices**
+- 15-min oil massage before shower
+- 10 min meditation
+- Barefoot in nature
+- Deep breathing
+- Gratitude practice
+
+**Reduce**
+- Multitasking
+- Saying yes when you mean no
+- Rushing
+- Late nights
+
+### 7-Day Challenge
+
+**Morning:**
+- Wake at 6 AM
+- Warm water with dates
+- 10 min meditation
+- Oil massage
+
+**Afternoon:**
+- Warm lunch (biggest meal)
+- 20 min walk
+- 10 min rest
+
+**Evening:**
+- Light dinner by 7 PM
+- Golden milk
+- Journal 3 gratitudes
+- Bed by 10 PM
+
+### How You'll Know It's Working
+
+**After 1 week:**
+- Waking up refreshed
+- Stable energy
+- Less brain fog
+- Better emotional resilience
+
+**After 1 month:**
+- Stop catching every cold
+- Skin looks better
+- Digestion improves
+- You feel like yourself
+
+---
+
+The texts say: "One who protects their ojas protects their life."
+
+Your battery is rechargeable. You just have to plug it in.`,
+    category: 'Energy & Vitality',
+    readTime: '4 min',
+    imageUrl: 'https://images.unsplash.com/photo-1506126613408-eca07ce68773?w=800&h=400&fit=crop',
+    tags: ['Ojas', 'Energy', 'Vitality', 'Immunity', 'Charaka Samhita'],
+    author: 'Ayurveda Knowledge Portal',
+    publishedDate: '2025-01-02'
+  },
+  {
     id: 'brahma-muhurta-magic',
     title: '🌅 Wake Up at Brahma Muhurta: The Ancient Secret to Your Best Life',
     excerpt: 'Ever wonder why successful people wake up at 4 AM? Ayurveda knew about the "ambrosial hours" 5,000 years ago.',
