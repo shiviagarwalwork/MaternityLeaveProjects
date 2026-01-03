@@ -294,6 +294,397 @@ Your battery is rechargeable. You just have to plug it in.`,
     publishedDate: '2025-01-02'
   },
   {
+    id: 'screen-fatigue-senses',
+    title: '👁️ Your Eyes Are Exhausted: Ancient Wisdom for Screen Fatigue',
+    excerpt: '2,000 years ago, Ayurveda warned about sensory overload. Endless scrolling is exactly what they meant.',
+    content: `Your eyes hurt. Your brain feels fried. You can't focus.
+
+Welcome to sensory overload - or what the Charaka Samhita called "unwholesome contact with sense objects."
+
+The ancient physicians identified this as one of THE root causes of disease. Not "a" cause. One of the three primary causes.
+
+### The Three Types of Sensory Imbalance
+
+**Too Much (Excessive Use)**
+- 8+ hours staring at screens
+- Constant notifications, music, podcasts
+- Never experiencing silence
+- Result: Exhaustion, headaches, anxiety
+
+**Too Little (Insufficient Use)**
+- No natural light exposure
+- No long-distance gazing
+- No silence or nature sounds
+- Result: Vitamin D deficiency, poor vision, mental dullness
+
+**Wrong Use (Misuse)**
+- Blue light at night (disrupts sleep)
+- Eating while watching screens
+- Listening to disturbing content before bed
+- Result: Insomnia, digestive issues, mood swings
+
+### Your Sensory Audit
+
+**Eyes:**
+How many hours on screens daily? ____
+Natural light exposure? ____
+Blue light after 8 PM? Yes/No
+
+**Ears:**
+Hours with headphones? ____
+Minutes of silence daily? ____
+Volume level (1-10)? ____
+
+**Diagnosis:** If you spend 8+ hours on screens with <30 min natural light, you have excessive + insufficient use.
+
+### The Reset Protocols
+
+**For Eyes (Digital Eye Strain)**
+
+Daily:
+- 20-20-20 rule: Every 20 min, look 20 feet away for 20 seconds
+- No screens 1 hour before bed
+- 5 min morning sun gazing
+- Rose water eye wash
+
+**For Ears (Sound Sensitivity)**
+
+Daily:
+- 2 hours complete silence
+- 30 min nature sounds (birds, wind, water)
+- Volume never above 60%
+- Warm sesame oil in ears before bed
+
+**For Mind (Mental Exhaustion)**
+
+Daily:
+- 10-20 min morning meditation
+- Digital fast 6 PM - 8 AM
+- One task at a time (no multitasking)
+- Evening reflection
+
+### Weekly Digital Detox Day
+
+Pick ONE day:
+
+**6-8 AM:** Wake to natural light, sit outside, no phone
+**8-12 PM:** Walk barefoot, read physical books, move
+**12-4 PM:** Nature time, long-distance gazing, no devices
+**4-6 PM:** Cook, create, physical activities
+**6-8 PM:** In-person connection, shared meals
+**8-10 PM:** Candle-lit bath, gentle stretching, early bed
+
+### The Ancient Question
+
+The Charaka Samhita asks: Are your senses guiding you, or are you guiding them?
+
+When you pick up your phone at 2 AM, who's in charge?
+
+The cure isn't complicated:
+- Too much screen? More nature.
+- No silence? Less sound.
+- Wrong timing? Realign with natural rhythms.
+
+---
+
+**Start Here:** Pick ONE sense. Follow its protocol for 3 days. Notice what changes.
+
+Your senses are doorways. Keep them healthy.`,
+    category: 'Digital Wellness',
+    readTime: '4 min',
+    imageUrl: 'https://images.unsplash.com/photo-1557672172-298e090bd0f1?w=800&h=400&fit=crop',
+    tags: ['Sensory Health', 'Screen Fatigue', 'Digital Detox', 'Eye Strain', 'Charaka Samhita'],
+    author: 'Ayurveda Knowledge Portal',
+    publishedDate: '2025-01-01'
+  },
+  {
+    id: 'anxiety-vata-modern-life',
+    title: '😰 Why Modern Life Makes You Anxious (Ayurvedic Explanation)',
+    excerpt: 'Anxiety, restlessness, racing thoughts - Ayurveda says this is Vata imbalance. Here's what that means.',
+    content: `Can't sit still. Mind racing. Constantly worried about what's next.
+
+Ayurveda calls this Vata imbalance - the air and space elements gone wild.
+
+Modern life is basically designed to aggravate Vata. Here's why you're anxious and what to do about it.
+
+### What is Vata?
+
+Vata governs all movement in your body and mind:
+- Thoughts racing
+- Heart beating
+- Food moving through digestion
+- Information processing
+
+When balanced: Creative, adaptable, enthusiastic
+When imbalanced: Anxious, scattered, exhausted
+
+### Modern Life = Vata Nightmare
+
+**What Aggravates Vata:**
+- Constant change and stimulation
+- Irregular schedule (eating, sleeping at random times)
+- Multitasking and scattered attention
+- Cold, raw foods (smoothie bowls in winter)
+- Travel and constant movement
+- Lack of routine
+- Too much screen time
+
+Sound like... your entire life?
+
+### Signs You're Vata Imbalanced
+
+**Physical:**
+- Dry skin, hair, eyes
+- Cold hands and feet
+- Constipation or gas
+- Restless sleep
+- Irregular appetite
+
+**Mental:**
+- Racing thoughts
+- Difficulty making decisions
+- Starting projects, never finishing
+- Anxiety and worry
+- Scattered focus
+
+**Emotional:**
+- Feel ungrounded
+- Overwhelmed easily
+- Nervous energy
+- Can't relax
+
+### The Vata-Calming Protocol
+
+**Create Routine (Non-Negotiable)**
+- Same wake time daily (6 AM)
+- Same meal times (even if not hungry)
+- Same bedtime (10 PM)
+- Same morning practice
+
+Your nervous system NEEDS predictability.
+
+**Eat Warm & Grounding**
+- Hot, cooked, oily foods
+- Root vegetables, soups, stews
+- Ghee with every meal
+- Avoid cold, raw, dry foods
+- No smoothies or iced drinks
+
+**Daily Grounding Practices**
+- 15-min oil massage (warm sesame oil)
+- Feet on earth barefoot - 20 min
+- Slow, deep breathing
+- Gentle yoga (not power yoga)
+- Hot baths
+
+**Reduce Stimulation**
+- One task at a time
+- Digital sunset at 8 PM
+- Limit news/social media
+- Quiet time daily
+- Slow down everything
+
+**Herbs for Vata**
+- Ashwagandha (calming)
+- Warm milk with nutmeg before bed
+- Ginger tea
+
+### 7-Day Vata Reset
+
+**Morning (Same Time Daily):**
+- Wake 6 AM
+- Warm water
+- Oil massage
+- Warm breakfast
+
+**Afternoon:**
+- Lunch at noon (warm, cooked, with ghee)
+- 20 min walk
+- No multitasking
+
+**Evening:**
+- Dinner at 6 PM (warm, lighter)
+- No screens after 8 PM
+- Warm bath
+- Bed by 10 PM
+
+**Key:** Do the SAME THING every day. Routine calms Vata.
+
+### The Core Question
+
+Vata asks: "What's next? What if? What about?"
+
+The answer isn't in your head. It's in your body.
+
+Ground down. Slow down. Warm up.
+
+---
+
+**Start Here:** Pick ONE routine to keep consistent for 7 days. Same time, every day. Watch anxiety drop.
+
+Vata needs an anchor. Be the anchor.`,
+    category: 'Mental Health',
+    readTime: '4 min',
+    imageUrl: 'https://images.unsplash.com/photo-1499209974431-9dddcece7f88?w=800&h=400&fit=crop',
+    tags: ['Anxiety', 'Vata', 'Mental Health', 'Routine', 'Grounding', 'Charaka Samhita'],
+    author: 'Ayurveda Knowledge Portal',
+    publishedDate: '2024-12-31'
+  },
+  {
+    id: 'digital-dinacarya-routine',
+    title: '⏰ The Ancient Daily Routine That Actually Works for Modern Life',
+    excerpt: 'Dinacarya - the Ayurvedic daily schedule. Not rigid rules, but alignment with your body's natural rhythms.',
+    content: `Your body has a clock. Ayurveda figured it out 5,000 years ago.
+
+It's called **dinacarya** - daily routine aligned with nature's rhythms.
+
+Not because it's tradition. Because it works.
+
+### Why Routine Matters
+
+Every cell in your body operates on circadian rhythm:
+- Digestion peaks at noon
+- Detox happens at night
+- Hormones follow cycles
+- Energy rises and falls predictably
+
+Fighting this = exhaustion.
+Working with it = effortless health.
+
+### The Ayurvedic Day (Simplified)
+
+**5-6 AM: Wake (Vata Time)**
+- Mind is clearest
+- Body is lightest
+- Best time for meditation, creativity
+- Miss this window? Day feels harder
+
+**6-10 AM: Kapha Time**
+- Slower, heavier energy
+- Good for exercise (burn off heaviness)
+- Light breakfast if hungry
+- Don't sleep during this - you'll feel sluggish
+
+**10 AM - 2 PM: Pitta Time**
+- Peak digestion and mental sharpness
+- Biggest meal at noon
+- Important work gets done
+- Your body can handle anything now
+
+**2-6 PM: Vata Time**
+- Creativity returns
+- Energy might dip (this is normal)
+- Light snack if needed
+- Good for creative work, not heavy thinking
+
+**6-10 PM: Kapha Time**
+- Body preparing for rest
+- Light dinner before 7 PM
+- No intense activity
+- Wind-down begins
+
+**10 PM - 2 AM: Pitta Time**
+- Body repairs and detoxes
+- You should be ASLEEP
+- Staying up = missing repair window
+- That "second wind" after 10? Ignore it.
+
+**2-6 AM: Vata Time**
+- Deep sleep
+- Dreams
+- Mental processing
+- Wake near the end of this
+
+### Your Modern Dinacarya
+
+**Morning (5:30-8 AM):**
+- Wake 5:30-6 AM
+- Scrape tongue, oil pull
+- Warm water with lemon
+- 10 min meditation or movement
+- Light breakfast if hungry
+
+**Midday (10 AM-2 PM):**
+- Biggest meal at noon
+- Eat slowly, no screens
+- 10-min walk after
+- Deep work before lunch
+
+**Afternoon (2-6 PM):**
+- Creative work
+- Light snack if needed
+- Another movement break
+- Begin wind-down at 5 PM
+
+**Evening (6-10 PM):**
+- Light dinner by 7 PM
+- No screens after 8 PM
+- Oil massage or bath
+- Read, stretch, relax
+- Bed by 10 PM (non-negotiable)
+
+### Why 10 PM Bedtime Matters
+
+After 10 PM, Pitta (fire) activates. You get:
+- Second wind of energy
+- Hunger (even after dinner)
+- Mental activity (suddenly want to organize closet)
+
+This ISN'T real energy. It's your repair cycle starting.
+
+Going to bed after 10 PM = missing your healing window.
+
+### The 3-Week Challenge
+
+Week 1: **Just the sleep times**
+- Bed by 10 PM
+- Wake by 6 AM
+- Same time every day
+
+Week 2: **Add meal timing**
+- Biggest meal at noon
+- Dinner by 7 PM
+- No snacking after 8 PM
+
+Week 3: **Full routine**
+- Morning practice
+- Digital sunset 8 PM
+- Wind-down ritual
+
+### What You'll Notice
+
+**After 1 week:**
+- Waking up easier
+- Better sleep quality
+- More stable energy
+
+**After 2 weeks:**
+- Digestion improves
+- Less afternoon crash
+- Mental clarity
+
+**After 3 weeks:**
+- This feels natural
+- Old schedule seems chaotic
+- Your body runs itself
+
+---
+
+**The Secret:** This isn't discipline. It's alignment.
+
+Your body WANTS this rhythm. You're just removing resistance.
+
+**Start Here:** Pick ONE time to keep consistent for 7 days. Bedtime is the most powerful.
+
+Ancient wisdom, modern results.`,
+    category: 'Daily Routine',
+    readTime: '5 min',
+    imageUrl: 'https://images.unsplash.com/photo-1495364141860-b0d03eccd065?w=800&h=400&fit=crop',
+    tags: ['Dinacarya', 'Daily Routine', 'Circadian Rhythm', 'Sleep', 'Productivity', 'Charaka Samhita'],
+    author: 'Ayurveda Knowledge Portal',
+    publishedDate: '2024-12-30'
+  },
+  {
     id: 'brahma-muhurta-magic',
     title: '🌅 Wake Up at Brahma Muhurta: The Ancient Secret to Your Best Life',
     excerpt: 'Ever wonder why successful people wake up at 4 AM? Ayurveda knew about the "ambrosial hours" 5,000 years ago.',
