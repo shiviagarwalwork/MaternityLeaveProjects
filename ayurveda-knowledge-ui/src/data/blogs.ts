@@ -176,7 +176,7 @@ You might still scroll. That's okay. The goal is **closing the gap between knowi
   {
     id: 'ojas-vital-energy',
     title: '✨ Why You Feel Drained (And How to Get Your Energy Back)',
-    excerpt: 'Ancient Ayurveda identified "ojas" - your vital essence. Modern life depletes it fast. Here's how to rebuild it.',
+    excerpt: "Ancient Ayurveda identified ojas - your vital essence. Modern life depletes it fast. Here's how to rebuild it.",
     content: `Ever feel exhausted even after sleeping 8 hours?
 
 Brain fog that won't lift? Catch every cold going around? Feel emotionally fragile?
@@ -1312,6 +1312,614 @@ The email, the notification, the video - they'll all be there in 20 minutes. You
     tags: ['Mindful Eating', 'Digestion', 'Habits', 'Wellness'],
     author: 'Ayurveda Knowledge Portal',
     publishedDate: '2024-11-25'
+  },
+  {
+    id: 'sadvritta-digital-ethics',
+    title: '🧭 Why Being Mean Online Makes You Sick (According to Ayurveda)',
+    excerpt: 'Sadvṛtta - right conduct. Ancient Ayurveda says how you treat others directly affects your health.',
+    content: `Ever notice you feel terrible after a comment section fight?
+
+Ayurveda says that's not coincidence. It's **sadvṛtta** - right conduct.
+
+The Charaka Samhita teaches: How you behave doesn't just affect others. It affects YOUR health.
+
+### What is Sadvṛtta?
+
+Right conduct for mental and physical health:
+- Truthfulness
+- Non-harm in speech and action
+- Respect for others
+- Self-control
+- Ethical behavior
+
+Not because it's "nice." Because it keeps YOU healthy.
+
+### The Digital Ethics Crisis
+
+**Online Disinhibition:**
+- Saying things you'd never say in person
+- Anonymous cruelty
+- Outrage cycles
+- Trolling and pile-ons
+
+**What It Does to YOU:**
+- Increases rajas (mental agitation)
+- Depletes ojas (vital energy)
+- Creates guilt and shame
+- Destroys peace of mind
+
+You think you're "just venting." Your nervous system thinks you're in combat.
+
+### The Three Violations
+
+**1. Speech (Vācika)**
+- Harsh words online
+- Lies and exaggeration
+- Gossip and rumor-spreading
+- Unnecessary arguments
+
+**2. Mind (Mānasika)**
+- Wishing harm on others
+- Envy and comparison
+- Resentment and grudges
+- Constant judgment
+
+**3. Body (Kāyika)**
+- Less relevant digitally, but includes:
+- Harmful actions
+- Violence
+- Stealing
+
+### Why It Makes You Sick
+
+**Ayurvedic Psychology:**
+When you violate sadvṛtta, you create mental disturbance:
+- Increased rajas → anxiety, agitation
+- Accumulated tamas → guilt, heaviness
+- Loss of sattva → clarity and peace gone
+
+**The Feedback Loop:**
+Bad conduct → mental disturbance → poor choices → more bad conduct
+
+### The Digital Sadvṛtta Protocol
+
+**Before Posting/Commenting:**
+
+Ask three questions:
+1. Is it true?
+2. Is it necessary?
+3. Is it kind?
+
+If no to any = don't post.
+
+**The 24-Hour Rule:**
+Feel outraged by something online?
+- Close the tab
+- Wait 24 hours
+- Notice if you still care
+
+**Social Media Boundaries:**
+
+**Do:**
+- Share what helps
+- Encourage genuinely
+- Inform accurately
+- Connect meaningfully
+
+**Don't:**
+- Engage with trolls
+- Participate in pile-ons
+- Doomscroll outrage
+- Hate-read
+
+### The Repair Practice
+
+**Daily Review:**
+Before bed, review your day:
+- Where did I act from anger?
+- Where did I cause harm?
+- Where did I lose integrity?
+
+Not for guilt. For awareness.
+
+**The Mental Cleanse:**
+When you've violated sadvṛtta:
+1. Acknowledge it
+2. Make amends if possible
+3. Recommit to right conduct
+4. Let it go
+
+Dwelling creates more disturbance.
+
+### What Changes
+
+**After 1 week:**
+- Feel less agitated after being online
+- Notice urge to argue decreasing
+- More mental peace
+
+**After 1 month:**
+- Social media feels different
+- Less reactive
+- More grounded
+- Better sleep
+
+**Long-term:**
+- Increased sattva (mental clarity)
+- Stronger ojas (vitality)
+- Actual peace of mind
+- Better relationships
+
+### The Core Teaching
+
+Your mental health is connected to your conduct.
+
+Every time you engage in digital cruelty, gossip, or unnecessary conflict - you hurt yourself.
+
+Not "karma" in some mystical sense. Direct physiological and psychological impact.
+
+---
+
+**Start Here:** For 7 days, post NOTHING you wouldn't say to someone's face. Watch your mental state change.
+
+Right conduct isn't moral preaching. It's mental health maintenance.`,
+    category: 'Mental Health',
+    readTime: '4 min',
+    imageUrl: 'https://images.unsplash.com/photo-1516321497487-e288fb19713f?w=800&h=400&fit=crop',
+    tags: ['Sadvṛtta', 'Ethics', 'Digital Wellness', 'Mental Health', 'Social Media', 'Charaka Samhita'],
+    author: 'Ayurveda Knowledge Portal',
+    publishedDate: '2024-12-29'
+  },
+  {
+    id: 'ritucarya-seasonal-living',
+    title: '🍂 Why You Feel Different in Winter (Seasonal Living from Ayurveda)',
+    excerpt: 'Ṛtucaryā - living in harmony with seasons. Your body changes with weather. Your habits should too.',
+    content: `Feel more anxious in fall? Lethargic in winter? Irritable in summer?
+
+That's not random. It's **ṛtucaryā** - seasonal influence on your body.
+
+Ayurveda says: Nature changes, your body changes. Ignore this at your own risk.
+
+### The Problem with Modern Life
+
+**Artificial Sameness:**
+- Same temperature year-round (AC/heating)
+- Same foods available always
+- Same routines regardless of season
+- Same screen time indoors
+
+Your body evolved for seasonal variation. Modern life removed it.
+
+Result: Seasonal disorders, weakened immunity, chronic imbalance.
+
+### How Seasons Affect You
+
+**Winter (Vata Season)**
+- Cold, dry, windy
+- Aggravates anxiety, insomnia, dry skin
+- Digestion can be strong or weak
+- Immune system vulnerable
+
+**Spring (Kapha Season)**
+- Wet, heavy, cool
+- Aggravates congestion, allergies, lethargy
+- Body wants to cleanse accumulated winter heaviness
+- Prone to colds and flu
+
+**Summer (Pitta Season)**
+- Hot, sharp, intense
+- Aggravates irritability, inflammation, skin issues
+- Digestion weakens (heat reduces digestive fire)
+- Exhaustion and burnout
+
+**Fall (Vata Season)**
+- Dry, light, changing
+- Aggravates anxiety, irregular digestion, insomnia
+- Transition time = instability
+- Mental restlessness peaks
+
+### Modern Seasonal Challenges
+
+**Fall/Winter:**
+- Seasonal affective disorder (SAD)
+- Increased screen time indoors
+- Holiday stress and overindulgence
+- Less sunlight = circadian disruption
+
+**Spring/Summer:**
+- Summer burnout culture ("hustle season")
+- Dehydration from AC
+- Poor sleep (heat + light)
+- Inflammation from processed summer foods
+
+### Your Seasonal Protocol
+
+**WINTER (Nov-Feb)**
+
+**Routine:**
+- Wake with sunrise (later in winter is OK)
+- Oil massage with sesame oil (warming)
+- Hot, cooked foods
+- Bed earlier (9:30 PM)
+
+**Diet:**
+- Warm, moist, nourishing
+- Soups, stews, root vegetables
+- Ghee and healthy fats
+- Warm spices (ginger, cinnamon)
+
+**Avoid:**
+- Cold, raw foods
+- Excessive fasting
+- Late nights
+- Over-exercising
+
+**SPRING (Mar-May)**
+
+**Routine:**
+- Wake early (before 6 AM)
+- Dry brushing before shower
+- Vigorous exercise (burn off heaviness)
+- Lighter meals
+
+**Diet:**
+- Light, warm, stimulating
+- Bitter greens, beans, barley
+- Honey (small amounts)
+- Spicy foods OK
+
+**Avoid:**
+- Heavy, oily foods
+- Dairy (increases congestion)
+- Daytime naps
+- Oversleeping
+
+**SUMMER (Jun-Aug)**
+
+**Routine:**
+- Wake very early (5-6 AM)
+- Cool shower
+- Gentle exercise only
+- Rest during peak heat
+
+**Diet:**
+- Cooling, hydrating foods
+- Sweet fruits, coconut, cucumber
+- Fresh herbs (cilantro, mint)
+- Room temperature or cool (not ice cold)
+
+**Avoid:**
+- Spicy, salty, fried foods
+- Alcohol (very heating)
+- Strenuous exercise in heat
+- Anger and conflict
+
+**FALL (Sep-Oct)**
+
+**Routine:**
+- Regular schedule (combat change)
+- Same wake/sleep times daily
+- Grounding practices (yoga, walking)
+- Warm oil massage
+
+**Diet:**
+- Warm, moist, grounding
+- Root vegetables, rice, ghee
+- Sweet, sour, salty tastes
+- Cooked (not raw)
+
+**Avoid:**
+- Cold, dry, raw foods
+- Irregular meals and sleep
+- Excessive travel
+- Overstimulation
+
+### The Digital Seasonal Adjustment
+
+**Winter:**
+- Blue light blockers (shorter days)
+- More offline time
+- Cozy evening rituals
+- Less social media comparison
+
+**Spring:**
+- Digital declutter (spring cleaning)
+- More outdoor time
+- Active morning routine
+- Energy for projects
+
+**Summer:**
+- Screen-free mornings
+- Night mode always on
+- Outdoor work when possible
+- Digital sunset earlier (8 PM)
+
+**Fall:**
+- Consistent routines
+- Grounding practices
+- Limit news/outrage content
+- Earlier bedtime
+
+### What You'll Notice
+
+**After 1 season:**
+- Seasonal transitions feel smoother
+- Fewer colds and flus
+- More energy aligned with weather
+- Better mood stability
+
+**After 1 year:**
+- Strong immunity
+- Natural rhythm with seasons
+- Anticipate and prevent imbalances
+- Feel connected to nature again
+
+### The Core Principle
+
+You're not separate from nature. You ARE nature.
+
+When the season changes, your body needs different support.
+
+Fighting this = constant struggle.
+Working with it = effortless health.
+
+---
+
+**Start Here:** Notice which season you're in. Pick ONE seasonal recommendation and try it for 1 week.
+
+Your body already knows what it needs. The season tells you.`,
+    category: 'Daily Routine',
+    readTime: '5 min',
+    imageUrl: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=800&h=400&fit=crop',
+    tags: ['Ṛtucaryā', 'Seasonal Living', 'Immunity', 'Natural Rhythms', 'Charaka Samhita'],
+    author: 'Ayurveda Knowledge Portal',
+    publishedDate: '2024-12-28'
+  },
+  {
+    id: 'manas-mental-qualities',
+    title: '🧠 Why Your Mind Feels Chaotic (The Three Mental States)',
+    excerpt: 'Manas - understanding your mental state. Ayurveda says your mind has three modes: clear, agitated, or dull.',
+    content: `Your mind feels like 50 browser tabs open at once.
+
+Ayurveda has a name for this: rajas. Mental agitation.
+
+The Charaka Samhita teaches that your mind operates in three states - **sattva, rajas, and tamas**.
+
+Understanding this changes everything.
+
+### The Three Mental Qualities
+
+**Sattva (Clarity)**
+- Clear thinking
+- Contentment
+- Wisdom and insight
+- Peaceful energy
+- Good decision-making
+- Present moment awareness
+
+**Rajas (Agitation)**
+- Racing thoughts
+- Desire and craving
+- Restlessness
+- Emotional reactivity
+- Comparison and competition
+- Constant doing
+
+**Tamas (Dullness)**
+- Brain fog
+- Lethargy and inertia
+- Confusion
+- Depression
+- Avoidance
+- Oversleeping
+
+**Key Insight:** These aren't fixed personality types. They're states you cycle through.
+
+### Digital Life = Maximum Rajas
+
+Modern technology is designed to increase rajas:
+
+**What Increases Rajas:**
+- Notifications (constant interruption)
+- Social media (comparison, envy, outrage)
+- News cycles (fear, anger, urgency)
+- Multitasking (fragmented attention)
+- Overstimulation (endless content)
+- FOMO (fear of missing out)
+
+**The Rajasic Spiral:**
+Agitation → Poor choices → More agitation → Exhaustion → Collapse into tamas
+
+### The Tamas Trap
+
+After too much rajas, you crash into tamas:
+
+**What Increases Tamas:**
+- Binge-watching
+- Oversleeping
+- Junk food and overeating
+- Drugs and alcohol
+- Avoiding responsibilities
+- Passive consumption
+
+**The Cycle:**
+Rajas (overstimulation) → Tamas (collapse) → More rajas (trying to feel better) → Repeat
+
+Neither state feels good. Both deplete you.
+
+### What Increases Sattva
+
+**Your Sattvic Protocol:**
+
+**Morning:**
+- Wake early (before 6 AM)
+- Meditation or stillness (even 5 min)
+- Natural light exposure
+- Nourishing breakfast
+
+**During Day:**
+- Single-tasking
+- Regular breaks
+- Time in nature
+- Meaningful work
+- Face-to-face connection
+
+**Evening:**
+- Digital sunset (8 PM)
+- Light dinner
+- Calming activities (reading, gentle yoga)
+- Bed by 10 PM
+
+**Foods That Increase Sattva:**
+- Fresh, organic vegetables
+- Fresh fruits
+- Whole grains
+- Nuts and seeds
+- Ghee and healthy oils
+- Herbal teas
+- Pure water
+
+**Foods That Increase Rajas:**
+- Caffeine (in excess)
+- Spicy foods (in excess)
+- Refined sugar
+- Energy drinks
+- Processed foods
+
+**Foods That Increase Tamas:**
+- Leftovers (old food)
+- Heavy, fried foods
+- Meat (especially red meat)
+- Alcohol
+- Processed junk food
+- Overeating anything
+
+### Digital Practices for Sattva
+
+**What Increases Mental Clarity:**
+
+**Do:**
+- Intentional consumption (not passive scrolling)
+- Educational content
+- Inspiring art and music
+- Meaningful conversation
+- Creation over consumption
+- Regular digital detox
+
+**Don't:**
+- Doomscroll news
+- Engage in online arguments
+- Compare yourself on social media
+- Consume outrage content
+- Multitask across platforms
+- Check phone first thing in morning
+
+### Recognizing Your State
+
+**Am I in Sattva?**
+- Feel calm but energized
+- Thinking clearly
+- Making good choices
+- Content with what is
+- Present and aware
+
+**Am I in Rajas?**
+- Can't sit still
+- Mind racing
+- Seeking next thing
+- Comparing and competing
+- Irritable and reactive
+
+**Am I in Tamas?**
+- Brain fog
+- Low motivation
+- Avoiding tasks
+- Oversleeping or can't wake up
+- Depressed or numb
+
+### How to Shift States
+
+**From Rajas → Sattva:**
+- Stop inputs (close all tabs)
+- Go outside
+- Deep breathing (10 slow breaths)
+- Warm, calming tea
+- Gentle movement (walk, not run)
+- One task at a time
+
+**From Tamas → Sattva:**
+- Get up and move (vigorous exercise)
+- Cold shower
+- Stimulating tea (ginger, tulsi)
+- Bright light exposure
+- Accountability (call a friend)
+- Start one small task
+
+**From Rajas → Tamas (What NOT to do):**
+Don't "crash" with TV, junk food, or oversleeping. This creates the cycle.
+
+Instead: Conscious wind-down through sattva.
+
+### The 21-Day Sattva Challenge
+
+**Week 1: Morning Foundation**
+- Wake by 6 AM
+- 5 min stillness before phone
+- Sattvic breakfast
+
+**Week 2: Day Management**
+- Single-task only
+- No social media before noon
+- One meal eaten mindfully
+
+**Week 3: Evening Ritual**
+- Digital sunset 8 PM
+- Sattvic dinner
+- Bed by 10 PM
+
+### What You'll Notice
+
+**After 1 week:**
+- Clearer thinking
+- Better decisions
+- Less reactive
+- More present
+
+**After 2 weeks:**
+- Stable energy
+- Reduced anxiety
+- Better sleep
+- Contentment increases
+
+**After 3 weeks:**
+- This feels normal
+- Old patterns obvious
+- Mental clarity sustained
+- Wisdom accessible
+
+### The Core Teaching
+
+Your mind has three modes. Modern life keeps you stuck in rajas-tamas cycle.
+
+**Rajas** feels productive but depletes you.
+**Tamas** feels like rest but doesn't restore you.
+**Sattva** is the state you're actually seeking.
+
+Every choice moves you toward one of these states.
+
+Choose sattva.
+
+---
+
+**Start Here:** For 1 day, notice which state you're in every hour. Just awareness. No judgment.
+
+You can't change what you don't see.`,
+    category: 'Mental Health',
+    readTime: '5 min',
+    imageUrl: 'https://images.unsplash.com/photo-1507120410856-1f35574c3b45?w=800&h=400&fit=crop',
+    tags: ['Manas', 'Mental Health', 'Sattva', 'Rajas', 'Tamas', 'Clarity', 'Charaka Samhita'],
+    author: 'Ayurveda Knowledge Portal',
+    publishedDate: '2024-12-27'
   }
 ];
 
