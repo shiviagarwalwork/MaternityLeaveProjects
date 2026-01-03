@@ -14,7 +14,7 @@ export interface BlogPost {
 export const blogPosts: BlogPost[] = [
   {
     id: 'prajnaparadha-digital-age',
-    title: '📱 Prajñāparādha: Why You Keep Scrolling (Even Though You Know It Hurts)',
+    title: '📱 Why You Keep Scrolling (Even Though You Know It Hurts)',
     excerpt: "The Charaka Samhita identified the root of all disease 2,000 years ago: doing what you know harms you. Sound familiar?",
     content: `You know scrolling at 2 AM destroys your sleep. You do it anyway.
 
@@ -22,31 +22,32 @@ You know comparing yourself on Instagram makes you miserable. You keep opening t
 
 You know binge-watching while eating makes digestion terrible. Netflix autoplays.
 
-The ancient Ayurvedic physician Charaka called this **prajñāparādha** (प्रज्ञापराध) - literally "crimes against wisdom." Not ignorance. Not accidents. Knowingly acting against your own better judgment.
+The ancient Ayurvedic physician Charaka called this **prajñāparādha** - literally "crimes against wisdom." Not ignorance. Not accidents. Knowingly acting against your own better judgment.
 
-### What the Charaka Saṃhitā Says
+### What the Ancient Text Says
 
-*"प्रज्ञापराधः सर्वेषां व्याधीनां मूलम्"*
-
-Translation: "Prajñāparādha is the root cause of all diseases."
+"Prajñāparādha is the root cause of all diseases."
 
 Not bacteria. Not genes. Not bad luck. **The gap between knowing and doing.**
 
-### The Three Types (From Sutrasthana 11.37-40)
+### The Three Types
 
-**1. Kāyika (कायिक) - Crimes of the Body**
-- Modern: Sitting all day despite knowing you need movement
-- Ancient: Suppressing natural urges (sneezing, urination, sleep)
+**1. Crimes of the Body**
+- Sitting all day despite knowing you need movement
+- Eating when you're not hungry
+- Staying up late even when exhausted
 - Result: Physical disease, stiffness, pain
 
-**2. Vācika (वाचिक) - Crimes of Speech**
-- Modern: Doom-scrolling news, engaging with online trolls
-- Ancient: Harsh speech, gossip, lies
+**2. Crimes of Speech**
+- Doom-scrolling news and comments
+- Engaging with trolls online
+- Gossip and harsh words
 - Result: Mental agitation, damaged relationships
 
-**3. Mānasika (मानसिक) - Crimes of Mind**
-- Modern: Endless comparison, rumination, worry spirals
-- Ancient: Dwelling on past regrets, future anxieties
+**3. Crimes of Mind**
+- Endless comparison on social media
+- Rumination and worry spirals
+- Dwelling on past regrets
 - Result: Depression, anxiety, insomnia
 
 ### Your Digital Prajñāparādha Patterns
@@ -77,119 +78,96 @@ Check honestly - which do you do **knowing** it harms you?
 - ☐ Skipping meals then binging
 - ☐ Choosing convenience over nourishment
 
-### Why We Do It (Ayurvedic Psychology)
+### Why We Do It
 
-The Charaka Saṃhitā explains we commit prajñāparādha when our **buddhi** (intellect) is overpowered by:
+The ancient text explains we keep harming ourselves when our intellect is overpowered by:
 
-**Rāga (राग) - Attachment/Craving**
+**Craving**
 - "Just one more video..."
 - The dopamine hit of notifications
 - FOMO keeping you scrolling
 
-**Dveṣa (द्वेष) - Aversion/Hatred**
+**Avoidance**
 - Hate-reading news
-- Engaging with content that enrages you
-- Picking fights in comment sections
+- Engaging with enraging content
+- Picking fights in comments
 
-**Moha (मोह) - Delusion/Confusion**
+**Delusion**
 - "This time will be different"
 - "Just 5 more minutes"
-- Believing you can multitask effectively
+- Believing you can multitask
 
-### The Path Back to Wisdom (Ayurvedic Solutions)
+### How to Stop
 
-**1. Svastha Vṛtta (स्वस्थ वृत्त) - Establish Yourself in Self**
+**The One Question**
 
-Before reaching for your phone, pause. Ask:
-- "Is this producing sukha (happiness) or duḥkha (suffering)?"
-- "Am I choosing this, or is the craving choosing for me?"
+Before reaching for your phone, pause and ask:
+- "Is this making me happier or more miserable?"
+- "Am I choosing this, or is the craving choosing?"
 - "What do I actually need right now?"
 
-**2. Sadācāra (सदाचार) - Right Conduct**
+**The Daily Routine**
 
-The text prescribes daily routines that **prevent** prajñāparādha:
-- Wake at Brahma Muhurta (5-6 AM, when mind is clear)
+Simple rules that prevent the pattern:
+- Wake at 5-6 AM when your mind is clearest
 - No screens first hour after waking
-- Meals at consistent times, without distraction
+- Eat meals at same times, without distraction
 - Digital sunset at 8 PM
-- Bed by 10 PM (Kapha time = natural sleep)
+- Bed by 10 PM
 
-**3. Dhī Dhṛti Smṛti (धी धृति स्मृति) - The Three Pillars**
+**The Three Skills to Build**
 
-To overcome prajñāparādha, cultivate:
-- **Dhī** (धी) - Wisdom: Understanding what truly serves you
-- **Dhṛti** (धृति) - Courage/Restraint: Ability to say no to harmful urges
-- **Smṛti** (स्मृति) - Memory: Remembering consequences of past choices
+- **Wisdom:** Know what truly serves you
+- **Restraint:** Say no to harmful urges
+- **Memory:** Remember how bad it felt last time
 
-**4. Sattvāvajaya (सत्त्वावजय) - Mind Training**
+### Your 3-Day Reset
 
-The Charaka Saṃhitā's term for cognitive behavioral therapy, 2000 years early:
-- Redirect mind from harmful patterns
-- Replace destructive habits with nourishing ones
-- Train attention like you'd train a muscle
-
-### Practical Digital-Age Protocol
-
-**Morning Protection (First 90 Minutes):**
-1. No phone before gratitude practice
-2. Tongue scraping, oil pulling (grounds you in body)
-3. Drink warm water with lemon
-4. 10 minutes meditation or pranayama
-5. Movement before screens
+**Morning (First Hour):**
+- No phone before gratitude
+- Drink warm water
+- 10 min movement
+- Then screens
 
 **Throughout Day:**
-1. Phone on airplane mode during deep work
-2. Eat one meal daily with ZERO distractions
-3. Set screen time limits (and honor them)
-4. Walk outside without phone once daily
-5. Notice the gap between urge and action
+- Airplane mode during deep work
+- One distraction-free meal
+- One phone-free walk
+- Notice urges before acting
 
-**Evening Wind-Down:**
-1. Digital sunset (8 PM)
-2. Replace scrolling with reading physical books
-3. Self-oil massage (abhyanga) - reconnects you to body
-4. Reflect: "Where did I choose wisdom today? Where did I choose harm?"
-5. Forgive yourself, plan better tomorrow
+**Evening:**
+- Digital sunset at 8 PM
+- Read physical books
+- Reflect: Where did I choose wisdom vs. harm?
+- Bed by 10 PM
 
-### The Ancient Question for Modern Life
+### The Core Question
 
-Charaka didn't say "delete your apps" (obviously). The question is deeper:
+The ancient text didn't say "delete your apps." It asked something deeper:
 
-**"Are your senses and mind under YOUR guidance, or are you being pulled by them?"**
+**"Are you guiding your mind, or is your mind guiding you?"**
 
-When you pick up your phone at 2 AM, is **you** choosing, or is rāga (craving) choosing?
+When you pick up your phone at 2 AM - is it YOU choosing, or just craving?
 
-When you doom-scroll despite exhaustion, is **you** deciding, or is moha (delusion) deciding?
+The cure isn't more information. It's becoming the decision-maker in your own life again.
 
-Prajñāparādha is the space between knowing better and doing better.
+### Start Small
 
-The cure isn't more information. It's **re-establishing yourself as the decision-maker** in your own life.
+Pick ONE pattern from the checklist. Just one.
 
-### Start Here (One Prajñāparādha at a Time)
+For 3 days:
+1. Notice when the urge hits
+2. Pause before acting
+3. Ask: "Is this wisdom or harm?"
+4. Choose consciously
 
-Pick ONE pattern from your list above. Just one.
-
-For the next 3 days:
-- Notice when the urge arises
-- Pause before acting
-- Ask: "Is this wisdom or prajñāparādha?"
-- Choose consciously (even if you choose the harmful thing)
-
-The goal isn't perfection. It's **closing the gap between knowing and doing.**
-
-One conscious choice at a time.
-
-### The Promise (From Sutrasthana)
-
-*"One who has control over one's self, who follows the path of dhī, dhṛti, and smṛti, remains free from disease and attains longevity, wealth, and fame."*
-
-Not because the universe rewards you. Because **you stop harming yourself.**
+You might still scroll. That's okay. The goal is **closing the gap between knowing and doing.**
 
 ---
 
-**Your Turn:** What's ONE digital prajñāparādha pattern you're ready to address? Share in our community or start tracking privately. The Charaka Saṃhitā says awareness is the first step to wisdom.`,
+**The Promise:** You won't become perfect. But you'll stop being your own worst enemy.`,
     category: 'Digital Wellness',
-    readTime: '8 min',
+    readTime: '4 min',
     imageUrl: 'https://images.unsplash.com/photo-1516585427167-9f4af9627e6c?w=800&h=400&fit=crop',
     tags: ['Prajñāparādha', 'Digital Detox', 'Screen Addiction', 'Mental Health', 'Charaka Samhita'],
     author: 'Ayurveda Knowledge Portal',
