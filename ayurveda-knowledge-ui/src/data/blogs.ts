@@ -168,7 +168,7 @@ You might still scroll. That's okay. The goal is **closing the gap between knowi
 **The Promise:** You won't become perfect. But you'll stop being your own worst enemy.`,
     category: 'Digital Wellness',
     readTime: '4 min',
-    imageUrl: '/images/wellness/mindfulness.jpg',
+    imageUrl: '/images/blogs/phone-addiction.jpg',
     tags: ['Prajñāparādha', 'Digital Detox', 'Screen Addiction', 'Mental Health', 'Charaka Samhita'],
     author: 'Ayurveda Knowledge Portal',
     publishedDate: '2025-01-03'
@@ -288,7 +288,7 @@ The texts say: "One who protects their ojas protects their life."
 Your battery is rechargeable. You just have to plug it in.`,
     category: 'Energy & Vitality',
     readTime: '4 min',
-    imageUrl: '/images/herbs/ashwagandha.jpg',
+    imageUrl: '/images/blogs/tired-exhausted.jpg',
     tags: ['Ojas', 'Energy', 'Vitality', 'Immunity', 'Charaka Samhita'],
     author: 'Ayurveda Knowledge Portal',
     publishedDate: '2025-01-02'
@@ -392,7 +392,7 @@ The cure isn't complicated:
 Your senses are doorways. Keep them healthy.`,
     category: 'Digital Wellness',
     readTime: '4 min',
-    imageUrl: '/images/wellness/nature.jpg',
+    imageUrl: '/images/blogs/screen-fatigue.jpg',
     tags: ['Sensory Health', 'Screen Fatigue', 'Digital Detox', 'Eye Strain', 'Charaka Samhita'],
     author: 'Ayurveda Knowledge Portal',
     publishedDate: '2025-01-01'
@@ -525,7 +525,7 @@ Ground down. Slow down. Warm up.
 Vata needs an anchor. Be the anchor.`,
     category: 'Mental Health',
     readTime: '4 min',
-    imageUrl: '/images/wellness/meditation.jpg',
+    imageUrl: '/images/blogs/meditation-calm.jpg',
     tags: ['Anxiety', 'Vata', 'Mental Health', 'Routine', 'Grounding', 'Charaka Samhita'],
     author: 'Ayurveda Knowledge Portal',
     publishedDate: '2024-12-31'
@@ -679,7 +679,7 @@ Your body WANTS this rhythm. You're just removing resistance.
 Ancient wisdom, modern results.`,
     category: 'Daily Routine',
     readTime: '5 min',
-    imageUrl: '/images/wellness/sunrise.jpg',
+    imageUrl: '/images/blogs/sunrise-morning.jpg',
     tags: ['Dinacarya', 'Daily Routine', 'Circadian Rhythm', 'Sleep', 'Productivity', 'Charaka Samhita'],
     author: 'Ayurveda Knowledge Portal',
     publishedDate: '2024-12-30'
@@ -1465,7 +1465,7 @@ Not "karma" in some mystical sense. Direct physiological and psychological impac
 Right conduct isn't moral preaching. It's mental health maintenance.`,
     category: 'Mental Health',
     readTime: '4 min',
-    imageUrl: '/images/wellness/yoga.jpg',
+    imageUrl: '/images/blogs/mindful-living.jpg',
     tags: ['Sadvṛtta', 'Ethics', 'Digital Wellness', 'Mental Health', 'Social Media', 'Charaka Samhita'],
     author: 'Ayurveda Knowledge Portal',
     publishedDate: '2024-12-29'
@@ -1670,7 +1670,7 @@ Working with it = effortless health.
 Your body already knows what it needs. The season tells you.`,
     category: 'Daily Routine',
     readTime: '5 min',
-    imageUrl: '/images/wellness/nature.jpg',
+    imageUrl: '/images/blogs/seasonal-nature.jpg',
     tags: ['Ṛtucaryā', 'Seasonal Living', 'Immunity', 'Natural Rhythms', 'Charaka Samhita'],
     author: 'Ayurveda Knowledge Portal',
     publishedDate: '2024-12-28'
@@ -1916,7 +1916,7 @@ Choose sattva.
 You can't change what you don't see.`,
     category: 'Mental Health',
     readTime: '5 min',
-    imageUrl: '/images/wellness/mindfulness.jpg',
+    imageUrl: '/images/blogs/mental-clarity.jpg',
     tags: ['Manas', 'Mental Health', 'Sattva', 'Rajas', 'Tamas', 'Clarity', 'Charaka Samhita'],
     author: 'Ayurveda Knowledge Portal',
     publishedDate: '2024-12-27'
