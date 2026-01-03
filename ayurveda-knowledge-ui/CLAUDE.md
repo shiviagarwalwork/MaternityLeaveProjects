@@ -30,7 +30,13 @@
 ## 📋 PROJECT OVERVIEW
 
 ### Purpose
-Educational Ayurvedic health portal making 5,000-year-old wisdom accessible for modern users. Provides personalized recommendations based on dosha (body type) assessment and symptoms.
+**Bridging ancient Charaka Samhita wisdom with modern digital-age mental health challenges.**
+
+Making 5,000-year-old Ayurvedic knowledge relevant for screen addiction, sensory overload, mental health crises, and disconnection from natural rhythms. Not generic wellness advice, but deep authentic sutras directly addressing modern suffering.
+
+**Core Question:** "Is your current way of living producing sukha (happiness) or duḥkha (suffering)?"
+
+**See `.claude/VISION.md` for complete strategic direction.**
 
 ### Tech Stack
 - **Framework:** Next.js 15 (App Router, Turbopack)
@@ -106,23 +112,33 @@ Key files:
 
 ## 🎯 NEXT PRIORITIES
 
-### High Priority
-1. **Test symptom collection flow** - Verify symptoms save to localStorage and appear in PersonalizedPlan
-2. **Integrate symptoms into PersonalizedPlan** - Actually use collected symptoms to customize recommendations
-3. **Mobile responsiveness audit** - Test all components on mobile devices
-4. **Custom domain setup** - Connect to a cleaner domain name
+### High Priority - Core Concepts Integration
+1. **Expand manuscripts database** - Add 8 core Charaka Samhita concepts:
+   - Prajñāparādha (crimes against wisdom)
+   - Asātmyendriyārtha saṃyoga (unwholesome sensory contact)
+   - Manas/mental qualities (sattva/rajas/tamas)
+   - Ojas (vital essence) building and depletion
+   - Dinacarya (daily routine) detailed
+   - Sadvṛtta (right conduct / digital ethics)
+   - Ṛtucaryā (seasonal living)
+   - Indriya management (sensory hygiene)
 
-### Medium Priority
-1. **AI Chat implementation** - Replace placeholder with actual AI integration
-2. **Add more blog content** - Expand educational articles
-3. **Performance optimization** - Image optimization, code splitting
-4. **SEO optimization** - Meta tags, sitemap, structured data
+2. **Connect QuickStart paths to sutras** - Link each quick fix to relevant Charaka Samhita teaching
+3. **Digital-age assessment** - Add quiz identifying atiyoga/ayoga/mithyāyoga patterns
+4. **Prajñāparādha tracker** - Help users recognize "I know this hurts me but I do it anyway" patterns
 
-### Low Priority
-1. **Dark mode toggle** - Optional theme switching
-2. **Print-friendly styles** - For daily plans
-3. **Progressive Web App** - Offline support
-4. **Analytics integration** - Track user engagement
+### Medium Priority - Practical Application
+1. **Screen time guidelines** - Based on sensory overload framework
+2. **Ojas-building tracker** - Monitor vitality-building vs. depleting activities
+3. **Sattva-increasing practices** - Recommendations to reduce mental agitation
+4. **Integrate symptoms into PersonalizedPlan** - Use collected symptoms for customization
+5. **Seasonal variations** - Add ṛtucaryā to daily plans
+
+### Low Priority - Enhancement
+1. **AI Chat with sutra integration** - Connect digital problems to specific Charaka Samhita verses
+2. **Mobile responsiveness audit** - Test all components
+3. **Custom domain** - ayurveda-for-digital-life.vercel.app or similar
+4. **SEO with strategic keywords** - "digital detox ayurveda", "screen addiction ancient wisdom", etc.
 
 ---
 
