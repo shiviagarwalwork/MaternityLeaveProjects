@@ -10,6 +10,7 @@ import BookmarksList from '@/components/BookmarksList';
 import Homepage from '@/components/Homepage';
 import PersonalizedPlan from '@/components/PersonalizedPlan';
 import QuickStart from '@/components/QuickStart';
+import AboutPage from '@/components/AboutPage';
 import ChakraIcon from '@/components/ChakraIcon';
 import OmSymbol from '@/components/OmSymbol';
 import {
@@ -24,10 +25,11 @@ import {
   Home as HomeIcon,
   Newspaper,
   CalendarCheck,
-  Zap
+  Zap,
+  Info
 } from 'lucide-react';
 
-type Tab = 'home' | 'quick' | 'chat' | 'symptoms' | 'body' | 'dosha' | 'plan' | 'browser' | 'bookmarks';
+type Tab = 'home' | 'quick' | 'chat' | 'symptoms' | 'body' | 'dosha' | 'plan' | 'browser' | 'bookmarks' | 'about';
 
 export default function Home() {
   const [activeTab, setActiveTab] = useState<Tab>('home');
@@ -36,6 +38,7 @@ export default function Home() {
 
   const tabs = [
     { id: 'home' as Tab, label: 'Blog', icon: Newspaper, description: 'Ancient wisdom, modern life' },
+    { id: 'about' as Tab, label: 'About', icon: Info, description: 'Our mission & vision' },
     { id: 'quick' as Tab, label: 'Quick Fix', icon: Zap, description: 'Instant solutions (1-2 min)' },
     { id: 'plan' as Tab, label: 'My Daily Plan', icon: CalendarCheck, description: 'Personalized schedule' },
     { id: 'chat' as Tab, label: 'AI Advisor', icon: MessageSquare, description: 'Get personalized help' },
@@ -175,6 +178,7 @@ export default function Home() {
           <main className="flex-1">
             <div className="transition-all duration-300">
               {activeTab === 'home' && <Homepage />}
+              {activeTab === 'about' && <AboutPage />}
               {activeTab === 'quick' && <QuickStart />}
               {activeTab === 'plan' && <PersonalizedPlan />}
               {activeTab === 'chat' && <ChatInterface />}
