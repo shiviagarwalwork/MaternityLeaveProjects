@@ -1,110 +1,74 @@
 import Link from 'next/link';
+import {
+  Handshake, Users, Lightbulb, Heart,
+  Building2, GraduationCap, Megaphone, Mail
+} from 'lucide-react';
 
-const coachingTypes = [
+const partnerTypes = [
   {
-    name: '1:1 Executive Coaching',
-    description: 'Personalized, high-touch support for leaders and senior professionals navigating the complexities of ambitious motherhood.',
-    features: [
-      'Bi-weekly 60-minute sessions',
-      'Unlimited async messaging',
-      'Custom action plans',
-      'Career strategy integration',
-      'Mental health check-ins',
+    icon: GraduationCap,
+    title: 'Coaches & Mentors',
+    description: 'Are you a certified coach, therapist, or mentor with expertise in working with mothers, career development, or mental health?',
+    looking: [
+      'Executive coaches with corporate experience',
+      'Licensed therapists specializing in maternal mental health',
+      'Career coaches focused on working parents',
+      'Life coaches with lived experience as working mothers',
     ],
-    price: 'From $500/month',
-    ideal: 'Senior professionals, executives, founders',
-    icon: '👑',
+    color: 'bg-[var(--primary-50)]',
+    textColor: 'text-[var(--primary)]',
   },
   {
-    name: 'Group Coaching',
-    description: 'Connect with a cohort of mothers in similar life stages. Learn from each other while getting expert guidance.',
-    features: [
-      'Weekly 90-minute group sessions',
-      'Private community access',
-      'Peer accountability',
-      'Expert-led workshops',
-      'Lifetime alumni network',
+    icon: Building2,
+    title: 'Organizations & Companies',
+    description: 'Is your organization committed to supporting working parents? We\'d love to explore collaboration opportunities.',
+    looking: [
+      'Companies with parent-friendly policies',
+      'HR tech companies focused on employee wellbeing',
+      'Childcare and education providers',
+      'Corporate wellness programs',
     ],
-    price: 'From $200/month',
-    ideal: 'Mothers seeking community + guidance',
-    icon: '👥',
+    color: 'bg-[var(--sage-mist)]',
+    textColor: 'text-[var(--accent)]',
   },
   {
-    name: 'Return-to-Work Intensive',
-    description: 'A focused 6-week program designed specifically for the critical transition back to work after maternity leave.',
-    features: [
-      '6 weekly coaching sessions',
-      'Week-by-week transition plan',
-      'Flexibility negotiation prep',
-      'Identity integration work',
-      'Post-return check-ins',
+    icon: Megaphone,
+    title: 'Content Creators & Experts',
+    description: 'Do you create content about parenting, career, AI, or related topics? Let\'s amplify each other\'s voices.',
+    looking: [
+      'Parenting bloggers and podcasters',
+      'AI and tech educators',
+      'Career development content creators',
+      'Authors and thought leaders',
     ],
-    price: '$1,200 one-time',
-    ideal: 'Returning from maternity leave',
-    icon: '🚀',
+    color: 'bg-[#FDF5ED]',
+    textColor: 'text-[var(--secondary-dark)]',
   },
   {
-    name: 'Postpartum Support',
-    description: 'Specialized coaching for the fourth trimester and beyond, with mental health awareness built in.',
-    features: [
-      'Flexible session scheduling',
-      'Mental health monitoring',
-      'Crisis escalation protocols',
-      'Partner/family integration',
-      'Clinical referral network',
+    icon: Heart,
+    title: 'Community Partners',
+    description: 'Do you run a community, nonprofit, or initiative that aligns with our mission? Let\'s support each other.',
+    looking: [
+      'Women in tech communities',
+      'Parent support networks',
+      'Nonprofits supporting working families',
+      'Professional women\'s networks',
     ],
-    price: 'From $300/month',
-    ideal: 'New mothers (0-12 months postpartum)',
-    icon: '🌸',
+    color: 'bg-[var(--blush)]',
+    textColor: 'text-[var(--primary)]',
   },
 ];
 
-const coaches = [
-  {
-    name: 'Lead Coach',
-    specialties: ['Executive Leadership', 'Career Transitions', 'Work-Life Integration'],
-    bio: 'Former Fortune 500 executive who navigated her own return-to-work journey and now helps other ambitious mothers do the same.',
-  },
-  {
-    name: 'Clinical Coach',
-    specialties: ['Postpartum Mental Health', 'Anxiety Management', 'Crisis Support'],
-    bio: 'Licensed therapist specializing in perinatal mental health with 10+ years of experience supporting new mothers.',
-  },
-  {
-    name: 'Career Coach',
-    specialties: ['Negotiation', 'Career Strategy', 'Professional Identity'],
-    bio: 'Career strategist who has helped hundreds of mothers navigate promotions, pivots, and flexibility conversations.',
-  },
+const collaborationIdeas = [
+  'Guest content and cross-promotion',
+  'Joint workshops and webinars',
+  'Community partnerships',
+  'Resource sharing',
+  'Speaking opportunities',
+  'App integrations',
 ];
 
-const process = [
-  {
-    step: 1,
-    title: 'Discovery Call',
-    description: 'A free 30-minute conversation to understand your situation and determine the best support path.',
-    icon: '📞',
-  },
-  {
-    step: 2,
-    title: 'Custom Plan',
-    description: 'We create a personalized coaching plan based on your goals, challenges, and timeline.',
-    icon: '📋',
-  },
-  {
-    step: 3,
-    title: 'Regular Sessions',
-    description: 'Consistent coaching sessions with actionable takeaways and ongoing support between calls.',
-    icon: '💬',
-  },
-  {
-    step: 4,
-    title: 'Integration',
-    description: 'Tools and frameworks to sustain your growth long after coaching ends.',
-    icon: '✨',
-  },
-];
-
-export default function CoachingPage() {
+export default function PartnerPage() {
   return (
     <div className="overflow-hidden">
       {/* Hero Section */}
@@ -116,206 +80,218 @@ export default function CoachingPage() {
         <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="max-w-3xl">
             <p className="text-[var(--primary)] font-medium tracking-wide uppercase text-sm mb-4">
-              Coaching
+              Partner With Us
             </p>
             <h1 className="text-5xl md:text-6xl font-bold text-[var(--foreground)] mb-6">
-              Human support for<br />
-              <span className="gradient-text">complex journeys</span>
+              Let&apos;s build the<br />
+              <span className="gradient-text">future together</span>
             </h1>
             <p className="text-xl text-[var(--muted)] mb-8 leading-relaxed">
-              While our AI companion handles daily support, some challenges need human wisdom.
-              Our coaches understand the unique intersection of ambition, motherhood, and mental health.
+              Alpha Mothers is growing, and we&apos;re looking for coaches, organizations, and
+              thought leaders who share our mission of empowering ambitious mothers
+              raising the next generation.
             </p>
             <div className="flex flex-col sm:flex-row gap-4">
-              <Link href="#book" className="btn-primary">
-                Book a Free Discovery Call
-              </Link>
-              <Link href="#programs" className="btn-secondary">
-                Explore Programs
+              <a href="#contact" className="btn-primary">
+                Get in Touch
+              </a>
+              <Link href="/about" className="btn-secondary">
+                Learn About Our Mission
               </Link>
             </div>
           </div>
         </div>
       </section>
 
-      {/* Why Coaching Section */}
+      {/* Why Partner Section */}
       <section className="py-24">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="grid lg:grid-cols-2 gap-16 items-center">
             <div>
               <p className="text-[var(--primary)] font-medium tracking-wide uppercase text-sm mb-4">
-                Why Coaching
+                Our Vision
               </p>
               <h2 className="text-4xl font-bold text-[var(--foreground)] mb-6">
-                When AI isn&apos;t enough
+                We can&apos;t do this alone
               </h2>
               <div className="space-y-4 text-[var(--muted)] leading-relaxed">
                 <p>
-                  Our AI companion is powerful for daily check-ins, pattern recognition, and
-                  immediate support. But some moments need more.
+                  Supporting ambitious mothers through career transitions, mental health
+                  challenges, and raising kids in the AI age requires a village of experts.
                 </p>
                 <p>
-                  When you&apos;re preparing for a difficult conversation with your manager about
-                  flexibility. When you&apos;re processing complex emotions about your identity
-                  as both mother and professional. When you need someone who&apos;s been through
-                  it to help you see the path forward.
+                  We&apos;re building an ecosystem where mothers can access the best coaches,
+                  resources, and support—all in one place. And we need partners who
+                  share our values to make that vision a reality.
                 </p>
                 <p className="font-medium text-[var(--foreground)]">
-                  That&apos;s when human coaching makes all the difference.
+                  Together, we can reach more mothers and create more impact.
                 </p>
               </div>
             </div>
             <div className="grid grid-cols-2 gap-4">
               <div className="bg-[var(--primary-50)] rounded-2xl p-6">
-                <div className="text-3xl mb-3">🧠</div>
-                <h4 className="font-bold text-[var(--foreground)] mb-2">Deep Understanding</h4>
-                <p className="text-sm text-[var(--muted)]">Coaches who&apos;ve lived the experience</p>
+                <div className="w-10 h-10 rounded-xl bg-white flex items-center justify-center mb-3">
+                  <Users className="w-5 h-5 text-[var(--primary)]" strokeWidth={1.5} />
+                </div>
+                <h4 className="font-bold text-[var(--foreground)] mb-2">Growing Community</h4>
+                <p className="text-sm text-[var(--muted)]">Access to engaged, ambitious mothers</p>
               </div>
               <div className="bg-[var(--sage-mist)] rounded-2xl p-6">
-                <div className="text-3xl mb-3">🎯</div>
-                <h4 className="font-bold text-[var(--foreground)] mb-2">Custom Strategy</h4>
-                <p className="text-sm text-[var(--muted)]">Personalized plans for your situation</p>
+                <div className="w-10 h-10 rounded-xl bg-white flex items-center justify-center mb-3">
+                  <Lightbulb className="w-5 h-5 text-[var(--accent)]" strokeWidth={1.5} />
+                </div>
+                <h4 className="font-bold text-[var(--foreground)] mb-2">Shared Mission</h4>
+                <p className="text-sm text-[var(--muted)]">Aligned values and purpose</p>
               </div>
               <div className="bg-[#FDF5ED] rounded-2xl p-6">
-                <div className="text-3xl mb-3">🤝</div>
-                <h4 className="font-bold text-[var(--foreground)] mb-2">Accountability</h4>
-                <p className="text-sm text-[var(--muted)]">Someone in your corner</p>
+                <div className="w-10 h-10 rounded-xl bg-white flex items-center justify-center mb-3">
+                  <Megaphone className="w-5 h-5 text-[var(--secondary-dark)]" strokeWidth={1.5} />
+                </div>
+                <h4 className="font-bold text-[var(--foreground)] mb-2">Amplified Reach</h4>
+                <p className="text-sm text-[var(--muted)]">Cross-promotion opportunities</p>
               </div>
               <div className="bg-[var(--blush)] rounded-2xl p-6">
-                <div className="text-3xl mb-3">💡</div>
-                <h4 className="font-bold text-[var(--foreground)] mb-2">Breakthrough Moments</h4>
-                <p className="text-sm text-[var(--muted)]">Insights you can&apos;t get from an app</p>
+                <div className="w-10 h-10 rounded-xl bg-white flex items-center justify-center mb-3">
+                  <Handshake className="w-5 h-5 text-[var(--primary)]" strokeWidth={1.5} />
+                </div>
+                <h4 className="font-bold text-[var(--foreground)] mb-2">True Partnership</h4>
+                <p className="text-sm text-[var(--muted)]">Collaborative, not transactional</p>
               </div>
             </div>
           </div>
         </div>
       </section>
 
-      {/* Programs Section */}
-      <section className="py-24 bg-[var(--cream)]" id="programs">
+      {/* Partner Types Section */}
+      <section className="py-24 bg-[var(--cream)]">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="text-center max-w-3xl mx-auto mb-16">
             <p className="text-[var(--primary)] font-medium tracking-wide uppercase text-sm mb-4">
-              Programs
+              Who We&apos;re Looking For
             </p>
             <h2 className="text-4xl font-bold text-[var(--foreground)] mb-6">
-              Find the right support
+              Partners who share our mission
             </h2>
             <p className="text-xl text-[var(--muted)]">
-              Different seasons of motherhood need different types of support.
+              We&apos;re open to various types of collaborations with individuals and
+              organizations who want to support ambitious mothers.
             </p>
           </div>
 
           <div className="grid md:grid-cols-2 gap-8">
-            {coachingTypes.map((type, index) => (
-              <div key={index} className="bg-white rounded-3xl p-8 shadow-lg">
-                <div className="flex items-start justify-between mb-4">
-                  <div className="text-4xl">{type.icon}</div>
-                  <span className="text-sm font-medium text-[var(--primary)] bg-[var(--primary-50)] px-3 py-1 rounded-full">
-                    {type.price}
-                  </span>
+            {partnerTypes.map((type, index) => {
+              const IconComponent = type.icon;
+              return (
+                <div key={index} className="bg-white rounded-3xl p-8 shadow-sm">
+                  <div className={`w-14 h-14 rounded-2xl ${type.color} flex items-center justify-center mb-4`}>
+                    <IconComponent className={`w-7 h-7 ${type.textColor}`} strokeWidth={1.5} />
+                  </div>
+                  <h3 className="text-2xl font-bold text-[var(--foreground)] mb-2">{type.title}</h3>
+                  <p className="text-[var(--muted)] mb-4">{type.description}</p>
+                  <p className="text-sm font-medium text-[var(--foreground)] mb-2">We&apos;re looking for:</p>
+                  <ul className="space-y-2">
+                    {type.looking.map((item, i) => (
+                      <li key={i} className="flex items-start gap-2 text-sm text-[var(--muted)]">
+                        <svg className="w-4 h-4 text-[var(--primary)] mt-0.5 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                        </svg>
+                        {item}
+                      </li>
+                    ))}
+                  </ul>
                 </div>
-                <h3 className="text-2xl font-bold text-[var(--foreground)] mb-2">{type.name}</h3>
-                <p className="text-[var(--muted)] mb-4">{type.description}</p>
-                <p className="text-sm text-[var(--primary)] font-medium mb-4">
-                  Ideal for: {type.ideal}
-                </p>
-                <ul className="space-y-2 mb-6">
-                  {type.features.map((feature, i) => (
-                    <li key={i} className="flex items-center gap-2 text-sm">
-                      <svg className="w-4 h-4 text-[var(--primary)]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                      </svg>
-                      {feature}
+              );
+            })}
+          </div>
+        </div>
+      </section>
+
+      {/* Collaboration Ideas */}
+      <section className="py-24">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <div className="grid lg:grid-cols-2 gap-16 items-center">
+            <div className="order-2 lg:order-1">
+              <div className="bg-gradient-to-br from-[var(--primary)] to-[var(--primary-dark)] rounded-3xl p-8 text-white">
+                <h3 className="text-2xl font-bold mb-6">Ways we can collaborate</h3>
+                <ul className="space-y-4">
+                  {collaborationIdeas.map((idea, index) => (
+                    <li key={index} className="flex items-center gap-3">
+                      <div className="w-6 h-6 rounded-full bg-white/20 flex items-center justify-center flex-shrink-0">
+                        <svg className="w-3 h-3 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                        </svg>
+                      </div>
+                      <span>{idea}</span>
                     </li>
                   ))}
                 </ul>
-                <Link href="#book" className="btn-secondary w-full text-center">
-                  Learn More
-                </Link>
+                <p className="mt-6 text-white/80 text-sm">
+                  Have another idea? We&apos;re open to creative collaborations!
+                </p>
               </div>
-            ))}
+            </div>
+            <div className="order-1 lg:order-2">
+              <p className="text-[var(--primary)] font-medium tracking-wide uppercase text-sm mb-4">
+                Collaboration
+              </p>
+              <h2 className="text-4xl font-bold text-[var(--foreground)] mb-6">
+                Flexible partnerships
+              </h2>
+              <div className="space-y-4 text-[var(--muted)] leading-relaxed">
+                <p>
+                  We believe the best partnerships are built on mutual benefit and shared
+                  values, not rigid structures. We&apos;re open to exploring what works best
+                  for both parties.
+                </p>
+                <p>
+                  Whether you want to contribute content, offer services to our community,
+                  co-create resources, or explore something entirely new—let&apos;s talk.
+                </p>
+              </div>
+            </div>
           </div>
         </div>
       </section>
 
-      {/* Coaches Section */}
-      <section className="py-24">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div className="text-center max-w-3xl mx-auto mb-16">
-            <p className="text-[var(--primary)] font-medium tracking-wide uppercase text-sm mb-4">
-              Our Coaches
-            </p>
-            <h2 className="text-4xl font-bold text-[var(--foreground)] mb-6">
-              Experts who understand
-            </h2>
-            <p className="text-xl text-[var(--muted)]">
-              Every coach has lived experience with ambitious motherhood, combined with professional expertise.
-            </p>
+      {/* Contact Section */}
+      <section className="py-24 bg-[var(--cream)]" id="contact">
+        <div className="mx-auto max-w-2xl px-4 sm:px-6 lg:px-8 text-center">
+          <div className="w-16 h-16 mx-auto rounded-2xl bg-[var(--primary-50)] flex items-center justify-center mb-6">
+            <Mail className="w-8 h-8 text-[var(--primary)]" strokeWidth={1.5} />
           </div>
-
-          <div className="grid md:grid-cols-3 gap-8">
-            {coaches.map((coach, index) => (
-              <div key={index} className="text-center">
-                <div className="w-32 h-32 mx-auto rounded-full bg-gradient-to-br from-[var(--primary-light)] to-[var(--secondary-light)] mb-6" />
-                <h3 className="text-xl font-bold text-[var(--foreground)] mb-2">{coach.name}</h3>
-                <div className="flex flex-wrap gap-2 justify-center mb-4">
-                  {coach.specialties.map((specialty, i) => (
-                    <span key={i} className="text-xs bg-[var(--cream)] text-[var(--muted)] px-2 py-1 rounded-full">
-                      {specialty}
-                    </span>
-                  ))}
-                </div>
-                <p className="text-[var(--muted)] text-sm">{coach.bio}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Process Section */}
-      <section className="py-24 bg-[var(--primary)] text-white">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div className="text-center max-w-3xl mx-auto mb-16">
-            <p className="text-[var(--primary-light)] font-medium tracking-wide uppercase text-sm mb-4">
-              How It Works
-            </p>
-            <h2 className="text-4xl font-bold mb-6">
-              Simple process, profound impact
-            </h2>
-          </div>
-
-          <div className="grid md:grid-cols-4 gap-8">
-            {process.map((item, index) => (
-              <div key={index} className="text-center">
-                <div className="text-4xl mb-4">{item.icon}</div>
-                <div className="w-10 h-10 mx-auto rounded-full bg-white/20 flex items-center justify-center font-bold mb-4">
-                  {item.step}
-                </div>
-                <h3 className="text-xl font-bold mb-2">{item.title}</h3>
-                <p className="text-white/70 text-sm">{item.description}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* CTA Section */}
-      <section className="py-24" id="book">
-        <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8 text-center">
           <h2 className="text-4xl font-bold text-[var(--foreground)] mb-6">
-            Ready to get started?
+            Let&apos;s start a conversation
           </h2>
           <p className="text-xl text-[var(--muted)] mb-8">
-            Book a free 30-minute discovery call. No pressure, no commitment—just a conversation
-            to see if coaching is right for you.
+            Interested in partnering with Alpha Mothers? We&apos;d love to hear from you.
+            Tell us about yourself and how you&apos;d like to collaborate.
           </p>
-          <Link href="#" className="btn-primary text-lg px-10 py-4">
-            Book Your Free Call
-          </Link>
+          <a
+            href="mailto:hello@alphamothers.com?subject=Partnership Inquiry"
+            className="btn-primary text-lg px-10 py-4 inline-flex items-center gap-2"
+          >
+            <Mail className="w-5 h-5" />
+            Email Us
+          </a>
           <p className="text-sm text-[var(--muted)] mt-6">
-            Prefer to start with the app? <Link href="/app" className="text-[var(--primary)] hover:underline">Download Alpha free</Link>
+            Or connect with us on{' '}
+            <a href="https://www.linkedin.com/company/alpha-mothers" className="text-[var(--primary)] hover:underline" target="_blank" rel="noopener noreferrer">
+              LinkedIn
+            </a>
           </p>
+        </div>
+      </section>
+
+      {/* Join Community CTA */}
+      <section className="py-16">
+        <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8 text-center">
+          <p className="text-[var(--muted)] mb-4">
+            Not looking to partner but want to be part of the community?
+          </p>
+          <Link href="/community" className="text-[var(--primary)] font-medium hover:underline">
+            Join the Alpha Mothers Community →
+          </Link>
         </div>
       </section>
     </div>

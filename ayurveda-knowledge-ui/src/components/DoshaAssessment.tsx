@@ -4,7 +4,11 @@ import { useState } from 'react';
 import { doshaQuestions, symptoms } from '@/data/symptoms';
 import { DoshaResult } from '@/types';
 
-export default function DoshaAssessment() {
+interface DoshaAssessmentProps {
+  onNavigate?: (tab: string) => void;
+}
+
+export default function DoshaAssessment({ onNavigate }: DoshaAssessmentProps) {
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [answers, setAnswers] = useState<{[key: string]: { dosha: string; points: number }}>({});
   const [result, setResult] = useState<DoshaResult | null>(null);
@@ -266,17 +270,18 @@ export default function DoshaAssessment() {
           <p className="text-[var(--foreground)] mb-4">
             Now that you know your dosha, get a complete daily schedule tailored to your type - including meal times, exercise routines, sleep schedule, and more!
           </p>
-          <a
-            href="#"
-            onClick={(e) => {
-              e.preventDefault();
-              window.location.hash = 'plan';
-              window.location.reload();
+          <button
+            onClick={() => {
+              // Save dosha result to localStorage for PersonalizedPlan
+              localStorage.setItem('doshaResult', JSON.stringify(result));
+              if (onNavigate) {
+                onNavigate('plan');
+              }
             }}
-            className="inline-block bg-gradient-to-r from-[var(--accent-secondary)] to-[var(--gold)] text-[var(--background)] px-6 py-3 rounded-lg hover:opacity-90 font-bold shadow-lg"
+            className="inline-block bg-gradient-to-r from-[var(--accent-secondary)] to-[var(--gold)] text-[var(--background)] px-6 py-3 rounded-lg hover:opacity-90 font-bold shadow-lg cursor-pointer"
           >
             View My Daily Plan →
-          </a>
+          </button>
         </div>
 
         <button

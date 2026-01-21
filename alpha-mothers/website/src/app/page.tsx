@@ -1,21 +1,22 @@
 import Link from 'next/link';
 import Image from 'next/image';
+import { Heart, Bot, Briefcase, Baby } from 'lucide-react';
 
 // Blog posts from alphamothers.com
 const blogPosts = [
   {
     title: "The Vision Behind Alpha Mothers",
     excerpt: "Being a career-oriented, high-achieving Millennial mom is a lot. And with AI changing the world at warp speed, the pressure is on to prepare them for a future we can barely imagine.",
-    slug: "vision",
+    slug: "vision-behind-alpha-mothers",
   },
   {
     title: "Parenting for 2035: Wait, What?!",
-    excerpt: "It's a wild future, right? But how do we prepare our kids for a world that's changing so fast?",
-    slug: "parenting-2035",
+    excerpt: "Fast forward 10 years. What will life be like for our Alpha Generation kids? It's a wild future, right? But how do we prepare our kids for a world that's changing so fast?",
+    slug: "parenting-for-2035",
   },
   {
     title: "Welcome Back! You've Got This",
-    excerpt: "Today I met a new mom returning to work after mat leave, and it took me right back to my own experience two years ago. I remember that mix of emotions – excitement, nervousness, and this overwhelming urge to prove I could still 'do it all.'",
+    excerpt: "Today I met a new mom returning to work after mat leave, and it took me right back to my own experience two years ago. It's not about going back. It's about moving forward.",
     slug: "welcome-back",
   },
   {
@@ -29,22 +30,30 @@ const appFeatures = [
   {
     title: 'Daily Check-ins',
     description: 'A 30-second mood and energy assessment that tracks your mental state without overwhelming you.',
-    icon: '💙',
+    icon: Heart,
+    color: 'text-[var(--primary)]',
+    bgColor: 'bg-[var(--primary-50)]',
   },
   {
     title: 'AI Companion',
     description: 'Get personalized support and pattern insights at any hour—even at 3am when the racing thoughts won\'t stop.',
-    icon: '🤖',
+    icon: Bot,
+    color: 'text-[var(--accent)]',
+    bgColor: 'bg-[var(--sage-mist)]',
   },
   {
     title: 'Return-to-Work Guides',
     description: 'Transition timelines, confidence exercises, and scripts for negotiating flexibility.',
-    icon: '💼',
+    icon: Briefcase,
+    color: 'text-[var(--secondary-dark)]',
+    bgColor: 'bg-[#FDF5ED]',
   },
   {
     title: 'Gen Alpha Resources',
     description: 'Age-appropriate AI literacy guides, screen time wisdom, and family tech agreements.',
-    icon: '👶',
+    icon: Baby,
+    color: 'text-[var(--primary)]',
+    bgColor: 'bg-[var(--blush)]',
   },
 ];
 
@@ -192,19 +201,24 @@ export default function HomePage() {
               Support in your pocket
             </h2>
             <p className="text-xl text-[var(--muted)] max-w-2xl mx-auto">
-              The Alpha app is your companion through the journey—from mental health check-ins
+              The Alpha Mothers app is your companion through the journey—from mental health check-ins
               to return-to-work guides to raising kids in the AI age.
             </p>
           </div>
 
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
-            {appFeatures.map((feature, index) => (
-              <div key={index} className="bg-white rounded-2xl p-6 shadow-sm hover:shadow-md transition-shadow">
-                <div className="text-3xl mb-4">{feature.icon}</div>
-                <h3 className="text-lg font-bold text-[var(--foreground)] mb-2">{feature.title}</h3>
-                <p className="text-sm text-[var(--muted)]">{feature.description}</p>
-              </div>
-            ))}
+            {appFeatures.map((feature, index) => {
+              const IconComponent = feature.icon;
+              return (
+                <div key={index} className="bg-white rounded-2xl p-6 shadow-sm hover:shadow-md transition-shadow">
+                  <div className={`w-12 h-12 rounded-xl ${feature.bgColor} flex items-center justify-center mb-4`}>
+                    <IconComponent className={`w-6 h-6 ${feature.color}`} strokeWidth={1.5} />
+                  </div>
+                  <h3 className="text-lg font-bold text-[var(--foreground)] mb-2">{feature.title}</h3>
+                  <p className="text-sm text-[var(--muted)]">{feature.description}</p>
+                </div>
+              );
+            })}
           </div>
 
           <div className="text-center">
@@ -294,8 +308,8 @@ export default function HomePage() {
                 Training your top soft skills to create a happier mindset, more significant
                 commitment, and success—on your own terms.
               </p>
-              <Link href="/coaching" className="btn-secondary">
-                Learn About Coaching
+              <Link href="/community" className="btn-secondary">
+                Join Our Community
               </Link>
             </div>
             <div className="bg-[var(--cream)] rounded-2xl p-8 shadow-sm">

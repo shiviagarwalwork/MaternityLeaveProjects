@@ -196,8 +196,8 @@ export default function AboutPage() {
             <Link href="/resources" className="btn-primary">
               Read the Blog
             </Link>
-            <Link href="/coaching" className="btn-secondary">
-              Explore Coaching
+            <Link href="/community" className="btn-secondary">
+              Join the Community
             </Link>
           </div>
         </div>

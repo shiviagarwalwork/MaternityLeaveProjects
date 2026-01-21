@@ -7,23 +7,23 @@ const footerLinks = {
     { name: 'Pricing', href: '/app#pricing' },
     { name: 'Download', href: '/app#download' },
   ],
-  coaching: [
-    { name: '1:1 Coaching', href: '/coaching#individual' },
-    { name: 'Group Programs', href: '/coaching#group' },
-    { name: 'Corporate', href: '/employers' },
-    { name: 'Book a Call', href: '/coaching#book' },
+  community: [
+    { name: 'Join Community', href: '/community' },
+    { name: 'WhatsApp Group', href: '/community#join' },
+    { name: 'Slack Workspace', href: '/community#join' },
+    { name: 'Partner With Us', href: '/coaching' },
   ],
   resources: [
-    { name: 'Mental Health', href: '/resources/mental-health' },
-    { name: 'Return to Work', href: '/resources/return-to-work' },
-    { name: 'Raising Gen Alpha', href: '/resources/gen-alpha' },
-    { name: 'Blog', href: '/resources/blog' },
+    { name: 'All Insights', href: '/resources' },
+    { name: 'Raising Gen Alpha', href: '/resources' },
+    { name: 'Career & Leadership', href: '/resources' },
+    { name: 'Vision & Mindset', href: '/resources' },
   ],
   company: [
     { name: 'About Us', href: '/about' },
     { name: 'Our Story', href: '/about#story' },
-    { name: 'Contact', href: '/contact' },
-    { name: 'Careers', href: '/careers' },
+    { name: 'Contact', href: '/coaching#contact' },
+    { name: 'For Employers', href: '/employers' },
   ],
 };
 
@@ -80,9 +80,9 @@ export default function Footer() {
           </div>
 
           <div>
-            <h3 className="text-sm font-semibold uppercase tracking-wider mb-4">Coaching</h3>
+            <h3 className="text-sm font-semibold uppercase tracking-wider mb-4">Community</h3>
             <ul className="space-y-2">
-              {footerLinks.coaching.map((link) => (
+              {footerLinks.community.map((link) => (
                 <li key={link.name}>
                   <Link href={link.href} className="text-gray-400 hover:text-white transition-colors text-sm">
                     {link.name}

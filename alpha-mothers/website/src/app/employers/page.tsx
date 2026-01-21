@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import { TrendingDown, Rocket, HeartPulse, Trophy, AlertTriangle, Smartphone, Users, BarChart3 } from 'lucide-react';
 
 const stats = [
   { number: '43%', label: 'of mothers never return to their role after maternity leave' },
@@ -14,7 +15,7 @@ const packages = [
     price: '$8',
     period: 'per employee/month',
     features: [
-      'Full Alpha app access for all parents',
+      'Full Alpha Mothers app access for all parents',
       'Return-to-work module',
       'Gen Alpha parenting guides',
       'Anonymous usage analytics',
@@ -60,26 +61,34 @@ const benefits = [
   {
     title: 'Reduce Turnover',
     description: 'The return-to-work transition is when most mothers leave. Proactive support keeps your best talent.',
-    icon: '📉',
+    icon: TrendingDown,
     stat: '38% higher retention',
+    color: 'text-[var(--primary)]',
+    bgColor: 'bg-[var(--primary-50)]',
   },
   {
     title: 'Faster Ramp-Up',
     description: 'Mothers who feel supported return to full productivity faster than those left to figure it out alone.',
-    icon: '🚀',
+    icon: Rocket,
     stat: '41% faster productivity recovery',
+    color: 'text-[var(--secondary-dark)]',
+    bgColor: 'bg-[#FDF5ED]',
   },
   {
     title: 'Mental Health ROI',
     description: 'Addressing perinatal mental health reduces absenteeism, presenteeism, and healthcare costs.',
-    icon: '💚',
+    icon: HeartPulse,
     stat: '4:1 ROI on mental health programs',
+    color: 'text-[var(--accent)]',
+    bgColor: 'bg-[var(--sage-mist)]',
   },
   {
     title: 'Employer Brand',
     description: 'Become known as a company that genuinely supports working parents—a key differentiator in talent markets.',
-    icon: '🏆',
+    icon: Trophy,
     stat: 'Top driver for parent talent',
+    color: 'text-[var(--primary)]',
+    bgColor: 'bg-[var(--blush)]',
   },
 ];
 
@@ -190,7 +199,7 @@ export default function EmployersPage() {
                   'Difficulty attracting parent talent',
                 ].map((item, index) => (
                   <li key={index} className="flex items-start gap-3">
-                    <span className="text-[var(--primary)]">⚠️</span>
+                    <AlertTriangle className="w-5 h-5 text-[var(--primary)] flex-shrink-0 mt-0.5" strokeWidth={1.5} />
                     <span className="text-[var(--foreground)]">{item}</span>
                   </li>
                 ))}
@@ -213,14 +222,19 @@ export default function EmployersPage() {
           </div>
 
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
-            {benefits.map((benefit, index) => (
-              <div key={index} className="bg-white rounded-2xl p-6 shadow-lg">
-                <div className="text-3xl mb-4">{benefit.icon}</div>
-                <h3 className="text-xl font-bold text-[var(--foreground)] mb-2">{benefit.title}</h3>
-                <p className="text-[var(--muted)] text-sm mb-4">{benefit.description}</p>
-                <p className="text-[var(--primary)] font-medium text-sm">{benefit.stat}</p>
-              </div>
-            ))}
+            {benefits.map((benefit, index) => {
+              const IconComponent = benefit.icon;
+              return (
+                <div key={index} className="bg-white rounded-2xl p-6 shadow-lg">
+                  <div className={`w-12 h-12 rounded-xl ${benefit.bgColor} flex items-center justify-center mb-4`}>
+                    <IconComponent className={`w-6 h-6 ${benefit.color}`} strokeWidth={1.5} />
+                  </div>
+                  <h3 className="text-xl font-bold text-[var(--foreground)] mb-2">{benefit.title}</h3>
+                  <p className="text-[var(--muted)] text-sm mb-4">{benefit.description}</p>
+                  <p className="text-[var(--primary)] font-medium text-sm">{benefit.stat}</p>
+                </div>
+              );
+            })}
           </div>
         </div>
       </section>
@@ -239,8 +253,8 @@ export default function EmployersPage() {
 
           <div className="grid md:grid-cols-3 gap-8">
             <div className="card-elegant p-8">
-              <div className="w-14 h-14 rounded-2xl bg-[var(--primary-50)] text-[var(--primary)] flex items-center justify-center text-2xl mb-6">
-                📱
+              <div className="w-14 h-14 rounded-2xl bg-[var(--primary-50)] flex items-center justify-center mb-6">
+                <Smartphone className="w-7 h-7 text-[var(--primary)]" strokeWidth={1.5} />
               </div>
               <h3 className="text-xl font-bold text-[var(--foreground)] mb-2">Alpha App Access</h3>
               <p className="text-[var(--muted)] mb-4">
@@ -255,8 +269,8 @@ export default function EmployersPage() {
             </div>
 
             <div className="card-elegant p-8">
-              <div className="w-14 h-14 rounded-2xl bg-[var(--sage-mist)] text-[var(--accent)] flex items-center justify-center text-2xl mb-6">
-                👥
+              <div className="w-14 h-14 rounded-2xl bg-[var(--sage-mist)] flex items-center justify-center mb-6">
+                <Users className="w-7 h-7 text-[var(--accent)]" strokeWidth={1.5} />
               </div>
               <h3 className="text-xl font-bold text-[var(--foreground)] mb-2">Group Coaching</h3>
               <p className="text-[var(--muted)] mb-4">
@@ -271,8 +285,8 @@ export default function EmployersPage() {
             </div>
 
             <div className="card-elegant p-8">
-              <div className="w-14 h-14 rounded-2xl bg-[#FDF5ED] text-[var(--secondary-dark)] flex items-center justify-center text-2xl mb-6">
-                📊
+              <div className="w-14 h-14 rounded-2xl bg-[#FDF5ED] flex items-center justify-center mb-6">
+                <BarChart3 className="w-7 h-7 text-[var(--secondary-dark)]" strokeWidth={1.5} />
               </div>
               <h3 className="text-xl font-bold text-[var(--foreground)] mb-2">Analytics & Insights</h3>
               <p className="text-[var(--muted)] mb-4">

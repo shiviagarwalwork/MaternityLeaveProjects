@@ -1,4 +1,10 @@
 import Link from 'next/link';
+import {
+  Heart, BarChart3, PenLine, Headphones, LifeBuoy,
+  Calendar, Dumbbell, MessageSquare, Star, Users,
+  Bot, Smartphone, Target, FileText, Rocket,
+  Lightbulb, Sparkles, Handshake
+} from 'lucide-react';
 
 const features = [
   {
@@ -8,27 +14,27 @@ const features = [
       {
         title: 'Daily Check-in',
         description: 'A 30-second mood and energy assessment that takes the pulse of your mental state without overwhelming you.',
-        icon: '💙',
+        icon: Heart,
       },
       {
         title: 'Pattern Recognition',
         description: 'AI notices trends in your data—like Sunday evening anxiety or Tuesday energy dips—before they become crises.',
-        icon: '📊',
+        icon: BarChart3,
       },
       {
         title: 'Journaling',
         description: 'Voice-to-text for those 3am racing thoughts. Get it out of your head and into a safe space.',
-        icon: '📝',
+        icon: PenLine,
       },
       {
         title: 'Guided Sessions',
         description: 'Short audio sessions for anxiety, sleep, and overwhelm—designed for mothers with no time.',
-        icon: '🎧',
+        icon: Headphones,
       },
       {
         title: 'Crisis Support',
         description: 'When things get serious, we connect you with human support immediately. Safety is never compromised.',
-        icon: '🆘',
+        icon: LifeBuoy,
       },
     ],
   },
@@ -39,27 +45,27 @@ const features = [
       {
         title: 'Transition Timeline',
         description: 'Week-by-week preparation starting 4 weeks before your return, so you\'re not blindsided.',
-        icon: '📅',
+        icon: Calendar,
       },
       {
         title: 'Confidence Rebuilding',
         description: 'Exercises to address "mom brain" concerns and rebuild your professional identity.',
-        icon: '💪',
+        icon: Dumbbell,
       },
       {
         title: 'Flexibility Scripts',
         description: 'Personalized scripts for negotiating hybrid work, adjusted schedules, or other accommodations.',
-        icon: '💬',
+        icon: MessageSquare,
       },
       {
         title: 'Identity Integration',
         description: 'Tools to help you embrace being both a great mother AND a high-performing professional.',
-        icon: '🌟',
+        icon: Star,
       },
       {
         title: 'Peer Stories',
         description: 'Real stories from mothers who\'ve navigated the transition successfully. You\'re not alone.',
-        icon: '👥',
+        icon: Users,
       },
     ],
   },
@@ -70,27 +76,27 @@ const features = [
       {
         title: 'AI Literacy by Age',
         description: 'Age-appropriate conversations about AI—what it is, what it can\'t do, and how to use it wisely.',
-        icon: '🤖',
+        icon: Bot,
       },
       {
         title: 'Screen Time Wisdom',
         description: 'Beyond just limits: understanding quality vs. quantity and making intentional choices.',
-        icon: '📱',
+        icon: Smartphone,
       },
       {
         title: 'Weekly Challenges',
         description: 'Fun family activities that build critical thinking, emotional intelligence, and healthy tech habits.',
-        icon: '🎯',
+        icon: Target,
       },
       {
         title: 'Family Tech Agreement',
         description: 'Generate personalized family guidelines for device use, social media, and online safety.',
-        icon: '📋',
+        icon: FileText,
       },
       {
         title: 'Future Skills',
         description: 'Guidance on nurturing creativity, empathy, and adaptability—skills AI can\'t replace.',
-        icon: '🚀',
+        icon: Rocket,
       },
     ],
   },
@@ -121,35 +127,45 @@ const pricingOptions = [
     price: '$4.99',
     period: '/month',
     description: 'Unlimited AI conversations, pattern insights, and personalized guidance',
-    icon: '💬',
+    icon: MessageSquare,
+    color: 'text-[var(--primary)]',
+    bgColor: 'bg-[var(--primary-50)]',
   },
   {
     name: 'Return to Work Module',
     price: '$9.99',
     period: 'one-time',
     description: 'Complete 12-week transition program with scripts, exercises, and strategies',
-    icon: '🚀',
+    icon: Rocket,
+    color: 'text-[var(--secondary-dark)]',
+    bgColor: 'bg-[#FDF5ED]',
   },
   {
     name: 'Gen Alpha Curriculum',
     price: '$7.99',
     period: '/month',
     description: 'Weekly AI literacy content, family challenges, and age-appropriate guides',
-    icon: '🤖',
+    icon: Bot,
+    color: 'text-[var(--accent)]',
+    bgColor: 'bg-[var(--sage-mist)]',
   },
   {
     name: 'Guided Sessions Pack',
     price: '$2.99',
     period: '/10 sessions',
     description: 'Audio sessions for anxiety, sleep, and overwhelm—use as many as you need',
-    icon: '🎧',
+    icon: Headphones,
+    color: 'text-[var(--primary)]',
+    bgColor: 'bg-[var(--blush)]',
   },
   {
     name: 'Coaching Session',
     price: '$75',
     period: '/session',
     description: 'One-on-one call with a certified coach. Book when you need it.',
-    icon: '🤝',
+    icon: Handshake,
+    color: 'text-[var(--accent)]',
+    bgColor: 'bg-[var(--sage-mist)]',
   },
 ];
 
@@ -173,7 +189,7 @@ export default function AppPage() {
                 Your 24/7 companion for the <span className="gradient-text">whole journey</span>
               </h1>
               <p className="text-xl text-[var(--muted)] mb-8 leading-relaxed">
-                Not another meditation app. Not another to-do list. Alpha is an intelligent
+                Not another meditation app. Not another to-do list. Alpha Mothers is an intelligent
                 companion that learns your patterns, understands your context, and provides
                 support exactly when you need it—even at 3am.
               </p>
@@ -220,9 +236,9 @@ export default function AppPage() {
                     <div className="bg-white rounded-2xl p-4 mb-4">
                       <p className="text-sm text-[var(--muted)] mb-3">Today&apos;s check-in</p>
                       <div className="flex justify-between">
-                        {['😔', '😐', '🙂', '😊', '🌟'].map((emoji, i) => (
-                          <button key={i} className={`w-11 h-11 rounded-full flex items-center justify-center text-xl transition-all ${i === 3 ? 'bg-[var(--primary)] scale-110 shadow-lg' : 'bg-[var(--cream)] hover:scale-105'}`}>
-                            {emoji}
+                        {[1, 2, 3, 4, 5].map((level, i) => (
+                          <button key={i} className={`w-11 h-11 rounded-full flex items-center justify-center transition-all ${i === 3 ? 'bg-[var(--primary)] scale-110 shadow-lg' : 'bg-[var(--cream)] hover:scale-105'}`}>
+                            <div className={`w-6 h-6 rounded-full ${i === 3 ? 'bg-white' : 'bg-[var(--primary)]'}`} style={{ opacity: 0.2 + (i * 0.2) }} />
                           </button>
                         ))}
                       </div>
@@ -231,7 +247,7 @@ export default function AppPage() {
                     {/* Insight Card */}
                     <div className="bg-white rounded-2xl p-4 mb-4">
                       <div className="flex items-center gap-2 mb-2">
-                        <span className="text-sm">✨</span>
+                        <Sparkles className="w-4 h-4 text-[var(--primary)]" strokeWidth={1.5} />
                         <p className="text-xs font-medium text-[var(--primary)]">Insight</p>
                       </div>
                       <p className="text-sm text-[var(--foreground)]">
@@ -242,11 +258,11 @@ export default function AppPage() {
                     {/* Quick Actions */}
                     <div className="grid grid-cols-2 gap-3">
                       <div className="bg-[var(--primary-50)] rounded-xl p-3 text-center">
-                        <span className="text-2xl mb-1 block">📝</span>
+                        <PenLine className="w-6 h-6 mx-auto mb-1 text-[var(--primary)]" strokeWidth={1.5} />
                         <p className="text-xs font-medium text-[var(--primary)]">Journal</p>
                       </div>
                       <div className="bg-[var(--sage-mist)] rounded-xl p-3 text-center">
-                        <span className="text-2xl mb-1 block">🎧</span>
+                        <Headphones className="w-6 h-6 mx-auto mb-1 text-[var(--accent)]" strokeWidth={1.5} />
                         <p className="text-xs font-medium text-[var(--accent)]">Guided</p>
                       </div>
                     </div>
@@ -299,13 +315,30 @@ export default function AppPage() {
               </div>
 
               <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-                {category.items.map((feature, featureIndex) => (
-                  <div key={featureIndex} className="card-elegant p-6">
-                    <div className="text-3xl mb-4">{feature.icon}</div>
-                    <h4 className="text-lg font-bold text-[var(--foreground)] mb-2">{feature.title}</h4>
-                    <p className="text-[var(--muted)] text-sm leading-relaxed">{feature.description}</p>
-                  </div>
-                ))}
+                {category.items.map((feature, featureIndex) => {
+                  const IconComponent = feature.icon;
+                  return (
+                    <div key={featureIndex} className="card-elegant p-6">
+                      <div className={`w-12 h-12 rounded-xl flex items-center justify-center mb-4 ${
+                        category.color === 'primary'
+                          ? 'bg-[var(--primary-50)]'
+                          : category.color === 'secondary'
+                          ? 'bg-[#FDF5ED]'
+                          : 'bg-[var(--sage-mist)]'
+                      }`}>
+                        <IconComponent className={`w-6 h-6 ${
+                          category.color === 'primary'
+                            ? 'text-[var(--primary)]'
+                            : category.color === 'secondary'
+                            ? 'text-[var(--secondary-dark)]'
+                            : 'text-[var(--accent)]'
+                        }`} strokeWidth={1.5} />
+                      </div>
+                      <h4 className="text-lg font-bold text-[var(--foreground)] mb-2">{feature.title}</h4>
+                      <p className="text-[var(--muted)] text-sm leading-relaxed">{feature.description}</p>
+                    </div>
+                  );
+                })}
               </div>
             </div>
           ))}
@@ -326,22 +359,25 @@ export default function AppPage() {
 
           <div className="grid md:grid-cols-4 gap-8">
             {[
-              { step: '1', title: 'Check In Daily', description: '30 seconds to log how you\'re feeling. That\'s it.', icon: '📱' },
-              { step: '2', title: 'Get Insights', description: 'AI recognizes patterns and offers personalized guidance.', icon: '💡' },
-              { step: '3', title: 'Take Action', description: 'Short exercises, scripts, and tools when you need them.', icon: '✨' },
-              { step: '4', title: 'Connect Human', description: 'When you need more, we connect you with real support.', icon: '🤝' },
-            ].map((item, index) => (
-              <div key={index} className="text-center">
-                <div className="w-16 h-16 mx-auto rounded-2xl bg-white shadow-lg flex items-center justify-center text-3xl mb-4">
-                  {item.icon}
+              { step: '1', title: 'Check In Daily', description: '30 seconds to log how you\'re feeling. That\'s it.', icon: Smartphone, color: 'text-[var(--primary)]' },
+              { step: '2', title: 'Get Insights', description: 'AI recognizes patterns and offers personalized guidance.', icon: Lightbulb, color: 'text-[var(--secondary-dark)]' },
+              { step: '3', title: 'Take Action', description: 'Short exercises, scripts, and tools when you need them.', icon: Sparkles, color: 'text-[var(--accent)]' },
+              { step: '4', title: 'Connect Human', description: 'When you need more, we connect you with real support.', icon: Handshake, color: 'text-[var(--primary)]' },
+            ].map((item, index) => {
+              const IconComponent = item.icon;
+              return (
+                <div key={index} className="text-center">
+                  <div className="w-16 h-16 mx-auto rounded-2xl bg-white shadow-lg flex items-center justify-center mb-4">
+                    <IconComponent className={`w-8 h-8 ${item.color}`} strokeWidth={1.5} />
+                  </div>
+                  <div className="w-8 h-8 mx-auto rounded-full bg-[var(--primary)] text-white flex items-center justify-center font-bold text-sm mb-3">
+                    {item.step}
+                  </div>
+                  <h3 className="text-lg font-bold text-[var(--foreground)] mb-2">{item.title}</h3>
+                  <p className="text-[var(--muted)] text-sm">{item.description}</p>
                 </div>
-                <div className="w-8 h-8 mx-auto rounded-full bg-[var(--primary)] text-white flex items-center justify-center font-bold text-sm mb-3">
-                  {item.step}
-                </div>
-                <h3 className="text-lg font-bold text-[var(--foreground)] mb-2">{item.title}</h3>
-                <p className="text-[var(--muted)] text-sm">{item.description}</p>
-              </div>
-            ))}
+              );
+            })}
           </div>
         </div>
       </section>
@@ -415,17 +451,22 @@ export default function AppPage() {
               No bundles. No commitments. Cancel anytime.
             </p>
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-5xl mx-auto">
-              {pricingOptions.map((option, index) => (
-                <div key={index} className="card-elegant p-6">
-                  <div className="text-3xl mb-3">{option.icon}</div>
-                  <h4 className="text-lg font-bold text-[var(--foreground)] mb-1">{option.name}</h4>
-                  <div className="mb-3">
-                    <span className="text-2xl font-bold text-[var(--primary)]">{option.price}</span>
-                    <span className="text-[var(--muted)] text-sm"> {option.period}</span>
+              {pricingOptions.map((option, index) => {
+                const IconComponent = option.icon;
+                return (
+                  <div key={index} className="card-elegant p-6">
+                    <div className={`w-12 h-12 rounded-xl ${option.bgColor} flex items-center justify-center mb-3`}>
+                      <IconComponent className={`w-6 h-6 ${option.color}`} strokeWidth={1.5} />
+                    </div>
+                    <h4 className="text-lg font-bold text-[var(--foreground)] mb-1">{option.name}</h4>
+                    <div className="mb-3">
+                      <span className="text-2xl font-bold text-[var(--primary)]">{option.price}</span>
+                      <span className="text-[var(--muted)] text-sm"> {option.period}</span>
+                    </div>
+                    <p className="text-[var(--muted)] text-sm">{option.description}</p>
                   </div>
-                  <p className="text-[var(--muted)] text-sm">{option.description}</p>
-                </div>
-              ))}
+                );
+              })}
             </div>
             <p className="text-center text-sm text-[var(--muted)] mt-8">
               Bundle all features for just <span className="font-semibold text-[var(--foreground)]">$14.99/month</span> (save 40%)

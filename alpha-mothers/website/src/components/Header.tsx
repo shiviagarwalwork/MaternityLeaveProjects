@@ -1,13 +1,15 @@
 'use client';
 
 import Link from 'next/link';
+import Image from 'next/image';
 import { useState } from 'react';
 
 const navigation = [
   { name: 'About', href: '/about' },
   { name: 'The App', href: '/app' },
-  { name: 'Blog', href: '/resources' },
-  { name: 'Coaching', href: '/coaching' },
+  { name: 'Insights', href: '/resources' },
+  { name: 'Community', href: '/community' },
+  { name: 'Partner', href: '/coaching' },
 ];
 
 export default function Header() {
@@ -20,8 +22,14 @@ export default function Header() {
           {/* Logo */}
           <div className="flex items-center">
             <Link href="/" className="flex items-center space-x-2">
-              <div className="w-10 h-10 rounded-full bg-[var(--primary)] flex items-center justify-center">
-                <span className="text-white font-bold text-lg">A</span>
+              <div className="w-10 h-10 rounded-full overflow-hidden">
+                <Image
+                  src="/images/Alpha Mothers vision and logo.jpeg"
+                  alt="Alpha Mothers"
+                  width={40}
+                  height={40}
+                  className="w-full h-full object-cover"
+                />
               </div>
               <span className="text-xl font-semibold text-[var(--foreground)]">
                 Alpha Mothers
@@ -45,10 +53,10 @@ export default function Header() {
           {/* CTA Button */}
           <div className="hidden md:flex md:items-center">
             <Link
-              href="/coaching"
+              href="/community"
               className="px-5 py-2 text-sm font-medium text-white bg-[var(--primary)] rounded-full hover:bg-[var(--primary-dark)] transition-colors"
             >
-              Work With Me
+              Join Community
             </Link>
           </div>
 
@@ -89,11 +97,11 @@ export default function Header() {
               ))}
               <div className="pt-4">
                 <Link
-                  href="/coaching"
+                  href="/community"
                   className="block w-full text-center px-4 py-2 text-sm font-medium text-white bg-[var(--primary)] rounded-full"
                   onClick={() => setMobileMenuOpen(false)}
                 >
-                  Work With Me
+                  Join Community
                 </Link>
               </div>
             </div>

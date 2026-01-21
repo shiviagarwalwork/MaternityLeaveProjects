@@ -1,14 +1,135 @@
 import { ChatMessage, SourceReference, Recommendation } from '@/types';
 import { manuscripts, searchManuscripts } from '@/data/manuscripts';
+import symptomMappings, { getSutrasForSymptom } from '@/data/symptomMappings';
+import { charakaSutras } from '@/data/charakaSutras';
 
-// Enhanced AI service with comprehensive, condition-specific responses
+// Enhanced AI service with Charaka Samhita sutras integration
 export class AyurvedaAIService {
   private async simulateDelay(ms: number = 1000): Promise<void> {
     return new Promise(resolve => setTimeout(resolve, ms));
   }
 
+  // Find matching symptom from our pre-computed data
+  private findMatchingSymptom(query: string): typeof symptomMappings[0] | null {
+    const lowerQuery = query.toLowerCase();
+
+    // Keywords to symptom ID mapping
+    const keywordMap: Record<string, string[]> = {
+      'screen-time': ['screen', 'phone', 'digital', 'computer', 'eye strain', 'blue light'],
+      'stress': ['stress', 'anxious', 'anxiety', 'worried', 'nervous', 'tension'],
+      'burnout': ['burnout', 'exhausted', 'depleted', 'tired all the time', 'chronic fatigue'],
+      'sleep': ['sleep', 'insomnia', 'can\'t sleep', 'wake up', 'restless', 'tired'],
+      'digestion': ['digest', 'stomach', 'gut', 'bloat', 'gas', 'constipat', 'ibs'],
+      'focus': ['focus', 'concentrate', 'attention', 'distracted', 'brain fog', 'mental clarity'],
+      'weight': ['weight', 'fat', 'obesity', 'overweight', 'sluggish', 'metabolism'],
+      'anger': ['anger', 'angry', 'irritable', 'frustrat', 'rage', 'temper'],
+      'procrastination': ['procrastinat', 'lazy', 'unmotivated', 'no energy'],
+      'overthinking': ['overthink', 'racing thoughts', 'can\'t stop thinking', 'ruminating', 'worry'],
+      'high-bp': ['blood pressure', 'bp', 'hypertension', 'high bp'],
+      'thyroid': ['thyroid', 'hypothyroid', 'hyperthyroid'],
+      'back-pain': ['back pain', 'lower back', 'spine', 'backache'],
+      'neck-pain': ['neck pain', 'stiff neck', 'cervical', 'neck stiff'],
+      'headache': ['headache', 'head pain', 'migraine', 'head ache'],
+      'hair-fall': ['hair fall', 'hair loss', 'bald', 'thinning hair', 'grey hair', 'gray hair'],
+      'acidity': ['acidity', 'acid reflux', 'heartburn', 'gerd', 'sour stomach'],
+      'joint-pain': ['joint', 'arthritis', 'knee pain', 'joint pain', 'stiffness'],
+      'diabetes': ['diabetes', 'blood sugar', 'glucose', 'diabetic'],
+      'cold-cough': ['cold', 'cough', 'flu', 'congestion', 'sinus', 'runny nose'],
+      'skin-issues': ['skin', 'acne', 'pimple', 'rash', 'eczema', 'psoriasis', 'itch'],
+      'low-immunity': ['immunity', 'immune', 'sick often', 'weak immune', 'low immunity'],
+      'pcos': ['pcos', 'pcod', 'polycystic', 'irregular period', 'menstrual']
+    };
+
+    // Find matching symptom
+    for (const [symptomId, keywords] of Object.entries(keywordMap)) {
+      for (const keyword of keywords) {
+        if (lowerQuery.includes(keyword)) {
+          return symptomMappings.find(s => s.symptomId === symptomId) || null;
+        }
+      }
+    }
+    return null;
+  }
+
+  // Generate response using symptomMappings data
+  private generateFromSymptomData(symptom: typeof symptomMappings[0]): string {
+    const sutras = getSutrasForSymptom(symptom.sutraIds);
+
+    let response = `**${symptom.symptomName} (${symptom.ayurvedicName})**\n\n`;
+    response += `**Dosha Involvement:** ${symptom.doshaInvolvement.join(', ')}\n\n`;
+    response += `**Ayurvedic Understanding:**\n${symptom.response}\n\n`;
+
+    // Quick Remedies
+    response += `**Quick Remedies:**\n`;
+    symptom.quickRemedies.forEach((remedy, i) => {
+      response += `${i + 1}. ${remedy}\n`;
+    });
+    response += '\n';
+
+    // Dietary Advice
+    response += `**Dietary Recommendations:**\n`;
+    symptom.dietaryAdvice.forEach((advice, i) => {
+      response += `• ${advice}\n`;
+    });
+    response += '\n';
+
+    // Lifestyle Advice
+    response += `**Lifestyle Changes:**\n`;
+    symptom.lifestyleAdvice.forEach((advice, i) => {
+      response += `• ${advice}\n`;
+    });
+    response += '\n';
+
+    // Herbs
+    if (symptom.herbs.length > 0) {
+      response += `**Recommended Herbs:**\n`;
+      symptom.herbs.forEach(herb => {
+        response += `• **${herb.name}**: ${herb.benefit}\n`;
+      });
+      response += '\n';
+    }
+
+    // Yoga
+    if (symptom.yogaAsanas.length > 0) {
+      response += `**Yoga Asanas:** ${symptom.yogaAsanas.join(', ')}\n\n`;
+    }
+
+    // Charaka Samhita References
+    if (sutras.length > 0) {
+      response += `**📜 Charaka Samhita References:**\n`;
+      sutras.forEach(sutra => {
+        response += `\n*"${sutra.english}"*\n`;
+        response += `— ${sutra.reference}\n`;
+      });
+    }
+
+    // Warning
+    if (symptom.warning) {
+      response += `\n⚠️ **Medical Advisory:** ${symptom.warning}`;
+    }
+
+    return response;
+  }
+
   async searchRelevantManuscripts(query: string): Promise<SourceReference[]> {
     await this.simulateDelay(600);
+
+    // First check if we have a matching symptom with sutras
+    const matchingSymptom = this.findMatchingSymptom(query);
+    if (matchingSymptom) {
+      const sutras = getSutrasForSymptom(matchingSymptom.sutraIds);
+      if (sutras.length > 0) {
+        return sutras.slice(0, 3).map(sutra => ({
+          manuscriptId: sutra.id,
+          manuscriptTitle: `Charaka Samhita - ${sutra.reference}`,
+          sourceUrl: `https://www.sacred-texts.com/hin/cs/`,
+          excerpt: sutra.english,
+          confidence: 0.92 + Math.random() * 0.08
+        }));
+      }
+    }
+
+    // Fallback to manuscript search
     const results = searchManuscripts(query);
     return results.slice(0, 3).map(m => ({
       manuscriptId: m.id,
@@ -22,6 +143,12 @@ export class AyurvedaAIService {
   async generateResponse(query: string, sources: SourceReference[]): Promise<string> {
     await this.simulateDelay(1200);
     const lowerQuery = query.toLowerCase();
+
+    // First, try to find a matching symptom in our pre-computed data
+    const matchingSymptom = this.findMatchingSymptom(query);
+    if (matchingSymptom) {
+      return this.generateFromSymptomData(matchingSymptom);
+    }
 
     // HEADACHE - Detailed specific response
     if (lowerQuery.includes('headache') || lowerQuery.includes('head pain') || lowerQuery.includes('migraine')) {
@@ -862,50 +989,58 @@ Hair loss often stress-related - manage through:
 Results take 3-6 months. Be patient and consistent!`;
     }
 
-    // DEFAULT RESPONSE (Improved)
+    // DEFAULT RESPONSE - Guide to available topics
+    const availableTopics = symptomMappings.map(s => s.symptomName).join(', ');
+
     return `**Ayurvedic Health Guidance:**
 
-Based on your query, here are general Ayurvedic principles:
+I can provide detailed, manuscript-backed guidance on the following conditions:
 
-**Foundation of Health (Pillars):**
-1. **Ahara** (Diet): Eat according to your constitution and season
-2. **Vihara** (Lifestyle): Maintain regular routines (Dinacharya)
-3. **Aushadha** (Herbs): Use appropriate herbs for prevention and healing
-4. **Nidra** (Sleep): 7-8 hours, before 10 PM
-5. **Brahmacharya** (Energy conservation): Balance in all activities
+**Common Concerns I Can Help With:**
+• Screen time & digital eye strain
+• Stress & anxiety
+• Burnout & exhaustion
+• Sleep issues & insomnia
+• Digestion problems
+• Focus & concentration
+• Weight management
+• Anger & irritability
+• Procrastination
+• Overthinking & racing thoughts
+• Blood pressure concerns
+• Thyroid imbalance
+• Back pain & neck pain
+• Headaches & migraines
+• Hair fall & thinning
+• Acidity & heartburn
+• Joint pain & arthritis
+• Blood sugar concerns
+• Cold, cough & immunity
+• Skin issues & acne
+• PCOS/PCOD
 
-**Daily Routine (Dinacharya):**
-• Wake before sunrise (6 AM)
-• Tongue scraping, oil pulling
-• Warm water (2 glasses)
-• Bowel movement
-• Abhyanga (oil massage)
-• Exercise/yoga (30 min)
-• Meditation/pranayama
-• Regular meal times
-• Early dinner (before 7 PM)
-• Sleep by 10 PM
+**How to Get the Best Response:**
+Ask about a specific condition like:
+• "I'm experiencing stress and anxiety"
+• "Help me with sleep issues"
+• "I have digestion problems"
+• "My hair is falling"
 
-**Universal Health Tips:**
-• Drink warm water throughout day
-• Use digestive spices (ginger, cumin, coriander, fennel)
-• Practice gratitude and mindfulness
-• Spend time in nature
-• Maintain social connections
-• Follow seasonal routines (Ritucharya)
+Each response includes:
+✦ Ayurvedic understanding of the condition
+✦ Quick remedies you can start today
+✦ Dietary recommendations
+✦ Lifestyle changes
+✦ Recommended herbs
+✦ Yoga asanas
+✦ Actual Charaka Samhita sutra references
 
-**When to See an Ayurvedic Practitioner:**
-• Chronic health issues
-• Personalized dosha assessment
-• Constitution-specific recommendations
-• Panchakarma detoxification guidance
+**Foundation of Ayurvedic Health:**
+• Take our **Dosha Quiz** to know your constitution
+• Use **Quick Fix** for instant symptom solutions
+• Check your **Personalized Plan** for daily routines
 
-**Next Steps:**
-1. Take our Dosha Assessment to understand your constitution
-2. Browse manuscripts for specific condition guidance
-3. Consult qualified Ayurvedic practitioner for personalized protocol
-
-Would you like specific guidance on any particular health concern?`;
+What specific health concern would you like guidance on?`;
   }
 
   async getChatResponse(message: string): Promise<ChatMessage> {

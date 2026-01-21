@@ -1,9 +1,8 @@
 'use client';
 
-import { useState } from 'react';
-import Image from 'next/image';
+import { useState, useEffect } from 'react';
 import { DoshaResult } from '@/types';
-import { Calendar, Clock, Coffee, Sun, Moon, Utensils, Activity, Droplets, CheckCircle2, Download } from 'lucide-react';
+import { Calendar, Clock, Coffee, Sun, Moon, Utensils, Activity, Droplets, CheckCircle2, Download, Lightbulb, FileText, Leaf, Ban, Pill, User, Apple, XCircle, Sparkles } from 'lucide-react';
 
 interface PersonalizedPlanProps {
   doshaResult?: DoshaResult;
@@ -18,47 +17,87 @@ interface DailyScheduleItem {
   category: 'morning' | 'afternoon' | 'evening' | 'night';
 }
 
-export default function PersonalizedPlan({ doshaResult, symptoms = [] }: PersonalizedPlanProps) {
-  const [selectedDosha, setSelectedDosha] = useState<string>(doshaResult?.dominant || 'vata');
+export default function PersonalizedPlan({ doshaResult: propDoshaResult, symptoms = [] }: PersonalizedPlanProps) {
+  const [doshaResult, setDoshaResult] = useState<DoshaResult | null>(propDoshaResult || null);
+  const [selectedDosha, setSelectedDosha] = useState<string>(propDoshaResult?.dominant || 'vata');
   const [userSymptoms, setUserSymptoms] = useState<string[]>([]);
+  const [hasCompletedQuiz, setHasCompletedQuiz] = useState(false);
 
-  // Load user symptoms from localStorage
-  useState(() => {
+  // Load dosha result and symptoms from localStorage
+  useEffect(() => {
     if (typeof window !== 'undefined') {
+      const savedDoshaResult = localStorage.getItem('doshaResult');
+      if (savedDoshaResult) {
+        const parsed = JSON.parse(savedDoshaResult);
+        setDoshaResult(parsed);
+        setSelectedDosha(parsed.dominant);
+        setHasCompletedQuiz(true);
+      }
+
       const savedSymptoms = localStorage.getItem('userSymptoms');
       if (savedSymptoms) {
         setUserSymptoms(JSON.parse(savedSymptoms));
       }
     }
-  });
+  }, []);
+
+  // Get secondary dosha (second highest percentage)
+  const getSecondaryDosha = (): string | null => {
+    if (!doshaResult) return null;
+    const doshas = [
+      { name: 'vata', value: doshaResult.vata },
+      { name: 'pitta', value: doshaResult.pitta },
+      { name: 'kapha', value: doshaResult.kapha }
+    ].sort((a, b) => b.value - a.value);
+
+    // If secondary is significant (>25%), return it
+    if (doshas[1].value >= 25) {
+      return doshas[1].name;
+    }
+    return null;
+  };
+
+  // Get constitution type description
+  const getConstitutionType = (): string => {
+    if (!doshaResult) return selectedDosha.charAt(0).toUpperCase() + selectedDosha.slice(1);
+
+    const secondary = getSecondaryDosha();
+    const dominant = doshaResult.dominant.charAt(0).toUpperCase() + doshaResult.dominant.slice(1);
+
+    if (secondary) {
+      const sec = secondary.charAt(0).toUpperCase() + secondary.slice(1);
+      return `${dominant}-${sec}`;
+    }
+    return dominant;
+  };
 
   // Get personalized recommendations based on symptoms
-  const getSymptomRecommendations = (symptoms: string[]): Array<{text: string, image?: string}> => {
-    const recommendations: Array<{text: string, image?: string}> = [];
+  const getSymptomRecommendations = (symptoms: string[]): Array<{text: string}> => {
+    const recommendations: Array<{text: string}> = [];
 
     if (symptoms.includes('Anxiety')) {
-      recommendations.push({text: 'Add 10 min meditation or deep breathing before bed (calms vata)', image: '/images/blogs/meditation-calm.jpg'});
+      recommendations.push({text: 'Add 10 min meditation or deep breathing before bed (calms vata)'});
       recommendations.push({text: 'Avoid caffeine after 2 PM (aggravates anxiety)'});
     }
 
     if (symptoms.includes('Insomnia')) {
       recommendations.push({text: 'No screens 1 hour before bed - blue light disrupts sleep'});
-      recommendations.push({text: 'Warm milk with nutmeg 30 min before sleep', image: '/images/blogs/turmeric-powder.jpg'});
+      recommendations.push({text: 'Warm milk with nutmeg 30 min before sleep'});
     }
 
     if (symptoms.includes('Indigestion') || symptoms.includes('Acidity')) {
       recommendations.push({text: 'Lunch should be your largest meal (when digestion is strongest)'});
       recommendations.push({text: 'Avoid eating after 7 PM'});
-      recommendations.push({text: 'Drink ginger tea 20 min before meals', image: '/images/blogs/ginger-root.jpg'});
+      recommendations.push({text: 'Drink ginger tea 20 min before meals'});
     }
 
     if (symptoms.includes('Fatigue') || symptoms.includes('Low Immunity')) {
-      recommendations.push({text: 'Consider Ashwagandha (300mg) in warm milk before bed', image: '/images/blogs/yoga-stretching.jpg'});
+      recommendations.push({text: 'Consider Ashwagandha (300mg) in warm milk before bed'});
       recommendations.push({text: 'Prioritize 7-8 hours sleep - this rebuilds ojas (vitality)'});
     }
 
     if (symptoms.includes('Constipation')) {
-      recommendations.push({text: '1 tbsp ghee in warm water first thing in morning', image: '/images/blogs/coconut-oil.jpg'});
+      recommendations.push({text: '1 tbsp ghee in warm water first thing in morning'});
       recommendations.push({text: 'Add more fiber: cooked vegetables, prunes, flaxseeds'});
     }
 
@@ -74,7 +113,7 @@ export default function PersonalizedPlan({ doshaResult, symptoms = [] }: Persona
 
     if (symptoms.includes('Joint Pain')) {
       recommendations.push({text: 'Daily oil massage focuses on joints (reduces vata/ama)'});
-      recommendations.push({text: 'Drink turmeric milk (½ tsp turmeric in warm milk)', image: '/images/blogs/turmeric-powder.jpg'});
+      recommendations.push({text: 'Drink turmeric milk (half tsp turmeric in warm milk)'});
     }
 
     return recommendations;
@@ -303,6 +342,82 @@ export default function PersonalizedPlan({ doshaResult, symptoms = [] }: Persona
     return baseSchedule[dosha] || baseSchedule.vata;
   };
 
+  // Comprehensive food recommendations for each dosha
+  const getDoshaFoods = (dosha: string) => {
+    const foods: Record<string, { eat: string[]; avoid: string[]; spices: string[] }> = {
+      vata: {
+        eat: [
+          'Warm soups and stews',
+          'Cooked grains: rice, oats, wheat',
+          'Root vegetables: carrots, beets, sweet potatoes',
+          'Ripe fruits: bananas, mangoes, papayas',
+          'Warm milk with ghee',
+          'Nuts and seeds (soaked)',
+          'Mung dal and red lentils',
+          'Healthy oils: ghee, sesame oil'
+        ],
+        avoid: [
+          'Raw vegetables and salads',
+          'Cold drinks and ice cream',
+          'Dried fruits (unless soaked)',
+          'Beans (except mung dal)',
+          'Caffeine and stimulants',
+          'Crackers, chips, dry snacks',
+          'Bitter greens in excess',
+          'Skipping meals'
+        ],
+        spices: ['Ginger', 'Cumin', 'Cinnamon', 'Cardamom', 'Fennel', 'Turmeric', 'Asafoetida (hing)']
+      },
+      pitta: {
+        eat: [
+          'Cooling foods: cucumber, melon, coconut',
+          'Sweet fruits: grapes, pomegranate, pears',
+          'Leafy greens and bitter vegetables',
+          'Basmati rice, barley, oats',
+          'Mung beans, tofu',
+          'Ghee and coconut oil',
+          'Fresh dairy: milk, butter',
+          'Mint, cilantro, fennel'
+        ],
+        avoid: [
+          'Spicy foods: chilies, hot peppers',
+          'Sour foods: tomatoes, citrus, vinegar',
+          'Fermented foods: alcohol, pickles',
+          'Red meat and eggs',
+          'Excess salt',
+          'Coffee and caffeinated drinks',
+          'Fried and oily foods',
+          'Onion, garlic (in excess)'
+        ],
+        spices: ['Coriander', 'Fennel', 'Cardamom', 'Turmeric', 'Mint', 'Saffron', 'Cumin (in moderation)']
+      },
+      kapha: {
+        eat: [
+          'Light, warm foods',
+          'Leafy greens and vegetables',
+          'Legumes: lentils, chickpeas',
+          'Astringent fruits: apples, pears, berries',
+          'Light grains: millet, barley, buckwheat',
+          'Honey (raw, unheated)',
+          'Ginger tea',
+          'Spicy foods in moderation'
+        ],
+        avoid: [
+          'Dairy: milk, cheese, ice cream',
+          'Heavy, fried foods',
+          'Excess sweets and sugar',
+          'Wheat and white rice',
+          'Cold foods and drinks',
+          'Red meat',
+          'Excess oils and fats',
+          'Bananas, avocados, coconut'
+        ],
+        spices: ['Black pepper', 'Ginger', 'Turmeric', 'Cayenne', 'Mustard seeds', 'Cloves', 'Fenugreek']
+      }
+    };
+    return foods[dosha];
+  };
+
   const getDoshaGuidelines = (dosha: string) => {
     const guidelines: Record<string, any> = {
       vata: {
@@ -310,28 +425,96 @@ export default function PersonalizedPlan({ doshaResult, symptoms = [] }: Persona
         flour: 'Whole wheat, oat flour, rice flour (cooked, not raw)',
         avoid: 'Cold foods, raw foods, excess caffeine, skipping meals',
         supplements: 'Ashwagandha (500mg 2x/day), Triphala at night, sesame oil',
-        lifestyle: 'Regular routine, warm environments, oil massage, adequate sleep (7-8 hours)'
+        lifestyle: 'Regular routine, warm environments, oil massage, adequate sleep (7-8 hours)',
+        exercise: 'Gentle yoga, walking, swimming, tai chi - avoid intense cardio',
+        oilType: 'Warm sesame oil for massage',
+        bestTime: 'Eat meals at regular times, biggest meal at lunch',
+        season: 'Most vulnerable in fall/early winter - stay extra warm and grounded'
       },
       pitta: {
         water: '8-10 glasses of cool (not ice cold) water throughout the day',
         flour: 'Whole wheat, barley flour, oat flour, avoid excess refined grains',
         avoid: 'Spicy foods, alcohol, sour foods, hot yoga, competitive sports',
         supplements: 'Brahmi (300mg daily), Aloe vera juice, coconut oil',
-        lifestyle: 'Moderate exercise, cooling practices, avoid overworking, take breaks'
+        lifestyle: 'Moderate exercise, cooling practices, avoid overworking, take breaks',
+        exercise: 'Swimming, cycling, moderate yoga - avoid hot yoga and midday exercise',
+        oilType: 'Coconut oil for cooling massage',
+        bestTime: 'Avoid eating when angry or stressed, lunch is most important',
+        season: 'Most vulnerable in summer - stay cool, avoid sun during 10am-2pm'
       },
       kapha: {
         water: '4-6 glasses of warm/hot water (less than other doshas)',
         flour: 'Buckwheat, millet, rye, corn flour - lighter grains only',
         avoid: 'Dairy, fried foods, excess sweets, heavy foods, oversleeping',
         supplements: 'Trikatu, Guggulu, dry ginger powder, honey (unheated)',
-        lifestyle: 'Vigorous daily exercise, avoid daytime naps, wake early, stay active'
+        lifestyle: 'Vigorous daily exercise, avoid daytime naps, wake early, stay active',
+        exercise: 'Running, HIIT, power yoga, aerobics - need to sweat daily',
+        oilType: 'Light oils: sunflower, almond - use sparingly or dry brush',
+        bestTime: 'Light breakfast or skip, main meal at noon, light early dinner',
+        season: 'Most vulnerable in spring - increase activity, reduce heavy foods'
       }
     };
     return guidelines[dosha];
   };
 
+  // Dual-dosha specific recommendations
+  const getDualDoshaRecommendations = (primary: string, secondary: string | null): string[] => {
+    if (!secondary) return [];
+
+    const dualRecommendations: Record<string, string[]> = {
+      'vata-pitta': [
+        'Balance warmth with cooling - avoid extremes of temperature',
+        'Regular meals are crucial - never skip meals but avoid overeating',
+        'Moderate exercise: yoga, walking, swimming - not too intense',
+        'Focus on sweet, nourishing foods that are neither too hot nor too cold',
+        'Ghee is your best friend - use generously'
+      ],
+      'vata-kapha': [
+        'Stay warm but keep moving - avoid cold AND stagnation',
+        'Light, warm meals - not too heavy, not too dry',
+        'Morning routine is essential - wake early and exercise',
+        'Ginger tea throughout the day helps both doshas',
+        'Avoid dairy and cold foods, but include healthy oils'
+      ],
+      'pitta-vata': [
+        'Balance warmth with cooling - avoid extremes of temperature',
+        'Regular meals are crucial - never skip meals but avoid overeating',
+        'Moderate exercise: yoga, walking, swimming - not too intense',
+        'Focus on sweet, nourishing foods that are neither too hot nor too cold',
+        'Ghee is your best friend - use generously'
+      ],
+      'pitta-kapha': [
+        'Avoid excess oil but don\'t go completely dry',
+        'Bitter and astringent tastes benefit both doshas',
+        'Moderate, cooling exercise - swimming is ideal',
+        'Reduce dairy, sweets, and sour foods',
+        'Light meals with plenty of vegetables'
+      ],
+      'kapha-vata': [
+        'Stay warm but keep moving - avoid cold AND stagnation',
+        'Light, warm meals - not too heavy, not too dry',
+        'Morning routine is essential - wake early and exercise',
+        'Ginger tea throughout the day helps both doshas',
+        'Avoid dairy and cold foods, but include healthy oils'
+      ],
+      'kapha-pitta': [
+        'Avoid excess oil but don\'t go completely dry',
+        'Bitter and astringent tastes benefit both doshas',
+        'Moderate, cooling exercise - swimming is ideal',
+        'Reduce dairy, sweets, and sour foods',
+        'Light meals with plenty of vegetables'
+      ]
+    };
+
+    const key = `${primary}-${secondary}`;
+    return dualRecommendations[key] || [];
+  };
+
   const schedule = getDoshaSchedule(selectedDosha);
   const guidelines = getDoshaGuidelines(selectedDosha);
+  const foods = getDoshaFoods(selectedDosha);
+  const secondaryDosha = getSecondaryDosha();
+  const dualDoshaRecs = getDualDoshaRecommendations(selectedDosha, secondaryDosha);
 
   const downloadPlan = () => {
     const planText = `
@@ -346,17 +529,17 @@ ${item.description}
 `).join('\n')}
 
 DAILY GUIDELINES:
-💧 Water: ${guidelines.water}
-🌾 Grains/Flour: ${guidelines.flour}
-🚫 Avoid: ${guidelines.avoid}
-💊 Supplements: ${guidelines.supplements}
-🧘 Lifestyle: ${guidelines.lifestyle}
+* Water: ${guidelines.water}
+* Grains/Flour: ${guidelines.flour}
+* Avoid: ${guidelines.avoid}
+* Supplements: ${guidelines.supplements}
+* Lifestyle: ${guidelines.lifestyle}
 
 Remember: This is a guideline, not a strict rule. Listen to your body and adjust as needed.
 Start with 2-3 changes and build from there. Consistency > Perfection.
 
 ---
-Generated by Ayurveda for Real Life ✨
+Generated by AyuVed - Ancient Wisdom, Modern Wellness
     `;
 
     const blob = new Blob([planText], { type: 'text/plain' });
@@ -369,151 +552,283 @@ Generated by Ayurveda for Real Life ✨
   };
 
   return (
-    <div className="bg-[var(--card-bg)] rounded-lg shadow-lg p-6">
+    <div className="relative bg-gradient-to-br from-white via-[var(--parchment-light)] to-[var(--parchment)] rounded-xl shadow-lg p-6 border-2 border-[var(--palm-leaf)]">
+      {/* Corner ornaments */}
+      <div className="absolute top-4 left-4 text-[var(--gold-leaf)] text-2xl">❧</div>
+      <div className="absolute top-4 right-4 text-[var(--gold-leaf)] text-2xl transform scale-x-[-1]">❧</div>
+
       <div className="flex items-center justify-between mb-6">
         <div>
-          <h2 className="text-3xl font-bold text-[var(--foreground)] mb-2">
-            Your Personalized Daily Plan 📋
-          </h2>
-          <p className="text-[var(--text-muted)]">
+          <div className="flex items-center gap-2 mb-2">
+            <FileText className="w-8 h-8 text-[var(--copper-brown)]" />
+            <h2 className="text-2xl md:text-3xl font-bold text-[var(--ink-black)]" style={{fontFamily: 'Georgia, serif'}}>
+              Your Personalized Daily Plan
+            </h2>
+          </div>
+          <p className="text-[var(--ink-brown)]">
             A complete roadmap for living in balance with your dosha
           </p>
         </div>
         <button
           onClick={downloadPlan}
-          className="flex items-center bg-gradient-to-r from-[var(--accent-primary)] to-[var(--olive)] text-[var(--background)] px-4 py-2 rounded-lg hover:opacity-90 font-medium"
+          className="flex items-center bg-gradient-to-r from-[var(--copper-brown)] to-[var(--henna)] text-white px-4 py-2 rounded-lg hover:opacity-90 font-medium shadow-md"
         >
           <Download className="w-4 h-4 mr-2" />
           Download Plan
         </button>
       </div>
 
-      {/* Dosha Selector */}
-      <div className="mb-8">
-        <h3 className="text-sm font-bold text-[var(--foreground)] mb-3">Select Your Dosha Type:</h3>
-        <div className="flex gap-3">
-          {['vata', 'pitta', 'kapha'].map(dosha => (
-            <button
-              key={dosha}
-              onClick={() => setSelectedDosha(dosha)}
-              className={`px-6 py-3 rounded-lg font-medium transition-all ${
-                selectedDosha === dosha
-                  ? 'bg-gradient-to-r from-[var(--accent-primary)] to-[var(--olive)] text-[var(--background)] shadow-lg scale-105'
-                  : 'bg-[var(--card-bg-light)] text-[var(--foreground)] border-2 border-[var(--border-color)] hover:border-[var(--accent-primary)]'
-              }`}
-            >
-              {dosha.charAt(0).toUpperCase() + dosha.slice(1)}
-            </button>
-          ))}
+      {/* Personalized Dosha Profile */}
+      {hasCompletedQuiz && doshaResult ? (
+        <div className="mb-8 bg-gradient-to-br from-white to-[var(--parchment-light)] p-6 rounded-xl border-2 border-[var(--gold-leaf)]">
+          <div className="flex items-center gap-3 mb-4">
+            <User className="w-6 h-6 text-[var(--copper-brown)]" />
+            <h3 className="text-lg font-bold text-[var(--ink-black)]">Your Prakriti (Constitution)</h3>
+          </div>
+
+          <div className="flex items-center gap-4 mb-4">
+            <div className="text-3xl font-bold text-[var(--copper-brown)]" style={{fontFamily: 'Georgia, serif'}}>
+              {getConstitutionType()}
+            </div>
+            {secondaryDosha && (
+              <span className="text-sm bg-[var(--parchment-dark)] text-[var(--ink-brown)] px-3 py-1 rounded-full">
+                Dual Dosha Type
+              </span>
+            )}
+          </div>
+
+          {/* Dosha Percentages */}
+          <div className="space-y-3 mb-4">
+            <div>
+              <div className="flex justify-between mb-1 text-sm">
+                <span className="font-medium text-[var(--ink-black)]">Vata (Air & Space)</span>
+                <span className="text-[var(--copper-brown)] font-bold">{doshaResult.vata}%</span>
+              </div>
+              <div className="w-full bg-[var(--parchment-dark)] rounded-full h-3">
+                <div className="bg-gradient-to-r from-blue-400 to-blue-600 h-3 rounded-full" style={{ width: `${doshaResult.vata}%` }}></div>
+              </div>
+            </div>
+            <div>
+              <div className="flex justify-between mb-1 text-sm">
+                <span className="font-medium text-[var(--ink-black)]">Pitta (Fire & Water)</span>
+                <span className="text-[var(--copper-brown)] font-bold">{doshaResult.pitta}%</span>
+              </div>
+              <div className="w-full bg-[var(--parchment-dark)] rounded-full h-3">
+                <div className="bg-gradient-to-r from-orange-400 to-red-500 h-3 rounded-full" style={{ width: `${doshaResult.pitta}%` }}></div>
+              </div>
+            </div>
+            <div>
+              <div className="flex justify-between mb-1 text-sm">
+                <span className="font-medium text-[var(--ink-black)]">Kapha (Earth & Water)</span>
+                <span className="text-[var(--copper-brown)] font-bold">{doshaResult.kapha}%</span>
+              </div>
+              <div className="w-full bg-[var(--parchment-dark)] rounded-full h-3">
+                <div className="bg-gradient-to-r from-green-400 to-green-600 h-3 rounded-full" style={{ width: `${doshaResult.kapha}%` }}></div>
+              </div>
+            </div>
+          </div>
+
+          <p className="text-sm text-[var(--ink-brown)]">
+            Your plan below is customized for your <strong>{getConstitutionType()}</strong> constitution.
+            {userSymptoms.length > 0 && ` It also addresses your specific symptoms.`}
+          </p>
         </div>
-        <p className="text-xs text-[var(--text-muted)] mt-2">
-          Don't know your dosha? Take the <strong>Dosha Quiz</strong> in the sidebar!
-        </p>
-      </div>
+      ) : (
+        /* Dosha Selector for users who haven't taken quiz */
+        <div className="mb-8">
+          <div className="bg-amber-50 border-l-4 border-amber-400 p-4 rounded-r-xl mb-4">
+            <p className="text-sm text-amber-800">
+              <strong>💡 Tip:</strong> Take the <strong>Dosha Quiz</strong> for a personalized plan based on your unique constitution!
+            </p>
+          </div>
+          <h3 className="text-sm font-bold text-[var(--ink-black)] mb-3">Select Your Dosha Type:</h3>
+          <div className="flex gap-3">
+            {['vata', 'pitta', 'kapha'].map(dosha => (
+              <button
+                key={dosha}
+                onClick={() => setSelectedDosha(dosha)}
+                className={`px-6 py-3 rounded-lg font-medium transition-all ${
+                  selectedDosha === dosha
+                    ? 'bg-gradient-to-r from-[var(--copper-brown)] to-[var(--henna)] text-white shadow-lg scale-105'
+                    : 'bg-white text-[var(--ink-black)] border-2 border-[var(--palm-leaf)] hover:border-[var(--gold-leaf)]'
+                }`}
+              >
+                {dosha.charAt(0).toUpperCase() + dosha.slice(1)}
+              </button>
+            ))}
+          </div>
+        </div>
+      )}
+
+      {/* Dual Dosha Recommendations */}
+      {dualDoshaRecs.length > 0 && (
+        <div className="mb-8 bg-purple-50 rounded-xl p-5 border border-purple-200">
+          <h3 className="text-lg font-bold text-purple-800 mb-3 flex items-center gap-2">
+            <Sparkles className="w-5 h-5" />
+            Special Recommendations for {getConstitutionType()} Types
+          </h3>
+          <p className="text-sm text-purple-700 mb-4">
+            As a dual-dosha type, you need to balance both energies. Here's what works best for you:
+          </p>
+          <div className="space-y-2">
+            {dualDoshaRecs.map((rec, idx) => (
+              <div key={idx} className="flex items-start gap-2">
+                <CheckCircle2 className="w-4 h-4 text-purple-600 mt-0.5 flex-shrink-0" />
+                <p className="text-sm text-purple-800">{rec}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
 
       {/* Daily Guidelines */}
       <div className="grid md:grid-cols-2 gap-4 mb-8">
-        <div className="bg-[var(--card-bg-light)] p-5 rounded-lg border-2 border-[var(--border-color)]">
+        <div className="bg-white p-5 rounded-xl border border-[var(--palm-leaf)] hover:border-[var(--gold-leaf)] transition-colors">
           <div className="flex items-center mb-3">
-            <Droplets className="w-5 h-5 text-[var(--accent-primary)] mr-2" />
-            <h4 className="font-bold text-[var(--foreground)]">Water Intake</h4>
+            <Droplets className="w-5 h-5 text-[var(--copper-brown)] mr-2" />
+            <h4 className="font-bold text-[var(--ink-black)]">Water Intake</h4>
           </div>
-          <p className="text-[var(--foreground)] text-sm">{guidelines.water}</p>
+          <p className="text-[var(--ink-brown)] text-sm">{guidelines.water}</p>
         </div>
 
-        <div className="bg-[var(--card-bg-light)] p-5 rounded-lg border-2 border-[var(--border-color)]">
+        <div className="bg-white p-5 rounded-xl border border-[var(--palm-leaf)] hover:border-[var(--gold-leaf)] transition-colors">
           <div className="flex items-center mb-3">
-            <Utensils className="w-5 h-5 text-[var(--accent-primary)] mr-2" />
-            <h4 className="font-bold text-[var(--foreground)]">Grains & Flour</h4>
+            <Leaf className="w-5 h-5 text-[var(--copper-brown)] mr-2" />
+            <h4 className="font-bold text-[var(--ink-black)]">Grains & Flour</h4>
           </div>
-          <p className="text-[var(--foreground)] text-sm">{guidelines.flour}</p>
+          <p className="text-[var(--ink-brown)] text-sm">{guidelines.flour}</p>
         </div>
 
-        <div className="bg-[var(--card-bg-light)] p-5 rounded-lg border-2 border-[var(--border-color)]">
+        <div className="bg-white p-5 rounded-xl border border-[var(--palm-leaf)] hover:border-[var(--gold-leaf)] transition-colors">
           <div className="flex items-center mb-3">
-            <Activity className="w-5 h-5 text-[var(--accent-primary)] mr-2" />
-            <h4 className="font-bold text-[var(--foreground)]">Lifestyle</h4>
+            <Activity className="w-5 h-5 text-[var(--copper-brown)] mr-2" />
+            <h4 className="font-bold text-[var(--ink-black)]">Lifestyle</h4>
           </div>
-          <p className="text-[var(--foreground)] text-sm">{guidelines.lifestyle}</p>
+          <p className="text-[var(--ink-brown)] text-sm">{guidelines.lifestyle}</p>
         </div>
 
-        <div className="bg-[var(--card-bg-light)] p-5 rounded-lg border-2 border-[var(--border-color)]">
+        <div className="bg-white p-5 rounded-xl border border-[var(--palm-leaf)] hover:border-[var(--gold-leaf)] transition-colors">
           <div className="flex items-center mb-3">
-            <CheckCircle2 className="w-5 h-5 text-[var(--accent-primary)] mr-2" />
-            <h4 className="font-bold text-[var(--foreground)]">Supplements</h4>
+            <Pill className="w-5 h-5 text-[var(--copper-brown)] mr-2" />
+            <h4 className="font-bold text-[var(--ink-black)]">Supplements</h4>
           </div>
-          <p className="text-[var(--foreground)] text-sm">{guidelines.supplements}</p>
+          <p className="text-[var(--ink-brown)] text-sm">{guidelines.supplements}</p>
+        </div>
+      </div>
+
+      {/* Food Recommendations */}
+      <div className="mb-8">
+        <h3 className="text-xl font-bold text-[var(--ink-black)] mb-4 flex items-center" style={{fontFamily: 'Georgia, serif'}}>
+          <Utensils className="w-6 h-6 mr-2 text-[var(--copper-brown)]" />
+          Food Guide for {selectedDosha.charAt(0).toUpperCase() + selectedDosha.slice(1)}
+        </h3>
+
+        <div className="grid md:grid-cols-2 gap-4 mb-4">
+          {/* Foods to Eat */}
+          <div className="bg-green-50 p-5 rounded-xl border border-green-200">
+            <div className="flex items-center mb-3">
+              <Apple className="w-5 h-5 text-green-600 mr-2" />
+              <h4 className="font-bold text-green-800">Foods to Favor</h4>
+            </div>
+            <ul className="space-y-2">
+              {foods.eat.map((food, idx) => (
+                <li key={idx} className="flex items-start gap-2 text-sm text-green-700">
+                  <CheckCircle2 className="w-4 h-4 text-green-500 mt-0.5 flex-shrink-0" />
+                  {food}
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          {/* Foods to Avoid */}
+          <div className="bg-red-50 p-5 rounded-xl border border-red-200">
+            <div className="flex items-center mb-3">
+              <XCircle className="w-5 h-5 text-red-600 mr-2" />
+              <h4 className="font-bold text-red-800">Foods to Reduce</h4>
+            </div>
+            <ul className="space-y-2">
+              {foods.avoid.map((food, idx) => (
+                <li key={idx} className="flex items-start gap-2 text-sm text-red-700">
+                  <Ban className="w-4 h-4 text-red-400 mt-0.5 flex-shrink-0" />
+                  {food}
+                </li>
+              ))}
+            </ul>
+          </div>
+        </div>
+
+        {/* Beneficial Spices */}
+        <div className="bg-amber-50 p-4 rounded-xl border border-amber-200">
+          <h4 className="font-bold text-amber-800 mb-2 flex items-center gap-2">
+            <Sparkles className="w-4 h-4" />
+            Best Spices for {selectedDosha.charAt(0).toUpperCase() + selectedDosha.slice(1)}
+          </h4>
+          <div className="flex flex-wrap gap-2">
+            {foods.spices.map((spice, idx) => (
+              <span key={idx} className="bg-amber-100 text-amber-800 px-3 py-1 rounded-full text-sm">
+                {spice}
+              </span>
+            ))}
+          </div>
         </div>
       </div>
 
       {/* Symptom-Specific Recommendations */}
       {userSymptoms.length > 0 && (
         <div className="mb-8">
-          <h3 className="text-xl font-bold text-[var(--foreground)] mb-4 flex items-center">
-            <CheckCircle2 className="w-6 h-6 mr-2 text-[var(--accent-secondary)]" />
+          <h3 className="text-xl font-bold text-[var(--ink-black)] mb-4 flex items-center" style={{fontFamily: 'Georgia, serif'}}>
+            <CheckCircle2 className="w-6 h-6 mr-2 text-[var(--gold-leaf)]" />
             Personalized for Your Symptoms
           </h3>
-          <div className="bg-gradient-to-br from-[var(--card-bg-light)] to-[var(--olive-light)] bg-opacity-30 border-2 border-[var(--accent-secondary)] rounded-lg p-6">
-            <p className="text-sm text-[var(--foreground)] opacity-80 mb-4">
-              Based on symptoms you reported: <strong className="text-[var(--accent-primary)]">{userSymptoms.join(', ')}</strong>
+          <div className="bg-white rounded-xl p-6 border-2 border-[var(--gold-leaf)]">
+            <p className="text-sm text-[var(--ink-brown)] mb-4">
+              Based on symptoms you reported: <strong className="text-[var(--copper-brown)]">{userSymptoms.join(', ')}</strong>
             </p>
             <div className="space-y-3">
               {getSymptomRecommendations(userSymptoms).map((rec, idx) => (
-                <div key={idx} className="bg-[var(--background)] bg-opacity-50 p-4 rounded-lg">
+                <div key={idx} className="bg-[var(--parchment-light)] p-4 rounded-lg border border-[var(--palm-leaf)]">
                   <div className="flex items-start gap-3">
-                    <CheckCircle2 className="w-5 h-5 text-[var(--accent-primary)] mt-0.5 flex-shrink-0" />
-                    <p className="text-sm text-[var(--foreground)] flex-1">{rec.text}</p>
+                    <CheckCircle2 className="w-5 h-5 text-[var(--copper-brown)] mt-0.5 flex-shrink-0" />
+                    <p className="text-sm text-[var(--ink-black)] flex-1">{rec.text}</p>
                   </div>
-                  {rec.image && (
-                    <div className="mt-3 ml-8">
-                      <div className="w-full max-w-xs rounded-lg overflow-hidden border-2 border-[var(--accent-primary)] shadow-md">
-                        <Image
-                          src={rec.image}
-                          alt="Ayurvedic remedy"
-                          width={400}
-                          height={300}
-                          className="w-full h-auto object-cover"
-                        />
-                      </div>
-                    </div>
-                  )}
                 </div>
               ))}
             </div>
-            <p className="text-xs text-[var(--text-muted)] mt-4 italic">
-              💡 These recommendations are integrated into your daily schedule below. Focus on these first for fastest relief.
-            </p>
+            <div className="flex items-start gap-2 mt-4 text-xs text-[var(--faded-ink)] italic">
+              <Lightbulb className="w-4 h-4 text-[var(--gold-leaf)] flex-shrink-0" />
+              <span>These recommendations are integrated into your daily schedule below. Focus on these first for fastest relief.</span>
+            </div>
           </div>
         </div>
       )}
 
       {/* Daily Schedule */}
       <div className="mb-6">
-        <h3 className="text-xl font-bold text-[var(--foreground)] mb-4 flex items-center">
-          <Calendar className="w-6 h-6 mr-2 text-[var(--accent-primary)]" />
+        <h3 className="text-xl font-bold text-[var(--ink-black)] mb-4 flex items-center" style={{fontFamily: 'Georgia, serif'}}>
+          <Calendar className="w-6 h-6 mr-2 text-[var(--copper-brown)]" />
           Your Ideal Daily Schedule
         </h3>
 
         <div className="space-y-6">
           {/* Morning */}
           <div>
-            <h4 className="text-lg font-bold text-[var(--accent-secondary)] mb-3 flex items-center">
-              <Sun className="w-5 h-5 mr-2" />
+            <h4 className="text-lg font-bold text-[var(--copper-brown)] mb-3 flex items-center">
+              <Sun className="w-5 h-5 mr-2 text-[var(--gold-leaf)]" />
               Morning Routine
             </h4>
             <div className="space-y-3">
               {schedule.filter(item => item.category === 'morning').map((item, idx) => (
-                <div key={idx} className="bg-[var(--card-bg-light)] p-4 rounded-lg border-l-4 border-[var(--accent-primary)]">
+                <div key={idx} className="bg-white p-4 rounded-xl border-l-4 border-[var(--gold-leaf)] shadow-sm">
                   <div className="flex items-start">
                     <div className="flex-shrink-0">
-                      <Clock className="w-5 h-5 text-[var(--accent-primary)] mr-3 mt-1" />
+                      <Clock className="w-5 h-5 text-[var(--copper-brown)] mr-3 mt-1" />
                     </div>
                     <div className="flex-1">
                       <div className="flex items-center justify-between mb-1">
-                        <span className="font-bold text-[var(--accent-primary)]">{item.time}</span>
+                        <span className="font-bold text-[var(--copper-brown)]">{item.time}</span>
                       </div>
-                      <h5 className="font-semibold text-[var(--foreground)] mb-1">{item.activity}</h5>
-                      <p className="text-sm text-[var(--foreground)]">{item.description}</p>
+                      <h5 className="font-semibold text-[var(--ink-black)] mb-1">{item.activity}</h5>
+                      <p className="text-sm text-[var(--ink-brown)]">{item.description}</p>
                     </div>
                   </div>
                 </div>
@@ -523,23 +838,23 @@ Generated by Ayurveda for Real Life ✨
 
           {/* Afternoon */}
           <div>
-            <h4 className="text-lg font-bold text-[var(--accent-secondary)] mb-3 flex items-center">
-              <Sun className="w-5 h-5 mr-2" />
+            <h4 className="text-lg font-bold text-[var(--copper-brown)] mb-3 flex items-center">
+              <Sun className="w-5 h-5 mr-2 text-[var(--gold-leaf)]" />
               Afternoon
             </h4>
             <div className="space-y-3">
               {schedule.filter(item => item.category === 'afternoon').map((item, idx) => (
-                <div key={idx} className="bg-[var(--card-bg-light)] p-4 rounded-lg border-l-4 border-[var(--accent-primary)]">
+                <div key={idx} className="bg-white p-4 rounded-xl border-l-4 border-[var(--copper-brown)] shadow-sm">
                   <div className="flex items-start">
                     <div className="flex-shrink-0">
-                      <Clock className="w-5 h-5 text-[var(--accent-primary)] mr-3 mt-1" />
+                      <Clock className="w-5 h-5 text-[var(--copper-brown)] mr-3 mt-1" />
                     </div>
                     <div className="flex-1">
                       <div className="flex items-center justify-between mb-1">
-                        <span className="font-bold text-[var(--accent-primary)]">{item.time}</span>
+                        <span className="font-bold text-[var(--copper-brown)]">{item.time}</span>
                       </div>
-                      <h5 className="font-semibold text-[var(--foreground)] mb-1">{item.activity}</h5>
-                      <p className="text-sm text-[var(--foreground)]">{item.description}</p>
+                      <h5 className="font-semibold text-[var(--ink-black)] mb-1">{item.activity}</h5>
+                      <p className="text-sm text-[var(--ink-brown)]">{item.description}</p>
                     </div>
                   </div>
                 </div>
@@ -549,23 +864,23 @@ Generated by Ayurveda for Real Life ✨
 
           {/* Evening */}
           <div>
-            <h4 className="text-lg font-bold text-[var(--accent-secondary)] mb-3 flex items-center">
-              <Moon className="w-5 h-5 mr-2" />
+            <h4 className="text-lg font-bold text-[var(--copper-brown)] mb-3 flex items-center">
+              <Moon className="w-5 h-5 mr-2 text-[var(--gold-leaf)]" />
               Evening & Night
             </h4>
             <div className="space-y-3">
               {schedule.filter(item => item.category === 'evening' || item.category === 'night').map((item, idx) => (
-                <div key={idx} className="bg-[var(--card-bg-light)] p-4 rounded-lg border-l-4 border-[var(--accent-primary)]">
+                <div key={idx} className="bg-white p-4 rounded-xl border-l-4 border-[#5B5EA6] shadow-sm">
                   <div className="flex items-start">
                     <div className="flex-shrink-0">
-                      <Clock className="w-5 h-5 text-[var(--accent-primary)] mr-3 mt-1" />
+                      <Clock className="w-5 h-5 text-[var(--copper-brown)] mr-3 mt-1" />
                     </div>
                     <div className="flex-1">
                       <div className="flex items-center justify-between mb-1">
-                        <span className="font-bold text-[var(--accent-primary)]">{item.time}</span>
+                        <span className="font-bold text-[var(--copper-brown)]">{item.time}</span>
                       </div>
-                      <h5 className="font-semibold text-[var(--foreground)] mb-1">{item.activity}</h5>
-                      <p className="text-sm text-[var(--foreground)]">{item.description}</p>
+                      <h5 className="font-semibold text-[var(--ink-black)] mb-1">{item.activity}</h5>
+                      <p className="text-sm text-[var(--ink-brown)]">{item.description}</p>
                     </div>
                   </div>
                 </div>
@@ -576,15 +891,36 @@ Generated by Ayurveda for Real Life ✨
       </div>
 
       {/* Important Notes */}
-      <div className="bg-gradient-to-br from-[var(--card-bg-light)] to-[var(--olive-light)] bg-opacity-30 border-2 border-[var(--accent-primary)] rounded-lg p-6">
-        <h4 className="font-bold text-[var(--accent-secondary)] mb-3">💡 Start Small, Build Big</h4>
-        <ul className="space-y-2 text-sm text-[var(--foreground)]">
-          <li>• Don't try to implement everything at once - that's overwhelming and unsustainable</li>
-          <li>• Pick 2-3 practices that resonate with you and start there</li>
-          <li>• Give each practice 2-3 weeks before adding more</li>
-          <li>• Consistency beats perfection - even 70% compliance is better than 0%</li>
-          <li>• Listen to your body - Ayurveda is about YOU, not rigid rules</li>
-          <li>• Track how you feel - energy, digestion, mood, sleep quality</li>
+      <div className="bg-[var(--parchment-light)] rounded-xl p-6 border-l-4 border-[var(--gold-leaf)]">
+        <h4 className="font-bold text-[var(--copper-brown)] mb-3 flex items-center gap-2" style={{fontFamily: 'Georgia, serif'}}>
+          <Lightbulb className="w-5 h-5 text-[var(--gold-leaf)]" />
+          Start Small, Build Big
+        </h4>
+        <ul className="space-y-2 text-sm text-[var(--ink-brown)]">
+          <li className="flex items-start gap-2">
+            <span className="text-[var(--gold-leaf)]">✦</span>
+            Don't try to implement everything at once - that's overwhelming and unsustainable
+          </li>
+          <li className="flex items-start gap-2">
+            <span className="text-[var(--gold-leaf)]">✦</span>
+            Pick 2-3 practices that resonate with you and start there
+          </li>
+          <li className="flex items-start gap-2">
+            <span className="text-[var(--gold-leaf)]">✦</span>
+            Give each practice 2-3 weeks before adding more
+          </li>
+          <li className="flex items-start gap-2">
+            <span className="text-[var(--gold-leaf)]">✦</span>
+            Consistency beats perfection - even 70% compliance is better than 0%
+          </li>
+          <li className="flex items-start gap-2">
+            <span className="text-[var(--gold-leaf)]">✦</span>
+            Listen to your body - Ayurveda is about YOU, not rigid rules
+          </li>
+          <li className="flex items-start gap-2">
+            <span className="text-[var(--gold-leaf)]">✦</span>
+            Track how you feel - energy, digestion, mood, sleep quality
+          </li>
         </ul>
       </div>
     </div>

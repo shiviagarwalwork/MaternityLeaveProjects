@@ -55,6 +55,11 @@ export default async function ArticlePage({ params }: { params: Promise<{ slug: 
       text: 'text-[var(--primary)]',
       accent: 'var(--primary)',
     },
+    'Vision': {
+      bg: 'bg-[var(--primary-50)]',
+      text: 'text-[var(--primary)]',
+      accent: 'var(--primary)',
+    },
   };
 
   const colors = categoryColors[article.category];
@@ -75,7 +80,7 @@ export default async function ArticlePage({ params }: { params: Promise<{ slug: 
             <svg className="w-4 h-4 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
             </svg>
-            Back to Resources
+            Back to Insights
           </Link>
 
           <span className={`inline-block px-3 py-1 text-sm font-medium rounded-full mb-4 ${colors.bg} ${colors.text}`}>
