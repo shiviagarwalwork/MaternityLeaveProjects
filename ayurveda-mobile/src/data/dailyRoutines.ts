@@ -30,6 +30,12 @@ export interface HerbProtocol {
   benefit: string;
 }
 
+export interface FoodGuide {
+  favor: string[];
+  reduce: string[];
+  spices: string[];
+}
+
 export interface DoshaRoutine {
   dosha: 'Vata' | 'Pitta' | 'Kapha';
   overview: string;
@@ -37,6 +43,7 @@ export interface DoshaRoutine {
   middayRoutine: TimeSlot[];
   eveningRoutine: TimeSlot[];
   meals: MealPlan[];
+  foodGuide: FoodGuide;
   exercise: ExerciseRoutine;
   herbs: HerbProtocol[];
   selfCare: string[];
@@ -181,6 +188,29 @@ export const doshaRoutines: DoshaRoutine[] = [
         avoid: ['Heavy meals', 'Raw foods', 'Beans (hard to digest)', 'Eating late'],
       },
     ],
+    foodGuide: {
+      favor: [
+        'Warm soups and stews',
+        'Cooked grains: rice, oats, wheat',
+        'Root vegetables: carrots, beets, sweet potatoes',
+        'Ripe fruits: bananas, mangoes, papayas',
+        'Warm milk with ghee',
+        'Nuts and seeds (soaked)',
+        'Mung dal and red lentils',
+        'Healthy oils: ghee, sesame oil',
+      ],
+      reduce: [
+        'Raw vegetables and salads',
+        'Cold drinks and ice cream',
+        'Dried fruits (unless soaked)',
+        'Most beans (except mung)',
+        'Caffeine and stimulants',
+        'Crackers, chips, dry snacks',
+        'Bitter greens in excess',
+        'Skipping meals',
+      ],
+      spices: ['Ginger', 'Cumin', 'Cinnamon', 'Cardamom', 'Fennel', 'Turmeric', 'Asafoetida (hing)'],
+    },
     exercise: {
       type: 'Gentle & Grounding',
       duration: '30-45 minutes',
@@ -349,6 +379,29 @@ export const doshaRoutines: DoshaRoutine[] = [
         avoid: ['Heavy, oily foods', 'Spicy curries', 'Alcohol', 'Sour foods'],
       },
     ],
+    foodGuide: {
+      favor: [
+        'Cooling foods: cucumber, melon, coconut',
+        'Sweet fruits: grapes, pomegranate, pears',
+        'Leafy greens and bitter vegetables',
+        'Basmati rice, barley, oats',
+        'Mung beans, tofu',
+        'Ghee and coconut oil',
+        'Fresh dairy: milk, butter',
+        'Mint, cilantro, fennel',
+      ],
+      reduce: [
+        'Spicy foods: chilies, hot peppers',
+        'Sour foods: tomatoes, citrus, vinegar',
+        'Fermented foods: alcohol, pickles',
+        'Red meat and eggs',
+        'Excess salt',
+        'Coffee and caffeinated drinks',
+        'Fried and oily foods',
+        'Onion, garlic (in excess)',
+      ],
+      spices: ['Coriander', 'Fennel', 'Cardamom', 'Turmeric', 'Mint', 'Saffron', 'Cumin (moderately)'],
+    },
     exercise: {
       type: 'Moderate & Cooling',
       duration: '30-45 minutes',
@@ -511,6 +564,29 @@ export const doshaRoutines: DoshaRoutine[] = [
         avoid: ['Heavy foods', 'Cheese', 'Desserts', 'Late eating'],
       },
     ],
+    foodGuide: {
+      favor: [
+        'Light, warm foods',
+        'Leafy greens and vegetables',
+        'Legumes: lentils, chickpeas',
+        'Astringent fruits: apples, pears, berries',
+        'Light grains: millet, barley, buckwheat',
+        'Honey (raw, unheated)',
+        'Ginger tea',
+        'Spicy foods in moderation',
+      ],
+      reduce: [
+        'Dairy: milk, cheese, ice cream',
+        'Heavy, fried foods',
+        'Excess sweets and sugar',
+        'Wheat and white rice',
+        'Cold foods and drinks',
+        'Red meat',
+        'Excess oils and fats',
+        'Bananas, avocados, coconut',
+      ],
+      spices: ['Black pepper', 'Ginger', 'Turmeric', 'Cayenne', 'Mustard seeds', 'Cloves', 'Fenugreek'],
+    },
     exercise: {
       type: 'Vigorous & Stimulating',
       duration: '45-60 minutes',

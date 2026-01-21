@@ -328,6 +328,55 @@ export default function PlanScreen() {
         <View style={styles.routineSection}>
           <Text style={styles.sectionTitle}>Diet for {userData.dominantDosha}</Text>
 
+          {/* Foods to Favor & Reduce */}
+          <View style={styles.foodGuideContainer}>
+            {/* Foods to Favor */}
+            <View style={[styles.foodGuideCard, { backgroundColor: '#E8F5E9', borderColor: '#81C784' }]}>
+              <View style={styles.foodGuideHeader}>
+                <Feather name="check-circle" size={20} color="#2E7D32" />
+                <Text style={[styles.foodGuideTitle, { color: '#2E7D32' }]}>Foods to Favor</Text>
+              </View>
+              {routine.foodGuide.favor.map((food, idx) => (
+                <View key={idx} style={styles.foodGuideRow}>
+                  <Feather name="check" size={14} color="#4CAF50" />
+                  <Text style={styles.foodGuideText}>{food}</Text>
+                </View>
+              ))}
+            </View>
+
+            {/* Foods to Reduce */}
+            <View style={[styles.foodGuideCard, { backgroundColor: '#FFEBEE', borderColor: '#EF9A9A' }]}>
+              <View style={styles.foodGuideHeader}>
+                <Feather name="x-circle" size={20} color="#C62828" />
+                <Text style={[styles.foodGuideTitle, { color: '#C62828' }]}>Foods to Reduce</Text>
+              </View>
+              {routine.foodGuide.reduce.map((food, idx) => (
+                <View key={idx} style={styles.foodGuideRow}>
+                  <Feather name="x" size={14} color="#EF5350" />
+                  <Text style={styles.foodGuideText}>{food}</Text>
+                </View>
+              ))}
+            </View>
+          </View>
+
+          {/* Best Spices */}
+          <View style={styles.spicesCard}>
+            <View style={styles.spicesHeader}>
+              <MaterialCommunityIcons name="shimmer" size={20} color={getDoshaColor(userData.dominantDosha!)} />
+              <Text style={styles.spicesTitle}>Best Spices for {userData.dominantDosha}</Text>
+            </View>
+            <View style={styles.spicesContainer}>
+              {routine.foodGuide.spices.map((spice, idx) => (
+                <View key={idx} style={[styles.spiceChip, { backgroundColor: getDoshaColor(userData.dominantDosha!) + '20' }]}>
+                  <Text style={[styles.spiceText, { color: getDoshaColor(userData.dominantDosha!) }]}>{spice}</Text>
+                </View>
+              ))}
+            </View>
+          </View>
+
+          {/* Meal-by-Meal Guide */}
+          <Text style={[styles.sectionTitle, { marginTop: 20 }]}>Meal-by-Meal Guide</Text>
+
           {routine.meals.map((meal, idx) => (
             <View key={idx} style={styles.mealCard}>
               <View style={styles.mealHeader}>
@@ -896,6 +945,69 @@ const styles = StyleSheet.create({
   },
   bottomPadding: {
     height: 32,
+  },
+  foodGuideContainer: {
+    marginBottom: 16,
+  },
+  foodGuideCard: {
+    borderRadius: 12,
+    padding: 16,
+    marginBottom: 12,
+    borderWidth: 1,
+  },
+  foodGuideHeader: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginBottom: 12,
+  },
+  foodGuideTitle: {
+    fontSize: 16,
+    fontWeight: 'bold',
+    marginLeft: 10,
+  },
+  foodGuideRow: {
+    flexDirection: 'row',
+    alignItems: 'flex-start',
+    marginBottom: 8,
+  },
+  foodGuideText: {
+    fontSize: 14,
+    color: ManuscriptColors.inkBrown,
+    marginLeft: 10,
+    flex: 1,
+  },
+  spicesCard: {
+    backgroundColor: ManuscriptColors.parchment,
+    borderRadius: 12,
+    padding: 16,
+    marginBottom: 12,
+    borderWidth: 1,
+    borderColor: ManuscriptColors.copperBrown,
+  },
+  spicesHeader: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginBottom: 12,
+  },
+  spicesTitle: {
+    fontSize: 16,
+    fontWeight: 'bold',
+    color: ManuscriptColors.inkBlack,
+    marginLeft: 10,
+  },
+  spicesContainer: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    gap: 8,
+  },
+  spiceChip: {
+    paddingHorizontal: 12,
+    paddingVertical: 6,
+    borderRadius: 20,
+  },
+  spiceText: {
+    fontSize: 13,
+    fontWeight: '600',
   },
   emptyState: {
     flex: 1,
