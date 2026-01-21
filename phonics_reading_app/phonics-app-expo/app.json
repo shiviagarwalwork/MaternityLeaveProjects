@@ -1,0 +1,43 @@
+{
+  "expo": {
+    "name": "PhonicsAI",
+    "slug": "phonics-ai",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/icon.png",
+    "userInterfaceStyle": "light",
+    "scheme": "phonicsai",
+    "newArchEnabled": true,
+    "splash": {
+      "image": "./assets/splash-icon.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#7C4DFF"
+    },
+    "ios": {
+      "supportsTablet": true,
+      "bundleIdentifier": "com.phonicsai.app"
+    },
+    "android": {
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/adaptive-icon.png",
+        "backgroundColor": "#7C4DFF"
+      },
+      "package": "com.phonicsai.app",
+      "edgeToEdgeEnabled": true
+    },
+    "web": {
+      "favicon": "./assets/favicon.png",
+      "bundler": "metro"
+    },
+    "plugins": [
+      "expo-router",
+      "expo-font",
+      [
+        "expo-av",
+        {
+          "microphonePermission": "PhonicsAI needs access to your microphone to hear you read."
+        }
+      ]
+    ]
+  }
+}

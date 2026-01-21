@@ -43,22 +43,22 @@ export default function PersonalizedPlan({ doshaResult, symptoms = [] }: Persona
 
     if (symptoms.includes('Insomnia')) {
       recommendations.push({text: 'No screens 1 hour before bed - blue light disrupts sleep'});
-      recommendations.push({text: 'Warm milk with nutmeg 30 min before sleep', image: '/images/blogs/warm-milk.jpg'});
+      recommendations.push({text: 'Warm milk with nutmeg 30 min before sleep', image: '/images/blogs/turmeric-powder.jpg'});
     }
 
     if (symptoms.includes('Indigestion') || symptoms.includes('Acidity')) {
       recommendations.push({text: 'Lunch should be your largest meal (when digestion is strongest)'});
       recommendations.push({text: 'Avoid eating after 7 PM'});
-      recommendations.push({text: 'Drink ginger tea 20 min before meals', image: '/images/blogs/fresh-ginger.jpg'});
+      recommendations.push({text: 'Drink ginger tea 20 min before meals', image: '/images/blogs/ginger-root.jpg'});
     }
 
     if (symptoms.includes('Fatigue') || symptoms.includes('Low Immunity')) {
-      recommendations.push({text: 'Consider Ashwagandha (300mg) in warm milk before bed', image: '/images/blogs/ashwagandha.jpg'});
+      recommendations.push({text: 'Consider Ashwagandha (300mg) in warm milk before bed', image: '/images/blogs/yoga-stretching.jpg'});
       recommendations.push({text: 'Prioritize 7-8 hours sleep - this rebuilds ojas (vitality)'});
     }
 
     if (symptoms.includes('Constipation')) {
-      recommendations.push({text: '1 tbsp ghee in warm water first thing in morning', image: '/images/blogs/ghee.jpg'});
+      recommendations.push({text: '1 tbsp ghee in warm water first thing in morning', image: '/images/blogs/coconut-oil.jpg'});
       recommendations.push({text: 'Add more fiber: cooked vegetables, prunes, flaxseeds'});
     }
 

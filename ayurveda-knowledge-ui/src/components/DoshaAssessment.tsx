@@ -32,9 +32,11 @@ export default function DoshaAssessment() {
   };
 
   const completeAssessment = () => {
-    calculateResult({ ...answers, [doshaQuestions[currentQuestion].id]: answers[doshaQuestions[currentQuestion].id] || { dosha: 'vata', points: 0 } });
+    calculateResult(answers);
     // Store symptoms in localStorage for PersonalizedPlan to access
     localStorage.setItem('userSymptoms', JSON.stringify(selectedSymptoms));
+    // Hide symptom selection screen to show results
+    setShowSymptomSelection(false);
   };
 
   const calculateResult = (allAnswers: {[key: string]: { dosha: string; points: number }}) => {

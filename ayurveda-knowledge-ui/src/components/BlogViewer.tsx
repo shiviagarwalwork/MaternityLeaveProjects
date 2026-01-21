@@ -2,6 +2,7 @@
 
 import { BlogPost } from '@/data/blogs';
 import { Clock, Tag, X, Share2 } from 'lucide-react';
+import { useState } from 'react';
 
 interface BlogViewerProps {
   post: BlogPost;
@@ -9,6 +10,8 @@ interface BlogViewerProps {
 }
 
 export default function BlogViewer({ post, onClose }: BlogViewerProps) {
+  const [imageModalOpen, setImageModalOpen] = useState(false);
+
   const handleShare = () => {
     if (navigator.share) {
       navigator.share({
@@ -47,12 +50,19 @@ export default function BlogViewer({ post, onClose }: BlogViewerProps) {
           {/* Blog Content */}
           <article className="bg-[var(--card-bg)] rounded-xl overflow-hidden shadow-2xl">
             {/* Featured Image */}
-            <div className="relative h-96 overflow-hidden">
+            <div
+              className="relative h-96 overflow-hidden cursor-pointer group"
+              onClick={() => setImageModalOpen(true)}
+            >
               <img
                 src={post.imageUrl}
                 alt={post.title}
-                className="w-full h-full object-cover"
+                className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
               />
+              <div className="absolute inset-0 bg-black opacity-0 group-hover:opacity-20 transition-opacity duration-300"></div>
+              <div className="absolute top-4 right-4 bg-black bg-opacity-50 text-white px-3 py-1 rounded-full text-sm opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                Click to view full image
+              </div>
               <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-[var(--background)] to-transparent p-8">
                 <span className="inline-block bg-gradient-to-r from-[var(--accent-primary)] to-[var(--olive)] text-[var(--background)] px-4 py-2 rounded-full text-sm font-bold mb-4">
                   {post.category}
@@ -126,6 +136,27 @@ export default function BlogViewer({ post, onClose }: BlogViewerProps) {
           </div>
         </div>
       </div>
+
+      {/* Image Modal */}
+      {imageModalOpen && (
+        <div
+          className="fixed inset-0 bg-black bg-opacity-90 z-[60] flex items-center justify-center p-4"
+          onClick={() => setImageModalOpen(false)}
+        >
+          <button
+            onClick={() => setImageModalOpen(false)}
+            className="absolute top-4 right-4 text-white hover:text-[var(--accent-primary)] transition-colors"
+          >
+            <X className="w-8 h-8" />
+          </button>
+          <img
+            src={post.imageUrl}
+            alt={post.title}
+            className="max-w-full max-h-full object-contain"
+            onClick={(e) => e.stopPropagation()}
+          />
+        </div>
+      )}
     </div>
   );
 }

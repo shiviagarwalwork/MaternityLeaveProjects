@@ -175,17 +175,17 @@ export default function AboutPage() {
             </div>
 
             <div className="border-l-4 border-[var(--accent-secondary)] pl-4">
-              <h4 className="font-bold text-[var(--foreground)] mb-1">5. Dinacarya</h4>
+              <h4 className="font-bold text-[var(--foreground)] mb-1">5. Dinacharya</h4>
               <p className="text-sm text-[var(--foreground)] opacity-80">Daily routine → Circadian alignment</p>
             </div>
 
             <div className="border-l-4 border-[var(--accent-tertiary)] pl-4">
-              <h4 className="font-bold text-[var(--foreground)] mb-1">6. Sadvṛtta</h4>
+              <h4 className="font-bold text-[var(--foreground)] mb-1">6. Sadvritta</h4>
               <p className="text-sm text-[var(--foreground)] opacity-80">Right conduct → Digital ethics</p>
             </div>
 
             <div className="border-l-4 border-[var(--accent-primary)] pl-4">
-              <h4 className="font-bold text-[var(--foreground)] mb-1">7. Ṛtucaryā</h4>
+              <h4 className="font-bold text-[var(--foreground)] mb-1">7. Ritucharya</h4>
               <p className="text-sm text-[var(--foreground)] opacity-80">Seasonal living → Natural rhythms</p>
             </div>
 

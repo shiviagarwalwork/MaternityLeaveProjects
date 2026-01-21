@@ -11,6 +11,7 @@ import Homepage from '@/components/Homepage';
 import PersonalizedPlan from '@/components/PersonalizedPlan';
 import QuickStart from '@/components/QuickStart';
 import AboutPage from '@/components/AboutPage';
+import AppShowcase from '@/components/AppShowcase';
 import ChakraIcon from '@/components/ChakraIcon';
 import OmSymbol from '@/components/OmSymbol';
 import {
@@ -26,17 +27,19 @@ import {
   Newspaper,
   CalendarCheck,
   Zap,
-  Info
+  Info,
+  Smartphone
 } from 'lucide-react';
 
-type Tab = 'home' | 'quick' | 'chat' | 'symptoms' | 'body' | 'dosha' | 'plan' | 'browser' | 'bookmarks' | 'about';
+type Tab = 'app' | 'home' | 'quick' | 'chat' | 'symptoms' | 'body' | 'dosha' | 'plan' | 'browser' | 'bookmarks' | 'about';
 
 export default function Home() {
-  const [activeTab, setActiveTab] = useState<Tab>('home');
+  const [activeTab, setActiveTab] = useState<Tab>('app');
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [showDisclaimer, setShowDisclaimer] = useState(true);
 
   const tabs = [
+    { id: 'app' as Tab, label: 'AyuVed App', icon: Smartphone, description: 'Download our mobile app' },
     { id: 'home' as Tab, label: 'Blog', icon: Newspaper, description: 'Ancient wisdom, modern life' },
     { id: 'about' as Tab, label: 'About', icon: Info, description: 'Our mission & vision' },
     { id: 'quick' as Tab, label: 'Quick Fix', icon: Zap, description: 'Instant solutions (1-2 min)' },
@@ -177,6 +180,7 @@ export default function Home() {
           {/* Main Content */}
           <main className="flex-1">
             <div className="transition-all duration-300">
+              {activeTab === 'app' && <AppShowcase />}
               {activeTab === 'home' && <Homepage />}
               {activeTab === 'about' && <AboutPage />}
               {activeTab === 'quick' && <QuickStart />}
