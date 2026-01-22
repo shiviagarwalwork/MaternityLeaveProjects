@@ -1,21 +1,21 @@
-// AI Service for AyuVed App
+// AI Service for NayaVed AI App
 // Connects to backend API for Claude AI integration
 
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { File } from 'expo-file-system';
 
 // Backend API URL - Change this when deploying
-// For local development: http://localhost:3000
-// For production: https://your-app.vercel.app
+// For local development: http://localhost:4000
+// For production: Deployed on Vercel
 // For physical device testing, use your computer's IP address
 // For simulator, localhost works fine
 const API_BASE_URL = __DEV__
-  ? 'http://10.0.0.218:4000'  // Your computer's local IP
-  : 'https://your-ayuved-backend.vercel.app'; // TODO: Update with your production URL
+  ? 'http://10.0.0.218:4000'  // Your computer's local IP for development
+  : 'https://backend-8j5meijqw-shiviagarwalwork-6100s-projects.vercel.app'; // Production API on Vercel
 
 // Storage keys
-const USER_ID_KEY = '@ayuved_user_id';
-const DEV_MODE_KEY = '@ayuved_dev_mode';
+const USER_ID_KEY = '@nayaved_user_id';
+const DEV_MODE_KEY = '@nayaved_dev_mode';
 
 // ============================================
 // USER MANAGEMENT

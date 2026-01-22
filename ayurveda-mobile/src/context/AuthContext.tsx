@@ -34,8 +34,8 @@ interface AuthContextType {
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 // Storage keys
-const USER_STORAGE_KEY = '@ayuved_user';
-const USER_DATA_PREFIX = '@ayuved_data_';
+const USER_STORAGE_KEY = '@nayaved_user';
+const USER_DATA_PREFIX = '@nayaved_data_';
 
 interface AuthProviderProps {
   children: ReactNode;

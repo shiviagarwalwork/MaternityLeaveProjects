@@ -68,7 +68,7 @@ export default function AppShowcase({ onNavigate }: AppShowcaseProps) {
             </div>
 
             <h1 className="text-4xl md:text-5xl font-bold text-[var(--ink-black)] mb-2" style={{fontFamily: 'Georgia, serif'}}>
-              AyuVed
+              NayaVed AI
             </h1>
             <p className="text-xl text-[var(--copper-brown)] mb-4 font-medium" style={{fontFamily: 'Georgia, serif'}}>
               Where Charaka Samhita Meets AI
@@ -85,7 +85,7 @@ export default function AppShowcase({ onNavigate }: AppShowcaseProps) {
             </div>
 
             <p className="text-[var(--ink-brown)] mb-6 leading-relaxed">
-              Unlike generic wellness apps, AyuVed is built on <strong>authenticated translations of the Charaka Samhita</strong> -
+              Unlike generic wellness apps, NayaVed AI is built on <strong>authenticated translations of the Charaka Samhita</strong> -
               a 2,000+ year old medical text that documented everything from digital-age problems (yes, they existed!)
               to personalized treatment protocols. Our AI doesn't guess - it references actual sutras.
             </p>
@@ -476,7 +476,7 @@ export default function AppShowcase({ onNavigate }: AppShowcaseProps) {
             Begin Your Ayurvedic Journey
           </h2>
           <p className="text-[#5D3A0A] mb-6 max-w-xl mx-auto leading-relaxed font-medium">
-            Download AyuVed and discover what the ancient physicians knew about your modern problems.
+            Download NayaVed AI and discover what the ancient physicians knew about your modern problems.
             Your personalized path to balance awaits - backed by 5,000 years of documented wisdom.
           </p>
           <div className="flex flex-wrap justify-center gap-4">

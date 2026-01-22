@@ -2,23 +2,48 @@
 export interface User {
   id: string;
   name: string;
-  email: string;
+  email?: string;
   stage: UserStage;
+  concerns: UserConcern[];
+  goals?: UserGoal[];
   dueDate?: string;
   babyBirthDate?: string;
+  babyName?: string;
   returnToWorkDate?: string;
   childrenAges?: number[];
+  hasCompletedOnboarding: boolean;
   createdAt: string;
 }
 
 export type UserStage =
-  | 'pregnancy'
-  | 'postpartum_0_3_months'
-  | 'postpartum_3_6_months'
-  | 'postpartum_6_12_months'
-  | 'return_to_work_prep'
-  | 'recently_returned'
-  | 'thriving';
+  | 'pregnant'
+  | 'new_mom'        // 0-6 months
+  | 'postpartum'     // 6-12 months
+  | 'returning_to_work'
+  | 'working_mom'
+  | 'established_mom';
+
+export type UserConcern =
+  | 'sleep_deprivation'
+  | 'anxiety_overwhelm'
+  | 'work_life_balance'
+  | 'career_identity'
+  | 'relationship_changes'
+  | 'physical_recovery'
+  | 'loneliness'
+  | 'mom_guilt'
+  | 'screen_time_kids'
+  | 'financial_stress';
+
+export type UserGoal =
+  | 'better_sleep'
+  | 'reduce_anxiety'
+  | 'career_growth'
+  | 'self_care'
+  | 'connect_with_baby'
+  | 'find_community'
+  | 'work_transition'
+  | 'parenting_skills';
 
 // Check-in Types
 export interface DailyCheckIn {

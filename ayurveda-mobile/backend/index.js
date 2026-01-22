@@ -1,5 +1,5 @@
 /**
- * AyuVed Backend API
+ * NayaVed Backend API
  * Handles Claude API calls, user usage tracking, and subscription management
  */
 
@@ -142,7 +142,7 @@ const callClaudeAPI = async (messages, systemPrompt, maxTokens = 1024) => {
 
 // Health check
 app.get('/', (req, res) => {
-  res.json({ status: 'ok', service: 'AyuVed API', version: '1.0.0' });
+  res.json({ status: 'ok', service: 'NayaVed API', version: '1.0.0' });
 });
 
 // Get user status (usage, subscription tier)
@@ -630,7 +630,7 @@ Format your responses with clear structure using **bold** for headings and bulle
 
 const PORT = process.env.PORT || 4000;
 app.listen(PORT, () => {
-  console.log(`AyuVed API running on port ${PORT}`);
+  console.log(`NayaVed API running on port ${PORT}`);
   console.log(`Free scan limit: ${FREE_SCAN_LIMIT}`);
   console.log(`Free chat limit: ${FREE_CHAT_LIMIT}`);
   console.log(`Developer codes configured: ${DEVELOPER_CODES.length}`);

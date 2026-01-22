@@ -153,7 +153,7 @@ export default function LoginScreen({ onLoginSuccess }: LoginScreenProps) {
         </View>
 
         {/* Title */}
-        <Text style={styles.title}>Ayuved</Text>
+        <Text style={styles.title}>NayaVed AI</Text>
         <Text style={styles.subtitle}>Ancient Wisdom for Modern Life</Text>
 
         {/* Exclusive message */}

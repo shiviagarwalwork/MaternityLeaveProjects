@@ -4,7 +4,7 @@ import { View, Text, StyleSheet } from 'react-native';
 export default function TestScreen() {
   return (
     <View style={styles.container}>
-      <Text style={styles.text}>✅ Ayuved App Works!</Text>
+      <Text style={styles.text}>✅ NayaVed AI App Works!</Text>
       <Text style={styles.subtitle}>Testing minimal screen</Text>
     </View>
   );

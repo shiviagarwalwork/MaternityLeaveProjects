@@ -9,7 +9,9 @@ import {
   Alert,
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { Colors, Spacing, BorderRadius, FontSizes } from '../constants/theme';
+import { LinearGradient } from 'expo-linear-gradient';
+import { Colors, Spacing, BorderRadius, FontSizes, FontWeights, Shadows } from '../constants/theme';
+import { useUser } from '../contexts/UserContext';
 
 interface MenuItem {
   id: string;
@@ -61,8 +63,22 @@ const menuSections: MenuSection[] = [
   },
 ];
 
+const stageLabels: { [key: string]: string } = {
+  pregnant: 'Expecting',
+  new_mom: 'New Mom',
+  postpartum: 'Postpartum',
+  returning_to_work: 'Returning to Work',
+  working_mom: 'Working Mom',
+  established_mom: 'Established Mom',
+};
+
 export default function ProfileScreen() {
+  const { user, resetOnboarding } = useUser();
   const [notificationsEnabled, setNotificationsEnabled] = useState(true);
+
+  const userName = user?.name || 'there';
+  const userInitial = userName.charAt(0).toUpperCase();
+  const userStage = user?.stage ? stageLabels[user.stage] || user.stage : 'Mom';
 
   const handleMenuPress = (itemId: string) => {
     switch (itemId) {
@@ -89,10 +105,10 @@ export default function ProfileScreen() {
   const handleLogout = () => {
     Alert.alert(
       'Log Out',
-      'Are you sure you want to log out?',
+      'Are you sure you want to log out? This will reset the app.',
       [
         { text: 'Cancel', style: 'cancel' },
-        { text: 'Log Out', style: 'destructive', onPress: () => {} },
+        { text: 'Log Out', style: 'destructive', onPress: () => resetOnboarding() },
       ]
     );
   };
@@ -101,20 +117,28 @@ export default function ProfileScreen() {
     <SafeAreaView style={styles.container} edges={['top']}>
       <ScrollView showsVerticalScrollIndicator={false}>
         {/* Header */}
-        <View style={styles.header}>
-          <Text style={styles.title}>Profile</Text>
-        </View>
+        <LinearGradient
+          colors={[Colors.primary50, Colors.background]}
+          style={styles.headerGradient}
+        >
+          <View style={styles.header}>
+            <Text style={styles.title}>Profile</Text>
+            <Text style={styles.subtitle}>Manage your account</Text>
+          </View>
+        </LinearGradient>
 
         {/* User Card */}
         <View style={styles.userCard}>
-          <View style={styles.avatar}>
-            <Text style={styles.avatarText}>S</Text>
-          </View>
+          <LinearGradient
+            colors={[Colors.primary, Colors.primaryDark]}
+            style={styles.avatar}
+          >
+            <Text style={styles.avatarText}>{userInitial}</Text>
+          </LinearGradient>
           <View style={styles.userInfo}>
-            <Text style={styles.userName}>Shivi</Text>
-            <Text style={styles.userEmail}>shivi@alphamothers.com</Text>
+            <Text style={styles.userName}>{userName}</Text>
             <View style={styles.stageBadge}>
-              <Text style={styles.stageText}>Returning to Work</Text>
+              <Text style={styles.stageText}>{userStage}</Text>
             </View>
           </View>
           <TouchableOpacity style={styles.editButton}>
@@ -210,15 +234,23 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: Colors.background,
   },
+  headerGradient: {
+    paddingBottom: Spacing.md,
+  },
   header: {
     paddingHorizontal: Spacing.lg,
     paddingTop: Spacing.md,
-    paddingBottom: Spacing.lg,
+    paddingBottom: Spacing.sm,
   },
   title: {
-    fontSize: FontSizes.xxxl,
-    fontWeight: '700',
+    fontSize: FontSizes.xxl,
+    fontWeight: FontWeights.bold,
     color: Colors.foreground,
+  },
+  subtitle: {
+    fontSize: FontSizes.sm,
+    color: Colors.muted,
+    marginTop: 2,
   },
   userCard: {
     marginHorizontal: Spacing.lg,
@@ -233,9 +265,9 @@ const styles = StyleSheet.create({
     width: 64,
     height: 64,
     borderRadius: 32,
-    backgroundColor: Colors.primary,
     alignItems: 'center',
     justifyContent: 'center',
+    ...Shadows.md,
   },
   avatarText: {
     fontSize: 28,
@@ -248,12 +280,8 @@ const styles = StyleSheet.create({
   },
   userName: {
     fontSize: FontSizes.xl,
-    fontWeight: '700',
+    fontWeight: FontWeights.bold,
     color: Colors.foreground,
-  },
-  userEmail: {
-    fontSize: FontSizes.sm,
-    color: Colors.muted,
     marginBottom: Spacing.xs,
   },
   stageBadge: {

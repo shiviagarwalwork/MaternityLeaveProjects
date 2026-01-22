@@ -7,6 +7,5 @@ __pycache__/
 .env.local
 
 # Projects with their own git repos
-alpha-mothers/
 ayurveda-knowledge-ui/
 ayurveda-mobile/

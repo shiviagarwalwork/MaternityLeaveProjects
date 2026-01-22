@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import Image from 'next/image';
 import ChatInterface from '@/components/ChatInterface';
 import DoshaAssessment from '@/components/DoshaAssessment';
 import KnowledgeBrowser from '@/components/KnowledgeBrowser';
@@ -34,7 +35,7 @@ export default function Home() {
   const [showDisclaimer, setShowDisclaimer] = useState(true);
 
   const tabs = [
-    { id: 'app' as Tab, label: 'AyuVed App', icon: Smartphone, description: 'AI-powered diagnostics' },
+    { id: 'app' as Tab, label: 'NayaVed AI App', icon: Smartphone, description: 'AI-powered diagnostics' },
     { id: 'about' as Tab, label: 'About', icon: Info, description: 'Our mission & vision' },
     { id: 'quick' as Tab, label: 'Quick Fix', icon: Zap, description: 'Symptom solutions' },
     { id: 'plan' as Tab, label: 'My Daily Plan', icon: CalendarCheck, description: 'Personalized schedule' },
@@ -75,23 +76,22 @@ export default function Home() {
 
         <div className="max-w-7xl mx-auto px-4 py-8 md:py-12">
           <div className="flex items-center justify-between">
-            <div className="flex items-center gap-5">
-              {/* AyuVed Lotus Logo */}
-              <div className="relative">
-                <div className="w-16 h-16 md:w-20 md:h-20 rounded-full bg-gradient-to-br from-[var(--parchment-light)] to-[var(--parchment-dark)] border-2 border-[var(--gold-leaf)] flex items-center justify-center shadow-lg">
-                  <LotusLogo className="text-[var(--copper-brown)]" size={44} />
-                </div>
-              </div>
-
+            <div className="flex items-center gap-4">
+              {/* NayaVed Logo */}
+              <Image
+                src="/images/Nayavednew.png"
+                alt="NayaVed AI"
+                width={80}
+                height={80}
+                style={{ objectFit: 'contain' }}
+                className="h-16 w-16 md:h-20 md:w-20"
+              />
               <div>
-                <h1 className="text-2xl md:text-4xl font-bold text-[var(--ink-black)] mb-1" style={{fontFamily: 'Georgia, serif'}}>
-                  AyuVed
+                <h1 className="text-3xl md:text-4xl font-bold text-[var(--ink-black)]" style={{fontFamily: 'Georgia, serif'}}>
+                  NayaVed <span className="text-[var(--copper-brown)]">AI</span>
                 </h1>
                 <p className="text-[var(--copper-brown)] text-sm md:text-base font-medium">
                   Ancient Wisdom, Modern Wellness
-                </p>
-                <p className="text-[var(--faded-ink)] text-xs md:text-sm mt-0.5 italic">
-                  Powered by Charaka Samhita & AI
                 </p>
               </div>
             </div>
@@ -202,10 +202,10 @@ export default function Home() {
             {/* About Section */}
             <div>
               <div className="flex items-center gap-3 mb-4">
-                <div className="w-12 h-12 rounded-full bg-gradient-to-br from-[var(--parchment-light)] to-white border border-[var(--gold-leaf)] flex items-center justify-center">
-                  <LotusLogo className="text-[var(--copper-brown)]" size={28} />
+                <div className="w-14 h-14 rounded-full bg-white border border-[var(--gold-leaf)] flex items-center justify-center overflow-hidden">
+                  <LotusLogo size={48} />
                 </div>
-                <h3 className="text-lg font-bold text-[var(--ink-black)]" style={{fontFamily: 'Georgia, serif'}}>AyuVed</h3>
+                <h3 className="text-lg font-bold text-[var(--ink-black)]" style={{fontFamily: 'Georgia, serif'}}>NayaVed AI</h3>
               </div>
               <p className="text-sm text-[var(--ink-brown)] leading-relaxed">
                 Bridging ancient Charaka Samhita wisdom with modern AI technology.
@@ -260,12 +260,14 @@ export default function Home() {
           <div className="mt-10 pt-8 border-t border-[var(--palm-leaf)]">
             <div className="flex flex-col md:flex-row items-center justify-between gap-4">
               <div className="flex items-center gap-3">
-                <LotusLogo className="text-[var(--gold-leaf)] opacity-70" size={32} />
+                <div className="w-10 h-10 rounded-full bg-white border border-[var(--gold-leaf)] flex items-center justify-center overflow-hidden">
+                  <LotusLogo size={36} />
+                </div>
                 <span className="text-[var(--gold-leaf)] text-xl">❖</span>
                 <span className="text-[var(--faded-ink)] text-sm italic" style={{fontFamily: 'Georgia, serif'}}>Where Charaka Samhita meets AI</span>
               </div>
               <p className="text-sm text-[var(--faded-ink)] text-center md:text-right">
-                &copy; 2024 AyuVed
+                &copy; 2024 NayaVed AI
                 <span className="mx-2">•</span>
                 <span className="italic">Ancient wisdom, modern wellness</span>
               </p>

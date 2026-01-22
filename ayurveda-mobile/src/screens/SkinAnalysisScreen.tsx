@@ -292,7 +292,7 @@ export default function SkinAnalysisScreen() {
   const updateOjasTracker = async (skinOjas: number) => {
     try {
       const today = new Date().toISOString().split('T')[0];
-      const ojasKey = `@ayuved_ojas_data_${today}`;
+      const ojasKey = `@nayaved_ojas_data_${today}`;
       const stored = await AsyncStorage.getItem(ojasKey);
 
       if (stored) {

@@ -1,6 +1,46 @@
 import Link from 'next/link';
 import Image from 'next/image';
 
+// Journey milestones - reverse chronological
+const journeyMilestones = [
+  {
+    year: 'Now',
+    title: 'Building Alpha Mothers',
+    description: 'On maternity leave with my second child, I\'m building Alpha Mothers—an AI life partner for mothers. Because if anyone understands the mental load of motherhood, it should be the technology we use.',
+    highlight: true,
+  },
+  {
+    year: '2025',
+    title: 'Second Maternity Leave',
+    description: 'November 2025—welcomed my second baby, a Gen Beta child. This time, I knew what was coming: the sleep deprivation, the identity shift, the mental load that multiplies (not just doubles) with two kids.',
+  },
+  {
+    year: '2025',
+    title: 'Deep Learning & NLP Course',
+    description: 'Completed Stanford\'s Natural Language Processing with Deep Learning course while working at Salesforce. Because if I\'m going to build AI that truly understands mothers, I need to understand how AI understands us.',
+  },
+  {
+    year: '2024',
+    title: 'Salesforce, Canada',
+    description: 'Moved to Canada and joined Salesforce. Continued building expertise in integration architecture, cloud solutions, and AI. Earned certifications in Salesforce AI, Mulesoft, and Microsoft Azure.',
+  },
+  {
+    year: '2022',
+    title: 'First Maternity Leave',
+    description: 'March 2022—became a mother for the first time in Hyderabad, welcoming my Gen Alpha child while working at Deloitte. Six months of the most transformative, overwhelming, beautiful chaos of my life.',
+  },
+  {
+    year: '2017+',
+    title: 'Deloitte, Hyderabad',
+    description: 'Moved to Deloitte in Hyderabad, building expertise in enterprise integration and technology consulting. This is where I was when I became a mother for the first time.',
+  },
+  {
+    year: '2014',
+    title: 'Infosys, Mysore & Pune',
+    description: 'Started my tech career at Infosys—training at the Mysore campus, then working in Pune. The foundation for everything that came after.',
+  },
+];
+
 export default function AboutPage() {
   return (
     <div className="overflow-hidden">
@@ -10,20 +50,22 @@ export default function AboutPage() {
           <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-[var(--primary-light)] opacity-10 blob blob-animate" />
         </div>
 
-        <div className="relative mx-auto max-w-3xl px-4 sm:px-6 lg:px-8 text-center">
-          <h1 className="text-4xl md:text-5xl font-bold text-[var(--foreground)] mb-6">
-            About Alpha Mothers
+        <div className="relative mx-auto max-w-4xl px-4 sm:px-6 lg:px-8 text-center">
+          <p className="text-[var(--primary)] font-medium mb-4">About Me</p>
+          <h1 className="text-4xl md:text-5xl font-bold text-[var(--foreground)] mb-6 leading-tight">
+            From India to Canada, now building AI for mothers.
           </h1>
-          <p className="text-xl text-[var(--muted)] leading-relaxed">
-            A space for Millennial moms navigating career, motherhood, and raising kids in the AI age.
+          <p className="text-xl text-[var(--muted)] leading-relaxed max-w-2xl mx-auto">
+            I&apos;m Shivi—a tech professional with 10+ years at Infosys, Deloitte, and Salesforce, and a mother of two.
+            Currently on maternity leave, building the support system I wish I had.
           </p>
         </div>
       </section>
 
-      {/* My Story */}
+      {/* Photo + Intro */}
       <section className="py-20">
         <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8">
-          <div className="flex flex-col md:flex-row items-center gap-12 mb-12">
+          <div className="flex flex-col md:flex-row items-center gap-12">
             {/* Photo */}
             <div className="flex-shrink-0">
               <div className="relative w-56 h-56 md:w-72 md:h-72 rounded-2xl overflow-hidden shadow-xl">
@@ -42,51 +84,131 @@ export default function AboutPage() {
               <h2 className="text-3xl font-bold text-[var(--foreground)] mb-4">
                 Hi, I&apos;m Shivi
               </h2>
-              <p className="text-xl text-[var(--muted)] leading-relaxed">
-                A Millennial mom, career woman, and the founder of Alpha Mothers.
-                I&apos;m here because I believe we shouldn&apos;t have to navigate
-                this journey alone.
+              <p className="text-lg text-[var(--muted)] leading-relaxed mb-4">
+                I&apos;m currently on maternity leave with my second child, and I&apos;m using
+                this time to build something I desperately needed the first time around:
+                <span className="text-[var(--foreground)] font-medium"> an AI that actually helps
+                mothers manage the mental load.</span>
+              </p>
+              <p className="text-lg text-[var(--muted)] leading-relaxed">
+                By day (well, by naptime), I work at Salesforce. By night (between feeds),
+                I&apos;m studying NLP at Stanford. And in every spare moment, I&apos;m building Alpha Mothers.
               </p>
             </div>
           </div>
+        </div>
+      </section>
 
-          <div className="space-y-6 text-lg text-[var(--muted)] leading-relaxed max-w-3xl mx-auto">
+      {/* The Journey - Timeline */}
+      <section className="py-20 bg-[var(--cream)]">
+        <div className="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8">
+          <h2 className="text-3xl font-bold text-[var(--foreground)] mb-4 text-center">
+            The Journey
+          </h2>
+          <p className="text-center text-[var(--muted)] mb-12 max-w-xl mx-auto">
+            From building enterprise software to building for mothers—here&apos;s how I got here.
+          </p>
+
+          <div className="space-y-8">
+            {journeyMilestones.map((milestone, index) => (
+              <div
+                key={index}
+                className={`flex gap-6 ${milestone.highlight ? '' : ''}`}
+              >
+                {/* Year marker */}
+                <div className="flex-shrink-0 w-20 text-right">
+                  <span className={`font-bold ${
+                    milestone.highlight
+                      ? 'text-[var(--primary)] text-lg'
+                      : 'text-[var(--muted)]'
+                  }`}>
+                    {milestone.year}
+                  </span>
+                </div>
+
+                {/* Timeline line */}
+                <div className="flex flex-col items-center">
+                  <div className={`w-3 h-3 rounded-full ${
+                    milestone.highlight
+                      ? 'bg-[var(--primary)]'
+                      : 'bg-[var(--muted)]'
+                  }`} />
+                  {index < journeyMilestones.length - 1 && (
+                    <div className="w-0.5 h-full bg-[var(--border)] mt-2" />
+                  )}
+                </div>
+
+                {/* Content */}
+                <div className={`flex-1 pb-8 ${
+                  milestone.highlight
+                    ? 'bg-white rounded-xl p-6 shadow-sm -mt-2'
+                    : ''
+                }`}>
+                  <h3 className={`font-bold mb-2 ${
+                    milestone.highlight
+                      ? 'text-xl text-[var(--foreground)]'
+                      : 'text-lg text-[var(--foreground)]'
+                  }`}>
+                    {milestone.title}
+                  </h3>
+                  <p className={`leading-relaxed ${
+                    milestone.highlight
+                      ? 'text-[var(--foreground)]'
+                      : 'text-[var(--muted)]'
+                  }`}>
+                    {milestone.description}
+                  </p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Why I'm Building This */}
+      <section className="py-20">
+        <div className="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8">
+          <h2 className="text-3xl font-bold text-[var(--foreground)] mb-8 text-center">
+            Why I&apos;m building Alpha Mothers
+          </h2>
+
+          <div className="space-y-6 text-lg text-[var(--muted)] leading-relaxed">
             <p>
-              I remember the day I met a new mom returning to work after mat leave. It took me right
-              back to my own experience two years ago—that mix of emotions. Excitement. Nervousness.
-              And this overwhelming urge to prove I could still &quot;do it all.&quot;
+              During my first maternity leave, I experienced something no one warned me about:
+              the mental load. Not just the physical exhaustion of caring for a newborn, but
+              the constant cognitive burden of tracking, planning, worrying, anticipating—all
+              while trying to figure out who I was becoming.
             </p>
 
             <p>
-              Being a career-oriented, high-achieving Millennial mom is <em>a lot</em>. We&apos;re
-              the generation that was told we could have it all, and now we&apos;re discovering
-              that &quot;having it all&quot; often means carrying it all—the career ambitions, the
-              parenting guilt, the mental load, and now the pressure to prepare our kids for an
-              AI-driven future we can barely imagine ourselves.
+              I had apps for tracking feeds. Apps for tracking sleep. Apps for tracking my mood.
+              But nothing that actually <em>helped</em>. Nothing that understood that I needed
+              someone to talk to at 3am. Nothing that could capture the million things swirling
+              in my brain without adding to the overwhelm.
             </p>
 
             <p>
-              I created Alpha Mothers because I needed a space like this. A place where we can be
-              honest about how hard this is, without pretending we have it all figured out. A place
-              to explore the questions that keep us up at 3am: Am I doing enough? Am I present enough?
-              Am I preparing my kids for a world that&apos;s changing faster than I can keep up with?
-            </p>
-
-            <p className="text-[var(--foreground)] font-medium">
-              I believe in the right to seek a better quality of life in the name of balance,
-              self-esteem, and personal growth.
+              Now, on my second maternity leave, I&apos;m building what I wished existed:
+              <span className="text-[var(--foreground)] font-medium"> an AI life partner that
+              combines the empathy of a therapist with the practicality of an executive assistant.</span>
             </p>
 
             <p>
-              That doesn&apos;t mean perfection. It means permission—to struggle, to question, to
-              figure it out as we go. Together.
+              I believe technology should reduce our mental load, not add to it. I believe
+              mothers deserve support that meets them where they are—at 3am, mid-meltdown,
+              or in the quiet moments when the guilt creeps in.
+            </p>
+
+            <p className="text-[var(--foreground)] font-medium text-xl">
+              That&apos;s why I&apos;m building Alpha Mothers. And I&apos;m building it in public,
+              because I know I&apos;m not the only one who needs this.
             </p>
           </div>
         </div>
       </section>
 
       {/* What I Write About */}
-      <section className="py-20 bg-[var(--cream)]">
+      <section className="py-20 bg-[var(--blush)]">
         <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8">
           <h2 className="text-3xl font-bold text-[var(--foreground)] mb-12 text-center">
             What I explore here
@@ -94,26 +216,26 @@ export default function AboutPage() {
 
           <div className="grid md:grid-cols-3 gap-8">
             <div className="bg-white rounded-2xl p-8">
-              <h3 className="text-xl font-bold text-[var(--foreground)] mb-4">Mental Health</h3>
+              <h3 className="text-xl font-bold text-[var(--foreground)] mb-4">Mental Load</h3>
               <p className="text-[var(--muted)]">
-                The anxiety, the guilt, the identity shifts that come with motherhood. The stuff
-                we don&apos;t always talk about but desperately need to.
+                The invisible labor of motherhood. The constant background process running
+                in our brains. The thing that exhausts us even when we&apos;re &quot;resting.&quot;
               </p>
             </div>
 
             <div className="bg-white rounded-2xl p-8">
-              <h3 className="text-xl font-bold text-[var(--foreground)] mb-4">Career & Work</h3>
+              <h3 className="text-xl font-bold text-[var(--foreground)] mb-4">Tech & Motherhood</h3>
               <p className="text-[var(--muted)]">
-                Returning to work after leave. Navigating ambition alongside caregiving. Finding
-                your worth when you feel like you&apos;re failing at both.
+                How AI can actually help mothers—not just track data, but provide real support.
+                Building technology that understands the complexity of our lives.
               </p>
             </div>
 
             <div className="bg-white rounded-2xl p-8">
               <h3 className="text-xl font-bold text-[var(--foreground)] mb-4">Raising Gen Alpha</h3>
               <p className="text-[var(--muted)]">
-                Our kids are growing up as the first &quot;AI natives.&quot; How do we prepare them for
-                a future we can&apos;t predict? How do we raise humans in an AI world?
+                Our kids are the first AI natives. How do we prepare them for a future
+                we can&apos;t predict? How do we raise humans in an AI world?
               </p>
             </div>
           </div>
@@ -129,54 +251,64 @@ export default function AboutPage() {
 
           <div className="space-y-6 text-lg text-[var(--muted)] leading-relaxed">
             <p>
-              Our children are Generation Alpha—the first generation born entirely in the 21st century,
-              growing up with AI as a natural part of their world.
+              My first child is Generation Alpha—the first generation born entirely in the
+              21st century, growing up with AI as a natural part of their world. My second
+              is Generation Beta, born into a world where AI is already everywhere.
             </p>
 
             <p>
-              And we&apos;re their mothers. Millennial women who came of age in the digital revolution
-              and are now raising kids through the AI revolution. We&apos;re navigating something unprecedented.
+              And I&apos;m their mother. A Millennial woman who came of age in the digital
+              revolution and is now raising kids through the AI revolution.
             </p>
 
             <p>
-              &quot;Alpha&quot; isn&apos;t about being the best or the most dominant. It&apos;s about being
-              at the forefront of a new era of motherhood—one that looks nothing like our mothers&apos;
-              experience, and one we&apos;re figuring out in real time.
+              &quot;Alpha Mothers&quot; isn&apos;t about being the best or the most dominant. It&apos;s
+              about being at the forefront of a new era of motherhood—raising the Alpha and Beta
+              generations while figuring it out in real time, together.
             </p>
           </div>
         </div>
       </section>
 
-      {/* My Approach */}
-      <section className="py-20 bg-[var(--blush)]">
+      {/* Credentials */}
+      <section className="py-20 bg-[var(--cream)]">
         <div className="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8">
           <h2 className="text-3xl font-bold text-[var(--foreground)] mb-8 text-center">
-            My approach
+            Background
           </h2>
 
-          <div className="space-y-8">
+          <div className="grid md:grid-cols-2 gap-8">
             <div>
-              <h3 className="text-xl font-bold text-[var(--foreground)] mb-3">Honest, not perfect</h3>
-              <p className="text-[var(--muted)]">
-                I don&apos;t have all the answers. I&apos;m figuring this out too. What I can offer is
-                honesty about the struggle and a willingness to explore the hard questions together.
-              </p>
+              <h3 className="font-bold text-[var(--foreground)] mb-4">Courses</h3>
+              <ul className="space-y-2 text-[var(--muted)]">
+                <li>Stanford — NLP with Deep Learning</li>
+              </ul>
             </div>
 
             <div>
-              <h3 className="text-xl font-bold text-[var(--foreground)] mb-3">Questions over answers</h3>
-              <p className="text-[var(--muted)]">
-                The most helpful thing I&apos;ve found isn&apos;t someone telling me what to do—it&apos;s
-                having space to think through what matters to me. I try to create that space here.
-              </p>
+              <h3 className="font-bold text-[var(--foreground)] mb-4">Certifications</h3>
+              <ul className="space-y-2 text-[var(--muted)]">
+                <li>Salesforce AI Associate</li>
+                <li>Mulesoft Platform Architect</li>
+                <li>Microsoft Azure Fundamentals</li>
+              </ul>
             </div>
 
             <div>
-              <h3 className="text-xl font-bold text-[var(--foreground)] mb-3">Community over isolation</h3>
-              <p className="text-[var(--muted)]">
-                Motherhood can be isolating, especially when you&apos;re also trying to maintain a career.
-                Knowing you&apos;re not alone in your struggles makes them more bearable.
-              </p>
+              <h3 className="font-bold text-[var(--foreground)] mb-4">Work</h3>
+              <ul className="space-y-2 text-[var(--muted)]">
+                <li>Salesforce, Canada (2024–present)</li>
+                <li>Deloitte, Hyderabad (2017–2024)</li>
+                <li>Infosys, Mysore & Pune (2014–2017)</li>
+              </ul>
+            </div>
+
+            <div>
+              <h3 className="font-bold text-[var(--foreground)] mb-4">Writing</h3>
+              <ul className="space-y-2 text-[var(--muted)]">
+                <li>Published articles on AI and parenting</li>
+                <li>Thought leadership on raising Gen Alpha</li>
+              </ul>
             </div>
           </div>
         </div>
@@ -190,15 +322,23 @@ export default function AboutPage() {
           </h2>
           <p className="text-xl text-[var(--muted)] mb-8 leading-relaxed">
             If any of this resonates with you, I&apos;d love to hear from you.
-            Read the blog, reach out, or explore coaching if you want to dive deeper.
+            Follow the journey, try Alpha, or just say hi.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Link href="/resources" className="btn-primary">
+            <Link href="/app" className="btn-primary">
+              Try Alpha Mothers
+            </Link>
+            <Link href="/resources" className="btn-secondary">
               Read the Blog
             </Link>
-            <Link href="/community" className="btn-secondary">
-              Join the Community
-            </Link>
+            <a
+              href="https://www.linkedin.com/in/shivi-agarwal-95b15537/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="btn-secondary"
+            >
+              LinkedIn
+            </a>
           </div>
         </div>
       </section>

@@ -1,7 +1,7 @@
 {
-  "name": "ayuved-backend",
+  "name": "nayaved-backend",
   "version": "1.0.0",
-  "description": "Backend API for AyuVed Ayurveda app",
+  "description": "Backend API for NayaVed Ayurveda app",
   "main": "index.js",
   "scripts": {
     "start": "node index.js",

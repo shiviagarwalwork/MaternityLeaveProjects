@@ -1,6 +1,68 @@
 import Link from 'next/link';
 import Image from 'next/image';
-import { Heart, Bot, Briefcase, Baby } from 'lucide-react';
+import { MessageCircle, Brain, Calendar, Users, Sparkles } from 'lucide-react';
+
+// Example conversations to showcase the app
+const conversations = [
+  {
+    context: "Morning overwhelm",
+    userMessage: "I'm already exhausted and the day hasn't even started. The baby was up twice, I have a big presentation at 2, and I haven't even looked at my emails.",
+    alphaResponse: "That sounds really hard. Let me help take some things off your plate. I looked at your inbox - out of 34 new emails, only 2 actually need you before your meeting. Your presentation is at 2pm, and you have a clear block from 10 to 12 for prep. Want me to mark you as 'focused' so people don't book over it?"
+  },
+  {
+    context: "2am thoughts",
+    userMessage: "I can't turn my brain off. I keep checking if she's breathing. I know it's irrational but I can't stop.",
+    alphaResponse: "I'm glad you're talking to me right now instead of sitting alone with these thoughts. What you're describing - the constant checking, the inability to rest - this is really common in the postpartum period. It doesn't mean you're crazy. Your brain is trying to protect her so hard that it's hurting you."
+  },
+  {
+    context: "Partner frustration",
+    userMessage: "He got to go to the gym while I did everything with the kids. And then he comes home and says he's tired. TIRED.",
+    alphaResponse: "I can hear the frustration. The imbalance isn't just about the gym - it's about what it represents. He got a break from parenthood while you were deep in it. This resentment, left unaddressed, will grow. What would fair look like to you?"
+  }
+];
+
+const fiveLayers = [
+  {
+    title: 'Emotional Support',
+    subtitle: 'Like a Therapist',
+    description: 'Voice conversations anytime. Processes emotions, validates feelings. Remembers your story, struggles, and wins.',
+    icon: MessageCircle,
+    color: 'text-[var(--primary)]',
+    bgColor: 'bg-[var(--primary-50)]',
+  },
+  {
+    title: 'Mental Load Capture',
+    subtitle: 'Your Second Brain',
+    description: 'Everything you mention gets captured automatically. To-dos, worries, ideas. You never have to write it down.',
+    icon: Brain,
+    color: 'text-[var(--accent)]',
+    bgColor: 'bg-[var(--sage-mist)]',
+  },
+  {
+    title: 'Active Management',
+    subtitle: 'Executive Assistant',
+    description: 'Email triage, calendar protection, meeting prep. AlphaMa handles the admin so you can focus on what matters.',
+    icon: Calendar,
+    color: 'text-[var(--secondary-dark)]',
+    bgColor: 'bg-[#FDF5ED]',
+  },
+  {
+    title: 'Family Coordination',
+    subtitle: 'Household Manager',
+    description: 'Task delegation to your partner via text. Shared lists, fair division suggestions, meal planning.',
+    icon: Users,
+    color: 'text-[var(--primary)]',
+    bgColor: 'bg-[var(--blush)]',
+  },
+  {
+    title: 'Proactive Intelligence',
+    subtitle: 'Life Manager',
+    description: 'Anticipates needs before you ask. Pattern recognition. Connects the dots across all areas of your life.',
+    icon: Sparkles,
+    color: 'text-[var(--accent)]',
+    bgColor: 'bg-[var(--sage-mist)]',
+  },
+];
 
 // Blog posts from alphamothers.com
 const blogPosts = [
@@ -14,54 +76,13 @@ const blogPosts = [
     excerpt: "Fast forward 10 years. What will life be like for our Alpha Generation kids? It's a wild future, right? But how do we prepare our kids for a world that's changing so fast?",
     slug: "parenting-for-2035",
   },
-  {
-    title: "Welcome Back! You've Got This",
-    excerpt: "Today I met a new mom returning to work after mat leave, and it took me right back to my own experience two years ago. It's not about going back. It's about moving forward.",
-    slug: "welcome-back",
-  },
-  {
-    title: "Returning to Work? Know Your Worth",
-    excerpt: "The conversation about your value doesn't start when you walk back through those office doors. It starts with how you see yourself.",
-    slug: "know-your-worth",
-  },
-];
-
-const appFeatures = [
-  {
-    title: 'Daily Check-ins',
-    description: 'A 30-second mood and energy assessment that tracks your mental state without overwhelming you.',
-    icon: Heart,
-    color: 'text-[var(--primary)]',
-    bgColor: 'bg-[var(--primary-50)]',
-  },
-  {
-    title: 'AI Companion',
-    description: 'Get personalized support and pattern insights at any hour—even at 3am when the racing thoughts won\'t stop.',
-    icon: Bot,
-    color: 'text-[var(--accent)]',
-    bgColor: 'bg-[var(--sage-mist)]',
-  },
-  {
-    title: 'Return-to-Work Guides',
-    description: 'Transition timelines, confidence exercises, and scripts for negotiating flexibility.',
-    icon: Briefcase,
-    color: 'text-[var(--secondary-dark)]',
-    bgColor: 'bg-[#FDF5ED]',
-  },
-  {
-    title: 'Gen Alpha Resources',
-    description: 'Age-appropriate AI literacy guides, screen time wisdom, and family tech agreements.',
-    icon: Baby,
-    color: 'text-[var(--primary)]',
-    bgColor: 'bg-[var(--blush)]',
-  },
 ];
 
 export default function HomePage() {
   return (
     <div className="overflow-hidden">
-      {/* Hero Section - Personal & Authentic */}
-      <section className="relative min-h-[85vh] flex items-center">
+      {/* Hero Section - Problem-First */}
+      <section className="relative min-h-[90vh] flex items-center">
         <div className="absolute inset-0 overflow-hidden">
           <div className="absolute top-20 right-0 w-[600px] h-[600px] bg-[var(--primary-light)] opacity-10 blob blob-animate" />
           <div className="absolute bottom-0 left-0 w-[400px] h-[400px] bg-[var(--secondary)] opacity-10 blob blob-animate" style={{ animationDelay: '-4s' }} />
@@ -88,17 +109,19 @@ export default function HomePage() {
                 Hi, I&apos;m Shivi Agarwal
               </p>
               <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold text-[var(--foreground)] leading-tight mb-6 animate-fade-in-up">
-                Are you a Millennial mom raising an Alpha Gen child while navigating a demanding career?
+                Your brain is running a constant background process.
               </h1>
               <p className="text-lg md:text-xl text-[var(--muted)] mb-8 animate-fade-in-up delay-200 leading-relaxed">
-                You&apos;re not alone. And you don&apos;t have to figure this out by yourself.
+                Tracking. Anticipating. Planning. Worrying. Even when you&apos;re &quot;relaxing,&quot; the mental tabs are open.
+                <br /><br />
+                <span className="text-[var(--foreground)] font-medium">What if you could hand off the mental load to someone who actually understands?</span>
               </p>
               <div className="animate-fade-in-up delay-300 flex flex-col sm:flex-row gap-4 justify-center md:justify-start">
-                <Link href="/about" className="btn-primary">
-                  Read My Story
+                <Link href="/app" className="btn-primary">
+                  Meet AlphaMa
                 </Link>
-                <Link href="/app" className="btn-secondary">
-                  Explore the App
+                <Link href="/about" className="btn-secondary">
+                  Read My Story
                 </Link>
               </div>
             </div>
@@ -106,124 +129,207 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* The Reality - Personal Story */}
+      {/* The Problem - Deep Understanding */}
+      <section className="py-20 bg-[var(--cream)]">
+        <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-16">
+            <h2 className="text-3xl md:text-4xl font-bold text-[var(--foreground)] mb-6">
+              The mental load isn&apos;t the tasks. It&apos;s REMEMBERING and MANAGING all the tasks.
+            </h2>
+          </div>
+
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
+            {[
+              { layer: 'Emotional', example: 'Guilt, anxiety, overwhelm, feeling unseen' },
+              { layer: 'Cognitive', example: 'Remembering everything for everyone' },
+              { layer: 'Administrative', example: 'Emails, forms, appointments, bills' },
+              { layer: 'Coordination', example: 'Who\'s picking up? What\'s for dinner?' },
+              { layer: 'Work', example: 'Meetings, deadlines, pumping schedules' },
+              { layer: 'Self', example: 'Personal needs - always last priority' },
+            ].map((item, i) => (
+              <div key={i} className="bg-white rounded-xl p-6 shadow-sm">
+                <h3 className="font-bold text-[var(--foreground)] mb-2">{item.layer}</h3>
+                <p className="text-[var(--muted)] text-sm">{item.example}</p>
+              </div>
+            ))}
+          </div>
+
+          <div className="text-center">
+            <p className="text-xl text-[var(--muted)] leading-relaxed mb-4">
+              Therapy helps with feelings but doesn&apos;t handle logistics. Productivity apps add MORE to manage.
+              To-do lists just remind you of everything you&apos;re not doing.
+            </p>
+            <p className="text-xl text-[var(--foreground)] font-medium">
+              You don&apos;t need another app. You need a partner.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      {/* Alpha Introduction */}
+      <section className="py-20">
+        <div className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-16">
+            <p className="text-[var(--primary)] font-medium mb-4">Introducing</p>
+            <h2 className="text-4xl md:text-5xl font-bold text-[var(--foreground)] mb-6">
+              AlphaMa
+            </h2>
+            <p className="text-xl text-[var(--muted)] max-w-3xl mx-auto leading-relaxed">
+              Your AI life partner - a therapist, executive assistant, and family coordinator in one.
+              Available 24/7 through natural voice conversation.
+            </p>
+          </div>
+
+          <div className="grid md:grid-cols-2 gap-8 mb-16">
+            <div className="bg-[var(--primary-50)] rounded-2xl p-8">
+              <h3 className="text-2xl font-bold text-[var(--foreground)] mb-4">Talk, don&apos;t type.</h3>
+              <p className="text-[var(--muted)] mb-4">
+                She&apos;s already holding a baby. Voice-first means she can vent, plan, and delegate while
+                nursing, cooking, or commuting.
+              </p>
+            </div>
+            <div className="bg-[var(--sage-mist)] rounded-2xl p-8">
+              <h3 className="text-2xl font-bold text-[var(--foreground)] mb-4">Remembers everything.</h3>
+              <p className="text-[var(--muted)] mb-4">
+                No more keeping it all in her head. AlphaMa captures to-dos, worries, ideas, and appointments
+                from conversation - and handles them.
+              </p>
+            </div>
+            <div className="bg-[#FDF5ED] rounded-2xl p-8">
+              <h3 className="text-2xl font-bold text-[var(--foreground)] mb-4">Therapist + Assistant.</h3>
+              <p className="text-[var(--muted)] mb-4">
+                Emotional support AND practical help. Process the guilt AND delegate the tasks.
+                AlphaMa does both.
+              </p>
+            </div>
+            <div className="bg-[var(--blush)] rounded-2xl p-8">
+              <h3 className="text-2xl font-bold text-[var(--foreground)] mb-4">Actually does things.</h3>
+              <p className="text-[var(--muted)] mb-4">
+                Texts your partner about diaper runs. Blocks focus time on your calendar.
+                Drafts the email. AlphaMa takes action.
+              </p>
+            </div>
+          </div>
+
+          <div className="text-center">
+            <Link href="/app" className="btn-primary">
+              See How It Works
+            </Link>
+          </div>
+        </div>
+      </section>
+
+      {/* Example Conversations */}
+      <section className="py-20 bg-[var(--blush)]">
+        <div className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-16">
+            <h2 className="text-3xl md:text-4xl font-bold text-[var(--foreground)] mb-6">
+              What talking to AlphaMa actually looks like
+            </h2>
+            <p className="text-xl text-[var(--muted)]">
+              Real conversations. Real support. At any hour.
+            </p>
+          </div>
+
+          <div className="space-y-8">
+            {conversations.map((convo, index) => (
+              <div key={index} className="bg-white rounded-2xl p-8 shadow-sm">
+                <p className="text-sm text-[var(--primary)] font-medium mb-4">{convo.context}</p>
+
+                {/* User message */}
+                <div className="flex justify-end mb-4">
+                  <div className="bg-[var(--primary)] text-white rounded-2xl rounded-br-md px-5 py-3 max-w-[80%]">
+                    <p className="text-sm">&quot;{convo.userMessage}&quot;</p>
+                  </div>
+                </div>
+
+                {/* Alpha response */}
+                <div className="flex justify-start">
+                  <div className="bg-[var(--cream)] rounded-2xl rounded-bl-md px-5 py-3 max-w-[80%]">
+                    <div className="flex items-center gap-2 mb-2">
+                      <div className="w-6 h-6 rounded-full bg-[var(--primary)] flex items-center justify-center">
+                        <span className="text-white text-xs font-bold">A</span>
+                      </div>
+                      <span className="text-xs font-medium text-[var(--primary)]">AlphaMa</span>
+                    </div>
+                    <p className="text-sm text-[var(--foreground)]">&quot;{convo.alphaResponse}&quot;</p>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+
+          <div className="text-center mt-12">
+            <Link href="/app" className="btn-primary">
+              Start Talking to AlphaMa
+            </Link>
+          </div>
+        </div>
+      </section>
+
+      {/* Five Layers */}
+      <section className="py-20">
+        <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-16">
+            <h2 className="text-3xl md:text-4xl font-bold text-[var(--foreground)] mb-6">
+              Five layers of support
+            </h2>
+            <p className="text-xl text-[var(--muted)] max-w-2xl mx-auto">
+              More than a chatbot. More than an assistant. AlphaMa is a complete life partner.
+            </p>
+          </div>
+
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {fiveLayers.map((layer, index) => {
+              const IconComponent = layer.icon;
+              return (
+                <div key={index} className="bg-white rounded-2xl p-6 shadow-sm hover:shadow-md transition-shadow">
+                  <div className={`w-12 h-12 rounded-xl ${layer.bgColor} flex items-center justify-center mb-4`}>
+                    <IconComponent className={`w-6 h-6 ${layer.color}`} strokeWidth={1.5} />
+                  </div>
+                  <p className="text-xs text-[var(--muted)] font-medium uppercase tracking-wide mb-1">{layer.subtitle}</p>
+                  <h3 className="text-lg font-bold text-[var(--foreground)] mb-2">{layer.title}</h3>
+                  <p className="text-sm text-[var(--muted)]">{layer.description}</p>
+                </div>
+              );
+            })}
+          </div>
+        </div>
+      </section>
+
+      {/* Personal Story */}
       <section className="py-20 bg-[var(--cream)]">
         <div className="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
             <h2 className="text-3xl md:text-4xl font-bold text-[var(--foreground)] mb-6">
-              I&apos;ve been there.
+              I built this because I needed it.
             </h2>
           </div>
 
           <div className="space-y-6 text-lg text-[var(--muted)] leading-relaxed">
             <p>
-              Today I met a new mom returning to work after mat leave, and it took me right back to my own
-              experience two years ago. I remember that mix of emotions – excitement, nervousness, and this
-              overwhelming urge to prove I could still &quot;do it all.&quot;
+              I&apos;m currently on maternity leave, and let me tell you - the mental load is real.
+              Even when I&apos;m supposed to be &quot;off,&quot; my brain is running a constant background process:
+              tracking feeds, worrying about milestones, managing the household, and already thinking about
+              what returning to work will look like.
             </p>
             <p>
-              Being a career-oriented, high-achieving Millennial mom is <em>a lot</em>. And with AI changing
-              the world at warp speed, the pressure is on to prepare our kids for a future we can barely imagine.
-            </p>
-            <p>
-              We&apos;re caught between two worlds: trying to advance in careers that were designed for people
-              without caregiving responsibilities, while also wanting to be present for our children during
-              the most formative years of their lives.
+              We&apos;re caught between two worlds: ambitious careers that were designed for people
+              without caregiving responsibilities, and wanting to be fully present for our children during
+              the most precious (and exhausting) moments of their lives.
             </p>
             <p className="text-[var(--foreground)] font-medium">
-              I created Alpha Mothers because I believe in the right to seek a better quality of life
-              in the name of balance, self-esteem, and personal growth.
+              The mental load isn&apos;t about being organized enough or trying harder. It&apos;s about
+              needing real support - someone (or something) that can carry some of it with you.
             </p>
-          </div>
-        </div>
-      </section>
-
-      {/* What This Space Is About */}
-      <section className="py-20">
-        <div className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-4xl font-bold text-[var(--foreground)] mb-6">
-              What I think about
-            </h2>
-            <p className="text-xl text-[var(--muted)] max-w-2xl mx-auto">
-              The conversations I wish more people were having.
+            <p>
+              That&apos;s why I&apos;m building Alpha Mothers.
             </p>
           </div>
 
-          <div className="grid md:grid-cols-3 gap-8">
-            <div className="text-center p-8">
-              <div className="w-16 h-16 mx-auto rounded-full bg-[var(--primary-50)] flex items-center justify-center mb-6">
-                <svg className="w-8 h-8 text-[var(--primary)]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
-                </svg>
-              </div>
-              <h3 className="text-xl font-bold text-[var(--foreground)] mb-4">Our Mental Health</h3>
-              <p className="text-[var(--muted)]">
-                The anxiety that keeps us up at 3am. The guilt we carry. The identity crisis
-                no one warned us about. Let&apos;s talk about it honestly.
-              </p>
-            </div>
-
-            <div className="text-center p-8">
-              <div className="w-16 h-16 mx-auto rounded-full bg-[#FDF5ED] flex items-center justify-center mb-6">
-                <svg className="w-8 h-8 text-[var(--secondary-dark)]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
-                </svg>
-              </div>
-              <h3 className="text-xl font-bold text-[var(--foreground)] mb-4">Returning to Work</h3>
-              <p className="text-[var(--muted)]">
-                That transition back is harder than anyone admits. The imposter syndrome.
-                The pumping logistics. The guilt. You&apos;ve got this—and you don&apos;t have to pretend it&apos;s easy.
-              </p>
-            </div>
-
-            <div className="text-center p-8">
-              <div className="w-16 h-16 mx-auto rounded-full bg-[var(--sage-mist)] flex items-center justify-center mb-6">
-                <svg className="w-8 h-8 text-[var(--accent)]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
-                </svg>
-              </div>
-              <h3 className="text-xl font-bold text-[var(--foreground)] mb-4">Raising the AI Generation</h3>
-              <p className="text-[var(--muted)]">
-                Our kids will graduate into a world we can barely imagine. How do we prepare them
-                for jobs that don&apos;t exist yet? How do we raise them to be human in an AI world?
-              </p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* The App Preview */}
-      <section className="py-20 bg-[var(--blush)]">
-        <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-4xl font-bold text-[var(--foreground)] mb-6">
-              Support in your pocket
-            </h2>
-            <p className="text-xl text-[var(--muted)] max-w-2xl mx-auto">
-              The Alpha Mothers app is your companion through the journey—from mental health check-ins
-              to return-to-work guides to raising kids in the AI age.
-            </p>
-          </div>
-
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
-            {appFeatures.map((feature, index) => {
-              const IconComponent = feature.icon;
-              return (
-                <div key={index} className="bg-white rounded-2xl p-6 shadow-sm hover:shadow-md transition-shadow">
-                  <div className={`w-12 h-12 rounded-xl ${feature.bgColor} flex items-center justify-center mb-4`}>
-                    <IconComponent className={`w-6 h-6 ${feature.color}`} strokeWidth={1.5} />
-                  </div>
-                  <h3 className="text-lg font-bold text-[var(--foreground)] mb-2">{feature.title}</h3>
-                  <p className="text-sm text-[var(--muted)]">{feature.description}</p>
-                </div>
-              );
-            })}
-          </div>
-
-          <div className="text-center">
-            <Link href="/app" className="btn-primary">
-              Learn More About the App
+          <div className="mt-8 text-center">
+            <Link href="/about" className="btn-secondary">
+              Read My Full Story
             </Link>
           </div>
         </div>
@@ -234,11 +340,8 @@ export default function HomePage() {
         <div className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
             <h2 className="text-3xl md:text-4xl font-bold text-[var(--foreground)] mb-6">
-              Recent Thoughts
+              What I&apos;m thinking about
             </h2>
-            <p className="text-xl text-[var(--muted)]">
-              Things I&apos;ve been writing about lately.
-            </p>
           </div>
 
           <div className="grid md:grid-cols-2 gap-8">
@@ -255,7 +358,7 @@ export default function HomePage() {
                   {post.excerpt}
                 </p>
                 <span className="inline-block mt-4 text-[var(--primary)] font-medium">
-                  Read more →
+                  Read more
                 </span>
               </Link>
             ))}
@@ -269,101 +372,44 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* The Question */}
-      <section className="py-20 bg-[var(--cream)]">
+      {/* CTA Section */}
+      <section className="py-20 bg-gradient-to-br from-[var(--primary)] to-[var(--primary-dark)] text-white">
         <div className="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8 text-center">
-          <h2 className="text-3xl md:text-4xl font-bold text-[var(--foreground)] mb-8">
-            Parenting for 2035: Wait, What?!
+          <h2 className="text-3xl md:text-4xl font-bold mb-6">
+            You don&apos;t have to carry it all alone.
           </h2>
-          <p className="text-xl text-[var(--muted)] mb-8 leading-relaxed">
-            It&apos;s a wild future, right? Our children are the first true &quot;AI natives.&quot;
-            They&apos;ll grow up with artificial intelligence as naturally as we grew up with the internet.
-          </p>
-          <p className="text-xl text-[var(--muted)] mb-8 leading-relaxed">
-            But how do we prepare our kids for a world that&apos;s changing so fast?
-            How do we teach them to think critically when AI can answer any question?
-            How do we help them stay human in an increasingly digital world?
-          </p>
-          <p className="text-lg text-[var(--foreground)] font-medium">
-            These are the questions I&apos;m exploring. I don&apos;t have all the answers—
-            but I believe we can figure it out together.
-          </p>
-        </div>
-      </section>
-
-      {/* Coaching - Soft Mention */}
-      <section className="py-20">
-        <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8">
-          <div className="grid md:grid-cols-2 gap-12 items-center">
-            <div>
-              <h2 className="text-3xl font-bold text-[var(--foreground)] mb-6">
-                Sometimes we need someone to talk to
-              </h2>
-              <p className="text-lg text-[var(--muted)] mb-6 leading-relaxed">
-                I offer coaching for mothers navigating the intersection of career, family,
-                and personal identity. Not advice from a textbook—real conversations about
-                what you&apos;re actually going through.
-              </p>
-              <p className="text-lg text-[var(--muted)] mb-8 leading-relaxed">
-                Training your top soft skills to create a happier mindset, more significant
-                commitment, and success—on your own terms.
-              </p>
-              <Link href="/community" className="btn-secondary">
-                Join Our Community
-              </Link>
-            </div>
-            <div className="bg-[var(--cream)] rounded-2xl p-8 shadow-sm">
-              <blockquote className="text-lg text-[var(--foreground)] italic leading-relaxed">
-                &ldquo;We believe in the right to seek a better quality of life in the name of
-                balance, self-esteem, and personal growth.&rdquo;
-              </blockquote>
-              <p className="mt-4 text-[var(--primary)] font-medium">— Shivi Agarwal</p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Community */}
-      <section className="py-20 bg-[var(--blush)]">
-        <div className="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8 text-center">
-          <h2 className="text-3xl md:text-4xl font-bold text-[var(--foreground)] mb-6">
-            You&apos;re not alone in this
-          </h2>
-          <p className="text-xl text-[var(--muted)] mb-8 leading-relaxed">
-            Alpha Mothers is a space for Millennial moms who are figuring it out—
-            the career, the parenting, the mental health, the future. Together.
-          </p>
-          <p className="text-xl text-[var(--muted)] mb-8 leading-relaxed">
-            No judgment. No perfection. Just honest conversations about what it&apos;s really like.
+          <p className="text-xl text-white/80 mb-8 leading-relaxed">
+            AlphaMa handles the mental load so you can be present.
+            For yourself. For your family. For what actually matters.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Link href="/about" className="btn-primary">
-              About Alpha Mothers
+            <Link href="/app" className="inline-flex items-center px-8 py-4 bg-white text-[var(--primary)] font-medium rounded-full hover:bg-white/90 transition-colors">
+              Download Alpha Mothers
             </Link>
-            <Link href="/resources" className="btn-secondary">
-              Read the Blog
+            <Link href="/community" className="inline-flex items-center px-8 py-4 bg-transparent border-2 border-white text-white font-medium rounded-full hover:bg-white/10 transition-colors">
+              Join Our Community
             </Link>
           </div>
         </div>
       </section>
 
-      {/* Newsletter - Simple */}
-      <section className="py-16 bg-gradient-to-br from-[var(--primary)] to-[var(--primary-dark)] text-white">
+      {/* Newsletter */}
+      <section className="py-16 bg-[var(--cream)]">
         <div className="mx-auto max-w-2xl px-4 sm:px-6 lg:px-8 text-center">
-          <h2 className="text-2xl font-bold mb-4">
+          <h2 className="text-2xl font-bold text-[var(--foreground)] mb-4">
             Join the conversation
           </h2>
-          <p className="text-white/80 mb-6">
-            Occasional thoughts on motherhood, career, and raising kids in the AI age.
-            No spam, no sales pitches—just real talk.
+          <p className="text-[var(--muted)] mb-6">
+            Occasional thoughts on motherhood, mental load, and building technology that actually helps.
+            No spam. No toxic positivity.
           </p>
           <div className="flex flex-col sm:flex-row gap-3 justify-center max-w-md mx-auto">
             <input
               type="email"
               placeholder="Your email"
-              className="flex-1 px-5 py-3 rounded-full text-[var(--foreground)] focus:outline-none"
+              className="flex-1 px-5 py-3 rounded-full border border-[var(--border)] focus:outline-none focus:border-[var(--primary)]"
             />
-            <button className="px-6 py-3 bg-white text-[var(--primary)] font-medium rounded-full hover:bg-white/90 transition-colors">
+            <button className="px-6 py-3 bg-[var(--primary)] text-white font-medium rounded-full hover:bg-[var(--primary-dark)] transition-colors">
               Subscribe
             </button>
           </div>

@@ -1,6 +1,6 @@
-# AyuVed Backend API
+# NayaVed Backend API
 
-Backend service for the AyuVed Ayurveda mobile app. Handles Claude AI integration, user usage tracking, and subscription management.
+Backend service for the NayaVed Ayurveda mobile app. Handles Claude AI integration, user usage tracking, and subscription management.
 
 ## Features
 

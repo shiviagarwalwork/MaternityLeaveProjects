@@ -32,7 +32,7 @@ interface OjasData {
   habits: HabitData;
 }
 
-const STORAGE_KEY = '@ayuved_ojas_data';
+const STORAGE_KEY = '@nayaved_ojas_data';
 
 export default function OjasTrackerScreen() {
   const [ojasScore, setOjasScore] = useState(50);
