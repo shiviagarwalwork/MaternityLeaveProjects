@@ -1,7 +1,7 @@
 # AlphaMa App - Build Summary
 
 > **Date:** January 23, 2026
-> **Status:** Phase 2D Complete (Gmail Integration)
+> **Status:** Phase 3A In Progress (Firebase Authentication)
 > **Developer:** Claude Code (AI Partner)
 
 ---
@@ -825,12 +825,13 @@ MOD:  .env.example                (Google OAuth variables)
 ### File Structure (Current)
 ```
 mental-health-app/
-├── App.tsx                              # Entry + 4-tab navigation
+├── App.tsx                              # Entry + 4-tab navigation + AuthProvider
 ├── .env.local                           # API key (gitignored)
 ├── .env.example                         # Template
 │
 ├── src/
 │   ├── screens/
+│   │   ├── LoginScreen.tsx              # Google/Apple sign-in ⭐ NEW
 │   │   ├── AlphaScreen.tsx              # Main chat + voice mode
 │   │   ├── MindScreen.tsx               # Mental load (real data)
 │   │   ├── SundayResetScreen.tsx        # Weekly planning
@@ -841,6 +842,12 @@ mental-health-app/
 │   │   └── VoiceMode.tsx                # Voice interaction UI
 │   │
 │   ├── services/
+│   │   ├── firebase/                    # ⭐ NEW - Firebase services
+│   │   │   ├── index.ts                 # Re-exports
+│   │   │   ├── auth.ts                  # Google/Apple Sign-In
+│   │   │   ├── firestore.ts             # Firestore CRUD operations
+│   │   │   └── migration.ts             # AsyncStorage → Firestore
+│   │   │
 │   │   ├── ai.ts                        # Claude API + context injection
 │   │   ├── modeDetection.ts             # Intent classification
 │   │   ├── emotionalBrain.ts            # CBT techniques
@@ -850,20 +857,23 @@ mental-health-app/
 │   │   ├── voice.ts                     # TTS/STT services
 │   │   ├── memory.ts                    # Fact storage/patterns
 │   │   ├── calendar.ts                  # Calendar/drafts
-│   │   ├── gmail.ts                     # Gmail OAuth/API ⭐ NEW
+│   │   ├── gmail.ts                     # Gmail OAuth/API
 │   │   └── storage.ts                   # Persistence layer
 │   │
 │   ├── hooks/
+│   │   ├── useAuth.ts                   # Firebase auth hook ⭐ NEW
 │   │   ├── useVoice.ts                  # Voice React hook
 │   │   ├── useMemory.ts                 # Memory React hook
 │   │   ├── useCalendar.ts               # Calendar React hook
-│   │   └── useGmail.ts                  # Gmail React hook ⭐ NEW
+│   │   └── useGmail.ts                  # Gmail React hook
 │   │
 │   ├── contexts/
+│   │   ├── AuthContext.tsx              # Firebase auth context ⭐ NEW
 │   │   ├── UserContext.tsx              # User state
 │   │   └── MentalLoadContext.tsx        # Shared mental load
 │   │
 │   ├── config/
+│   │   ├── firebase.ts                  # Firebase config ⭐ NEW
 │   │   └── env.ts                       # Environment config
 │   │
 │   └── constants/
@@ -919,6 +929,276 @@ Try these messages to trigger different brains:
 2. Go to "Mind" tab
 3. See captured items appear
 4. Mark items as resolved
+
+---
+
+## Phase 3A: Firebase Authentication 🚧 IN PROGRESS
+
+### What Was Built
+
+**1. Firebase Core Setup**
+
+*Packages Installed:*
+```json
+{
+  "@react-native-firebase/app": "latest",
+  "@react-native-firebase/auth": "latest",
+  "@react-native-firebase/firestore": "latest",
+  "@react-native-google-signin/google-signin": "latest",
+  "expo-apple-authentication": "latest",
+  "expo-build-properties": "latest"
+}
+```
+
+**2. Firebase Configuration** (`src/config/firebase.ts`)
+
+*Features:*
+- Firebase app initialization
+- Firestore offline persistence enabled
+- Collection name constants
+- Helper functions for document references
+
+**3. Auth Service** (`src/services/firebase/auth.ts`)
+
+*Google Sign-In:*
+```typescript
+signInWithGoogle(): Promise<AuthResult>
+// - Checks Play Services availability
+// - Gets ID token from Google
+// - Creates Firebase credential
+// - Signs in with Firebase Auth
+```
+
+*Apple Sign-In:*
+```typescript
+signInWithApple(): Promise<AuthResult>
+// - Generates secure nonce
+// - Requests Apple authentication
+// - Creates Firebase credential
+// - Handles first-time name disclosure
+```
+
+*Other Functions:*
+- `signOut()` - Signs out from provider and Firebase
+- `onAuthStateChanged()` - Auth state listener
+- `getCurrentUser()` - Get current Firebase user
+- `deleteAccount()` - Delete user account
+- `reauthenticateWithGoogle/Apple()` - Re-auth for sensitive operations
+
+**4. Firestore Service** (`src/services/firebase/firestore.ts`)
+
+*User Profile Operations:*
+```typescript
+createOrUpdateUserProfile(user, provider)
+getUserProfile(userId)
+updateUserProfile(userId, updates)
+completeOnboardingInFirestore(userId, data)
+subscribeToUserProfile(userId, callback)  // Real-time listener
+```
+
+*Data Operations:*
+```typescript
+// Check-ins
+saveCheckIn() / getCheckIns() / subscribeToCheckIns()
+
+// Mental Load Items
+saveMentalLoadItem() / updateMentalLoadItem() / getMentalLoadItems()
+subscribeToMentalLoadItems()
+
+// Journal Entries
+saveJournalEntry() / getJournalEntries()
+
+// Memory (Facts & Patterns)
+saveUserFact() / getUserFacts() / deleteUserFact()
+saveUserPattern() / getUserPatterns()
+
+// Insights
+saveInsight() / getInsights()
+
+// Delete All
+deleteAllUserData(userId)  // For account deletion
+```
+
+**5. Migration Service** (`src/services/firebase/migration.ts`)
+
+*Features:*
+- Detects existing AsyncStorage data
+- Migrates on first cloud sign-in:
+  - User profile
+  - Check-ins
+  - Mental load items
+  - Journal entries
+  - Insights
+  - User facts (memory)
+  - Patterns
+- Tracks migration status per user
+- Returns migration result with counts
+
+**6. Auth Hook** (`src/hooks/useAuth.ts`)
+
+*Interface:*
+```typescript
+const {
+  user,                    // Firebase user object
+  profile,                 // Firestore user profile
+  isLoading,
+  isAuthenticated,
+  error,
+  signInWithGoogle,
+  signInWithApple,
+  signOut,
+  isAppleSignInAvailable,
+  migrationResult,
+  isMigrating,
+} = useAuth();
+```
+
+**7. Auth Context** (`src/contexts/AuthContext.tsx`)
+
+- Wraps `useAuth` hook in React context
+- Provides auth state to entire app
+- `useAuthContext()` hook for consuming
+
+**8. Login Screen** (`src/screens/LoginScreen.tsx`)
+
+*Features:*
+- Welcome header with logo
+- Feature highlights
+- "Continue with Google" button
+- "Continue with Apple" button (iOS only)
+- Loading state during migration
+- Error handling
+- Terms of Service footer
+
+**9. App.tsx Integration**
+
+*Provider Hierarchy:*
+```typescript
+<SafeAreaProvider>
+  <AuthProvider>      {/* NEW: Auth state */}
+    <UserProvider>
+      <MentalLoadProvider>
+        <NavigationContainer>
+          <AppNavigator />
+        </NavigationContainer>
+      </MentalLoadProvider>
+    </UserProvider>
+  </AuthProvider>
+</SafeAreaProvider>
+```
+
+*Navigation Flow:*
+1. Check auth loading → Show splash
+2. Not authenticated → Show LoginScreen
+3. Authenticated + needs onboarding → Show OnboardingScreen
+4. Authenticated + onboarded → Show MainTabs
+
+### Files Created
+```
+NEW:  src/config/firebase.ts              (50+ lines)
+NEW:  src/services/firebase/auth.ts       (200+ lines)
+NEW:  src/services/firebase/firestore.ts  (350+ lines)
+NEW:  src/services/firebase/migration.ts  (250+ lines)
+NEW:  src/services/firebase/index.ts      (re-exports)
+NEW:  src/hooks/useAuth.ts                (150+ lines)
+NEW:  src/contexts/AuthContext.tsx        (35 lines)
+NEW:  src/screens/LoginScreen.tsx         (250+ lines)
+MOD:  App.tsx                             (AuthProvider + login flow)
+MOD:  app.json                            (Firebase plugins)
+```
+
+### Firestore Data Structure
+```
+users/{userId}/
+├── profile                    # User profile document
+│   ├── id, email, name, photoURL
+│   ├── authProvider: 'google' | 'apple'
+│   ├── stage, concerns, goals
+│   ├── babyName, babyBirthDate, dueDate
+│   ├── hasCompletedOnboarding
+│   ├── createdAt, updatedAt, lastSyncedAt
+│   └── migratedFromLocal: boolean
+│
+├── checkIns/                  # Subcollection
+│   └── {checkInId}
+│       ├── date, mood, energy
+│       ├── sleepQuality, anxietyLevel, notes
+│       └── createdAt, syncedAt
+│
+├── mentalLoadItems/           # Subcollection
+│   └── {itemId}
+│       ├── type, content, resolved
+│       ├── dueDate, assignedTo, priority
+│       └── createdAt, syncedAt
+│
+├── journalEntries/            # Subcollection
+│   └── {entryId}
+│
+├── insights/                  # Subcollection
+│   └── {insightId}
+│
+└── memory/
+    └── data/
+        ├── facts/             # Subcollection
+        │   └── {factId}
+        └── patterns/          # Subcollection
+            └── {patternId}
+```
+
+### Setup Required for Testing
+
+**1. Create Firebase Project:**
+```
+https://console.firebase.google.com/
+```
+
+**2. Add iOS App:**
+- Bundle ID: `com.alphama.app`
+- Download `GoogleService-Info.plist`
+- Place in project root
+
+**3. Add Android App:**
+- Package name: `com.alphama.app`
+- Download `google-services.json`
+- Place in project root
+
+**4. Enable Auth Providers:**
+- Go to Authentication > Sign-in method
+- Enable Google
+- Enable Apple
+
+**5. Create Firestore Database:**
+- Go to Firestore Database
+- Create database (production mode)
+
+**6. Apple Developer Portal (for Apple Sign-In):**
+- Enable "Sign in with Apple" for App ID
+- Create Services ID
+- Generate Key (.p8 file)
+- Upload to Firebase
+
+**7. Build with EAS:**
+```bash
+# Install EAS CLI
+npm install -g eas-cli
+
+# Build for iOS simulator
+eas build --platform ios --profile development
+
+# Build for Android emulator
+eas build --platform android --profile development
+```
+
+**Note:** Firebase native modules require a development build (not Expo Go).
+
+### What's Next for Phase 3A
+
+- [ ] Test auth flow on real device/simulator
+- [ ] Update UserContext to use Firestore for authenticated users
+- [ ] Update MentalLoadContext to sync with Firestore
+- [ ] Add sign-out button to ProfileScreen
+- [ ] Deploy Firestore security rules
+- [ ] Test multi-device sync
 
 ---
 
@@ -978,6 +1258,25 @@ Try these messages to trigger different brains:
 - [x] Smart email detection (school, action, important)
 - [x] Email context in AI prompts
 - [x] Profile integration with connect/disconnect
+
+🚧 **Phase 3A In Progress (Firebase Authentication):**
+- [x] Firebase packages installed (@react-native-firebase/app, auth, firestore)
+- [x] Google Sign-In package installed
+- [x] Apple Sign-In package installed
+- [x] Firebase config created (src/config/firebase.ts)
+- [x] Auth service with Google/Apple sign-in (src/services/firebase/auth.ts)
+- [x] Firestore service with all CRUD operations (src/services/firebase/firestore.ts)
+- [x] Migration service for AsyncStorage → Firestore (src/services/firebase/migration.ts)
+- [x] useAuth hook created (src/hooks/useAuth.ts)
+- [x] AuthContext provider created (src/contexts/AuthContext.tsx)
+- [x] LoginScreen with Google/Apple buttons (src/screens/LoginScreen.tsx)
+- [x] App.tsx updated with AuthProvider
+- [x] app.json configured with Firebase plugins
+- [ ] Firebase project setup in console.firebase.google.com
+- [ ] GoogleService-Info.plist and google-services.json files
+- [ ] Test auth flow on device/simulator
+- [ ] Deploy Firestore security rules
+- [ ] Update contexts to use Firestore for authenticated users
 
 ---
 

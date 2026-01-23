@@ -106,10 +106,10 @@ export interface EmailSummary {
 
 // Create OAuth request
 export function useGoogleAuth() {
-  const redirectUri = AuthSession.makeRedirectUri({
-    scheme: 'alphama',
-    path: 'oauth/google',
-  });
+  // Use Expo's auth proxy for development
+  const redirectUri = 'https://auth.expo.io/@shiviagarwalwork/alphama';
+
+  console.log('OAuth redirect URI:', redirectUri);
 
   const [request, response, promptAsync] = AuthSession.useAuthRequest(
     {

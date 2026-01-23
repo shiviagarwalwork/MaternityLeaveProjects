@@ -6,11 +6,13 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
+import { AuthProvider, useAuthContext } from './src/contexts/AuthContext';
 import { UserProvider, useUser } from './src/contexts/UserContext';
 import { MentalLoadProvider } from './src/contexts/MentalLoadContext';
 import { Colors, FontSizes } from './src/constants/theme';
 
 // Import screens
+import LoginScreen from './src/screens/LoginScreen';
 import OnboardingScreen from './src/screens/OnboardingScreen';
 import AlphaScreen from './src/screens/AlphaScreen';
 import MindScreen from './src/screens/MindScreen';
@@ -121,11 +123,13 @@ function MainTabs() {
   );
 }
 
-// Main Navigation with Onboarding Check
+// Main Navigation with Auth and Onboarding Check
 function AppNavigator() {
-  const { isLoading, hasCompletedOnboarding, completeOnboarding } = useUser();
+  const { isAuthenticated, isLoading: authLoading, profile } = useAuthContext();
+  const { isLoading: userLoading, hasCompletedOnboarding, completeOnboarding } = useUser();
 
-  if (isLoading) {
+  // Show loading screen while checking auth or user state
+  if (authLoading || userLoading) {
     return (
       <View style={styles.loadingContainer}>
         <Image
@@ -139,7 +143,15 @@ function AppNavigator() {
     );
   }
 
-  if (!hasCompletedOnboarding) {
+  // Show login screen if not authenticated
+  if (!isAuthenticated) {
+    return <LoginScreen />;
+  }
+
+  // Show onboarding if user hasn't completed it
+  // Check both local state and Firestore profile
+  const needsOnboarding = !hasCompletedOnboarding && !profile?.hasCompletedOnboarding;
+  if (needsOnboarding) {
     return <OnboardingScreen onComplete={completeOnboarding} />;
   }
 
@@ -158,14 +170,16 @@ function AppNavigator() {
 export default function App() {
   return (
     <SafeAreaProvider>
-      <UserProvider>
-        <MentalLoadProvider>
-          <NavigationContainer>
-            <StatusBar style="dark" />
-            <AppNavigator />
-          </NavigationContainer>
-        </MentalLoadProvider>
-      </UserProvider>
+      <AuthProvider>
+        <UserProvider>
+          <MentalLoadProvider>
+            <NavigationContainer>
+              <StatusBar style="dark" />
+              <AppNavigator />
+            </NavigationContainer>
+          </MentalLoadProvider>
+        </UserProvider>
+      </AuthProvider>
     </SafeAreaProvider>
   );
 }
