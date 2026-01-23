@@ -7,6 +7,7 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
 import { UserProvider, useUser } from './src/contexts/UserContext';
+import { MentalLoadProvider } from './src/contexts/MentalLoadContext';
 import { Colors, FontSizes } from './src/constants/theme';
 
 // Import screens
@@ -14,6 +15,7 @@ import OnboardingScreen from './src/screens/OnboardingScreen';
 import AlphaScreen from './src/screens/AlphaScreen';
 import MindScreen from './src/screens/MindScreen';
 import ProfileScreen from './src/screens/ProfileScreen';
+import SundayResetScreen from './src/screens/SundayResetScreen';
 
 // Navigation types
 export type RootStackParamList = {
@@ -21,8 +23,9 @@ export type RootStackParamList = {
 };
 
 export type TabParamList = {
-  Alpha: undefined;
   Mind: undefined;
+  Alpha: undefined;
+  Reset: undefined;
   Profile: undefined;
 };
 
@@ -38,14 +41,16 @@ function MinimalTabBar({ state, descriptors, navigation }: any) {
         const isAlpha = route.name === 'Alpha';
 
         const icons: { [key: string]: string } = {
-          Alpha: '💬',
           Mind: '📋',
+          Alpha: '💬',
+          Reset: '🗓️',
           Profile: '👤',
         };
 
         const labels: { [key: string]: string } = {
-          Alpha: 'Talk',
           Mind: 'Mind',
+          Alpha: 'Talk',
+          Reset: 'Reset',
           Profile: 'You',
         };
 
@@ -110,6 +115,7 @@ function MainTabs() {
     >
       <Tab.Screen name="Mind" component={MindScreen} />
       <Tab.Screen name="Alpha" component={AlphaScreen} />
+      <Tab.Screen name="Reset" component={SundayResetScreen} />
       <Tab.Screen name="Profile" component={ProfileScreen} />
     </Tab.Navigator>
   );
@@ -153,10 +159,12 @@ export default function App() {
   return (
     <SafeAreaProvider>
       <UserProvider>
-        <NavigationContainer>
-          <StatusBar style="dark" />
-          <AppNavigator />
-        </NavigationContainer>
+        <MentalLoadProvider>
+          <NavigationContainer>
+            <StatusBar style="dark" />
+            <AppNavigator />
+          </NavigationContainer>
+        </MentalLoadProvider>
       </UserProvider>
     </SafeAreaProvider>
   );

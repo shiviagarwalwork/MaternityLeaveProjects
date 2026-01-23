@@ -1,5 +1,9 @@
 import Anthropic from '@anthropic-ai/sdk';
 import { ANTHROPIC_API_KEY } from '../config/env';
+import { detectMode, getModeContext, ModeDetectionResult } from './modeDetection';
+import { getEmotionalPromptEnhancement } from './emotionalBrain';
+import { getLogisticPromptEnhancement } from './logisticBrain';
+import { getGrowthPromptEnhancement } from './growthBrain';
 
 // Initialize the Anthropic client
 const anthropic = new Anthropic({
@@ -87,47 +91,171 @@ export interface CapturedItem {
 export interface AlphaMaResponse {
   message: string;
   capturedItems?: CapturedItem[];
+  detectedMode?: {
+    primary: string;
+    secondary?: string;
+    isCrisis: boolean;
+  };
 }
 
-// Parse the response for captured items
+// Enhanced parsing for captured items with better extraction
 function parseCapturedItems(response: string, userMessage: string): CapturedItem[] {
   const items: CapturedItem[] = [];
-  const combinedText = `${userMessage} ${response}`.toLowerCase();
+  const lowerMessage = userMessage.toLowerCase();
+  const seenContents = new Set<string>();
 
-  // Simple keyword detection for mental load items
-  const todoKeywords = ['need to', 'have to', 'should', 'must', 'don\'t forget', 'remember to', 'schedule', 'book', 'call', 'email', 'buy', 'get'];
-  const worryKeywords = ['worried', 'anxious', 'scared', 'nervous', 'concerned', 'afraid', 'stress', 'overwhelm'];
-  const appointmentKeywords = ['meeting', 'appointment', 'at 2', 'at 3', 'tomorrow', 'next week', 'on monday', 'on tuesday'];
+  // Helper to add unique items
+  const addItem = (type: CapturedItem['type'], content: string) => {
+    const normalizedContent = content.toLowerCase().trim();
+    if (normalizedContent.length > 3 && normalizedContent.length < 150 && !seenContents.has(normalizedContent)) {
+      seenContents.add(normalizedContent);
+      items.push({
+        id: Date.now().toString() + Math.random().toString(36).substr(2, 9),
+        type,
+        content: content.trim(),
+      });
+    }
+  };
 
-  // Extract potential to-dos from user message
-  todoKeywords.forEach(keyword => {
-    if (userMessage.toLowerCase().includes(keyword)) {
-      // Try to extract the task
-      const regex = new RegExp(`${keyword}\\s+([^.!?]+)`, 'i');
-      const match = userMessage.match(regex);
-      if (match && match[1] && match[1].length > 3 && match[1].length < 100) {
-        items.push({
-          id: Date.now().toString() + Math.random().toString(36).substr(2, 9),
-          type: 'todo',
-          content: match[1].trim(),
-        });
+  // ===== TODO EXTRACTION =====
+  const todoPatterns = [
+    /(?:i\s+)?(?:need|have|got)\s+to\s+([^.!?,]+)/gi,
+    /(?:i\s+)?(?:should|must)\s+([^.!?,]+)/gi,
+    /(?:don'?t\s+forget\s+to|remember\s+to)\s+([^.!?,]+)/gi,
+    /(?:gotta|gonna)\s+([^.!?,]+)/gi,
+  ];
+
+  todoPatterns.forEach(pattern => {
+    const matches = userMessage.matchAll(pattern);
+    for (const match of matches) {
+      if (match[1]) {
+        addItem('todo', match[1]);
       }
     }
   });
 
-  // Check for worries
-  worryKeywords.forEach(keyword => {
-    if (userMessage.toLowerCase().includes(keyword)) {
-      items.push({
-        id: Date.now().toString() + Math.random().toString(36).substr(2, 9),
-        type: 'worry',
-        content: userMessage.substring(0, 100),
-      });
+  // Direct task indicators
+  const taskKeywords = ['schedule', 'book', 'call', 'email', 'buy', 'pick up', 'drop off', 'send', 'finish', 'complete'];
+  taskKeywords.forEach(keyword => {
+    const regex = new RegExp(`${keyword}\\s+([^.!?,]+)`, 'gi');
+    const matches = userMessage.matchAll(regex);
+    for (const match of matches) {
+      if (match[1]) {
+        addItem('todo', `${keyword} ${match[1]}`);
+      }
     }
   });
 
-  // Limit to avoid duplicates
-  return items.slice(0, 3);
+  // ===== APPOINTMENT EXTRACTION =====
+  const appointmentPatterns = [
+    /(?:meeting|appointment|call)\s+(?:on\s+)?(?:monday|tuesday|wednesday|thursday|friday|saturday|sunday|tomorrow|today)/gi,
+    /(?:at\s+)?(\d{1,2}(?::\d{2})?\s*(?:am|pm)?)\s+(?:meeting|call|appointment)/gi,
+    /(?:monday|tuesday|wednesday|thursday|friday|saturday|sunday)\s+(?:at\s+)?(\d{1,2}(?::\d{2})?\s*(?:am|pm)?)/gi,
+  ];
+
+  appointmentPatterns.forEach(pattern => {
+    const matches = userMessage.matchAll(pattern);
+    for (const match of matches) {
+      addItem('appointment', match[0]);
+    }
+  });
+
+  // ===== WORRY EXTRACTION =====
+  const worryIndicators = ['worried', 'anxious', 'scared', 'nervous', 'concerned', 'afraid', 'stress', 'overwhelm', 'panic', 'dread'];
+  const hasWorry = worryIndicators.some(w => lowerMessage.includes(w));
+
+  if (hasWorry) {
+    // Extract what they're worried about
+    const worryPatterns = [
+      /(?:worried|anxious|scared|nervous|concerned)\s+(?:about|that)\s+([^.!?]+)/gi,
+      /(?:i'?m\s+)?(?:stressing|stressed)\s+(?:about|over)\s+([^.!?]+)/gi,
+    ];
+
+    let foundSpecificWorry = false;
+    worryPatterns.forEach(pattern => {
+      const matches = userMessage.matchAll(pattern);
+      for (const match of matches) {
+        if (match[1]) {
+          addItem('worry', match[1]);
+          foundSpecificWorry = true;
+        }
+      }
+    });
+
+    // If no specific worry extracted, capture general worry
+    if (!foundSpecificWorry && userMessage.length < 200) {
+      addItem('worry', userMessage);
+    }
+  }
+
+  // ===== DELEGATION HINTS =====
+  const delegationPatterns = [
+    /(?:he|she|partner|husband|wife)\s+(?:never|always|doesn'?t|won'?t)\s+([^.!?]+)/gi,
+    /(?:i\s+)?wish\s+(?:he|she|partner)\s+would\s+([^.!?]+)/gi,
+  ];
+
+  delegationPatterns.forEach(pattern => {
+    const matches = userMessage.matchAll(pattern);
+    for (const match of matches) {
+      if (match[1]) {
+        addItem('delegation', `Consider delegating: ${match[1]}`);
+      }
+    }
+  });
+
+  // ===== IDEA EXTRACTION =====
+  const ideaPatterns = [
+    /(?:maybe\s+i\s+should|i\s+could|what\s+if\s+i)\s+([^.!?]+)/gi,
+    /(?:good\s+)?idea\s*(?:to|:)\s*([^.!?]+)/gi,
+  ];
+
+  ideaPatterns.forEach(pattern => {
+    const matches = userMessage.matchAll(pattern);
+    for (const match of matches) {
+      if (match[1]) {
+        addItem('idea', match[1]);
+      }
+    }
+  });
+
+  // Limit to most relevant items
+  return items.slice(0, 5);
+}
+
+// Build mode-specific prompt enhancement based on detected intent
+function buildModeEnhancement(userMessage: string): { enhancement: string; modeResult: ModeDetectionResult } {
+  const modeResult = detectMode(userMessage);
+  let enhancement = getModeContext(modeResult);
+
+  // Add brain-specific enhancements
+  switch (modeResult.primaryMode) {
+    case 'emotional':
+      enhancement += getEmotionalPromptEnhancement(userMessage, modeResult.isCrisis);
+      break;
+    case 'logistic':
+      enhancement += getLogisticPromptEnhancement(userMessage);
+      break;
+    case 'growth':
+      enhancement += getGrowthPromptEnhancement(userMessage);
+      break;
+  }
+
+  // Add secondary mode enhancement if blending
+  if (modeResult.blendModes && modeResult.secondaryMode) {
+    switch (modeResult.secondaryMode) {
+      case 'emotional':
+        enhancement += '\n' + getEmotionalPromptEnhancement(userMessage, false);
+        break;
+      case 'logistic':
+        enhancement += '\n' + getLogisticPromptEnhancement(userMessage);
+        break;
+      case 'growth':
+        enhancement += '\n' + getGrowthPromptEnhancement(userMessage);
+        break;
+    }
+  }
+
+  return { enhancement, modeResult };
 }
 
 // Main function to get AlphaMa's response
@@ -141,6 +269,9 @@ export async function getAlphaMaResponse(
   }
 ): Promise<AlphaMaResponse> {
   try {
+    // Detect mode and get brain-specific enhancements
+    const { enhancement: modeEnhancement, modeResult } = buildModeEnhancement(userMessage);
+
     // Build context about the user
     let contextAddition = '';
     if (userContext) {
@@ -155,7 +286,8 @@ export async function getAlphaMaResponse(
       }
     }
 
-    const systemPrompt = ALPHAMA_SYSTEM_PROMPT + contextAddition;
+    // Combine base prompt with mode-specific enhancements
+    const systemPrompt = ALPHAMA_SYSTEM_PROMPT + contextAddition + '\n\n---\n' + modeEnhancement;
 
     // Format conversation history for Claude
     const messages = conversationHistory.map(msg => ({
@@ -168,6 +300,9 @@ export async function getAlphaMaResponse(
       role: 'user' as const,
       content: userMessage,
     });
+
+    // Log mode detection for debugging (can be removed in production)
+    console.log(`[AlphaMa] Mode detected: ${modeResult.primaryMode}${modeResult.secondaryMode ? ` + ${modeResult.secondaryMode}` : ''} | Crisis: ${modeResult.isCrisis}`);
 
     // Call Claude API
     const response = await anthropic.messages.create({
@@ -187,6 +322,11 @@ export async function getAlphaMaResponse(
     return {
       message: messageText,
       capturedItems: capturedItems.length > 0 ? capturedItems : undefined,
+      detectedMode: {
+        primary: modeResult.primaryMode,
+        secondary: modeResult.secondaryMode || undefined,
+        isCrisis: modeResult.isCrisis,
+      },
     };
   } catch (error) {
     console.error('Error calling Claude API:', error);
@@ -203,6 +343,9 @@ export function getSimulatedResponse(userMessage: string, userName: string): Alp
   const lowerMessage = userMessage.toLowerCase();
   let response = '';
   const capturedItems: CapturedItem[] = [];
+
+  // Detect mode for simulated responses too
+  const modeResult = detectMode(userMessage);
 
   // High-distress detection - prioritize emotional support
   if (lowerMessage.includes('panic') || lowerMessage.includes('crisis') || lowerMessage.includes("can't cope") || lowerMessage.includes('breaking down')) {
@@ -262,5 +405,10 @@ export function getSimulatedResponse(userMessage: string, userName: string): Alp
   return {
     message: response,
     capturedItems: capturedItems.length > 0 ? capturedItems : undefined,
+    detectedMode: {
+      primary: modeResult.primaryMode,
+      secondary: modeResult.secondaryMode || undefined,
+      isCrisis: modeResult.isCrisis,
+    },
   };
 }

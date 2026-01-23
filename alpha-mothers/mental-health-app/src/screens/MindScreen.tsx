@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import {
   View,
   Text,
@@ -6,72 +6,13 @@ import {
   ScrollView,
   TouchableOpacity,
   Image,
+  ActivityIndicator,
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { LinearGradient } from 'expo-linear-gradient';
 import { Colors, FontSizes, Spacing, BorderRadius, FontWeights, Shadows } from '../constants/theme';
 import { useUser } from '../contexts/UserContext';
-
-// Types for mental load items
-interface MindItem {
-  id: string;
-  type: 'todo' | 'worry' | 'appointment' | 'idea' | 'delegation';
-  content: string;
-  resolved: boolean;
-  createdAt: Date;
-  dueDate?: Date;
-  assignedTo?: string;
-  priority?: 'low' | 'medium' | 'high';
-}
-
-// Mock data - organized by type
-const mockMindItems: MindItem[] = [
-  {
-    id: '1',
-    type: 'todo',
-    content: 'Schedule pediatrician appointment',
-    resolved: false,
-    createdAt: new Date(),
-    priority: 'high',
-  },
-  {
-    id: '2',
-    type: 'todo',
-    content: 'Buy diapers',
-    resolved: false,
-    createdAt: new Date(),
-  },
-  {
-    id: '3',
-    type: 'worry',
-    content: 'Daycare transition next week',
-    resolved: false,
-    createdAt: new Date(),
-  },
-  {
-    id: '4',
-    type: 'appointment',
-    content: 'Team meeting - Thursday 2pm',
-    resolved: false,
-    createdAt: new Date(),
-    dueDate: new Date(Date.now() + 2 * 24 * 60 * 60 * 1000),
-  },
-  {
-    id: '5',
-    type: 'delegation',
-    content: 'Grocery shopping',
-    resolved: false,
-    createdAt: new Date(),
-    assignedTo: 'Partner',
-  },
-  {
-    id: '6',
-    type: 'idea',
-    content: '5-minute calm technique before meetings',
-    resolved: false,
-    createdAt: new Date(),
-  },
-];
+import { useMentalLoad, MentalLoadItem } from '../contexts/MentalLoadContext';
 
 const sectionConfig = {
   todo: { title: 'To-Do', icon: '✓', color: Colors.primary, emptyText: 'No tasks right now' },
@@ -83,21 +24,23 @@ const sectionConfig = {
 
 export default function MindScreen() {
   const { user } = useUser();
-  const [items, setItems] = useState<MindItem[]>(mockMindItems);
+  const { items, toggleResolved, getItemsByType, unresolvedCount, isLoading } = useMentalLoad();
 
-  const toggleResolved = (id: string) => {
-    setItems(prev =>
-      prev.map(item =>
-        item.id === id ? { ...item, resolved: !item.resolved } : item
-      )
-    );
-  };
-
-  const getItemsByType = (type: string) => items.filter(item => item.type === type && !item.resolved);
   const resolvedItems = items.filter(item => item.resolved);
-  const totalUnresolved = items.filter(item => !item.resolved).length;
+  const totalUnresolved = unresolvedCount;
 
-  const renderSection = (type: keyof typeof sectionConfig) => {
+  if (isLoading) {
+    return (
+      <SafeAreaView style={styles.container} edges={['top']}>
+        <View style={styles.loadingContainer}>
+          <ActivityIndicator size="large" color={Colors.primary} />
+          <Text style={styles.loadingText}>Loading your mind...</Text>
+        </View>
+      </SafeAreaView>
+    );
+  }
+
+  const renderSection = (type: MentalLoadItem['type']) => {
     const config = sectionConfig[type];
     const sectionItems = getItemsByType(type);
 
@@ -137,7 +80,7 @@ export default function MindScreen() {
                   )}
                   {item.dueDate && (
                     <Text style={styles.dueText}>
-                      {item.dueDate.toLocaleDateString('en-US', {
+                      {new Date(item.dueDate).toLocaleDateString('en-US', {
                         weekday: 'short',
                         month: 'short',
                         day: 'numeric',
@@ -222,7 +165,9 @@ export default function MindScreen() {
           <View style={styles.infoContent}>
             <Text style={styles.infoTitle}>How this works</Text>
             <Text style={styles.infoText}>
-              As you chat with me, I'll automatically capture tasks, worries, and ideas so you don't have to hold everything in your head.
+              {totalUnresolved === 0
+                ? "Start a conversation with me and I'll automatically capture tasks, worries, and ideas so you don't have to hold everything in your head."
+                : "I'm tracking these for you. Tap any item to mark it done. New items appear here as we chat."}
             </Text>
           </View>
         </View>
@@ -237,6 +182,16 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: Colors.background,
+  },
+  loadingContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  loadingText: {
+    marginTop: Spacing.md,
+    fontSize: FontSizes.md,
+    color: Colors.muted,
   },
   headerGradient: {
     paddingBottom: Spacing.md,

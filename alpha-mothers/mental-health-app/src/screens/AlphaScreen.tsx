@@ -19,6 +19,8 @@ import { Colors, Spacing, BorderRadius, FontSizes, FontWeights, Shadows } from '
 import { useUser, getGreeting } from '../contexts/UserContext';
 import { getAlphaMaResponse, getSimulatedResponse, Message as AIMessage } from '../services/ai';
 import { USE_SIMULATED_RESPONSES } from '../config/env';
+import { useMentalLoad } from '../contexts/MentalLoadContext';
+import { saveConversation, loadConversation, StoredMessage } from '../services/storage';
 
 const { width, height } = Dimensions.get('window');
 
@@ -32,9 +34,10 @@ interface Message {
 
 interface CapturedItem {
   id: string;
-  type: 'todo' | 'worry' | 'appointment' | 'idea';
+  type: 'todo' | 'worry' | 'appointment' | 'idea' | 'delegation';
   content: string;
   resolved: boolean;
+  createdAt?: string;
 }
 
 // Suggestion prompts for different moods/needs
@@ -59,11 +62,12 @@ const convertToAIMessages = (messages: Message[]): AIMessage[] => {
 
 export default function AlphaScreen() {
   const { user } = useUser();
+  const { addItems, items: mentalLoadItems } = useMentalLoad();
   const [messages, setMessages] = useState<Message[]>([]);
   const [inputText, setInputText] = useState('');
   const [isRecording, setIsRecording] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-  const [capturedItems, setCapturedItems] = useState<CapturedItem[]>([]);
+  const [isLoadingHistory, setIsLoadingHistory] = useState(true);
   const scrollViewRef = useRef<ScrollView>(null);
   const pulseAnim = useRef(new Animated.Value(1)).current;
   const fadeAnim = useRef(new Animated.Value(0)).current;
@@ -71,6 +75,40 @@ export default function AlphaScreen() {
   const userName = user?.name || 'there';
   const userStage = user?.stage || 'new_mom';
   const greeting = getGreeting();
+
+  // Load conversation history on mount
+  useEffect(() => {
+    const loadHistory = async () => {
+      const stored = await loadConversation();
+      if (stored.length > 0) {
+        // Convert stored messages to local format
+        const loadedMessages: Message[] = stored.map(m => ({
+          ...m,
+          timestamp: new Date(m.timestamp),
+        }));
+        setMessages(loadedMessages);
+      }
+      setIsLoadingHistory(false);
+    };
+    loadHistory();
+  }, []);
+
+  // Save conversation whenever messages change
+  useEffect(() => {
+    if (!isLoadingHistory && messages.length > 0) {
+      const toStore: StoredMessage[] = messages.map(m => ({
+        id: m.id,
+        role: m.role,
+        content: m.content,
+        timestamp: m.timestamp.toISOString(),
+        capturedItems: m.capturedItems?.map(item => ({
+          ...item,
+          createdAt: item.createdAt || new Date().toISOString(),
+        })),
+      }));
+      saveConversation(toStore);
+    }
+  }, [messages, isLoadingHistory]);
 
   // Fade in animation
   useEffect(() => {
@@ -81,13 +119,13 @@ export default function AlphaScreen() {
     }).start();
   }, []);
 
-  // Initial greeting when no messages
+  // Initial greeting when no messages (and not loading)
   useEffect(() => {
-    if (messages.length === 0) {
+    if (!isLoadingHistory && messages.length === 0) {
       const greetings = [
-        `Hey ${userName} 💜\n\nHow's it going today? I'm here whenever you need to talk, vent, or just think out loud.`,
-        `Hi ${userName}!\n\nHow are you holding up? No pressure to be "fine" here - you can be real with me.`,
-        `${greeting}, ${userName} 💜\n\nWhat's on your mind today? I'm all ears.`,
+        `${userName}, I'm ready. What's taking up mental space right now?\n\nOr do a stream-of-consciousness dump and I'll help you organize it.`,
+        `Hey ${userName}. What's the one thing weighing on you most today?\n\nI'm here to help you tackle it or just hold space.`,
+        `${greeting}, ${userName}. I've got my notebook ready.\n\nWhat needs to come out of your head and into a system I can help manage?`,
       ];
       const randomGreeting = greetings[Math.floor(Math.random() * greetings.length)];
 
@@ -99,7 +137,7 @@ export default function AlphaScreen() {
       };
       setMessages([initialMessage]);
     }
-  }, []);
+  }, [isLoadingHistory]);
 
   // Pulse animation for recording button
   useEffect(() => {
@@ -177,8 +215,13 @@ export default function AlphaScreen() {
 
       setMessages(prev => [...prev, alphaMessage]);
 
+      // Add captured items to shared mental load context
       if (newItems && newItems.length > 0) {
-        setCapturedItems(prev => [...prev, ...newItems]);
+        addItems(newItems.map(item => ({
+          type: item.type,
+          content: item.content,
+          priority: item.type === 'todo' ? 'medium' : undefined,
+        })));
       }
     } catch (error) {
       console.error('Error getting AI response:', error);
@@ -346,17 +389,17 @@ export default function AlphaScreen() {
           <View style={{ height: 20 }} />
         </ScrollView>
 
-        {/* Captured Items Bar */}
-        {capturedItems.length > 0 && (
+        {/* Captured Items Bar - Connected to Mental Load Context */}
+        {mentalLoadItems.filter(i => !i.resolved).length > 0 && (
           <View style={styles.capturedBar}>
             <View style={styles.capturedBarHeader}>
               <Text style={styles.capturedBarIcon}>🧠</Text>
               <Text style={styles.capturedBarTitle}>
-                On your mind ({capturedItems.filter(i => !i.resolved).length})
+                On your mind ({mentalLoadItems.filter(i => !i.resolved).length})
               </Text>
             </View>
             <ScrollView horizontal showsHorizontalScrollIndicator={false}>
-              {capturedItems.filter(i => !i.resolved).slice(0, 5).map(item => (
+              {mentalLoadItems.filter(i => !i.resolved).slice(0, 5).map(item => (
                 <View key={item.id} style={styles.capturedChip}>
                   <Text style={styles.capturedChipText}>{item.content}</Text>
                 </View>

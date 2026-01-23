@@ -240,3 +240,142 @@ export const getAverageMood = async (days: number = 7): Promise<number> => {
     return 0;
   }
 };
+
+// === Conversation Storage ===
+
+const CONVERSATION_KEY = '@alphama_conversations';
+const MENTAL_LOAD_KEY = '@alphama_mental_load';
+
+export interface StoredMessage {
+  id: string;
+  role: 'user' | 'alpha';
+  content: string;
+  timestamp: string;
+  capturedItems?: StoredCapturedItem[];
+}
+
+export interface StoredCapturedItem {
+  id: string;
+  type: 'todo' | 'worry' | 'appointment' | 'idea' | 'delegation';
+  content: string;
+  resolved: boolean;
+  createdAt: string;
+  dueDate?: string;
+  assignedTo?: string;
+  priority?: 'low' | 'medium' | 'high';
+}
+
+export async function saveConversation(messages: StoredMessage[]): Promise<void> {
+  try {
+    const jsonValue = JSON.stringify(messages);
+    await AsyncStorage.setItem(CONVERSATION_KEY, jsonValue);
+  } catch (error) {
+    console.error('Error saving conversation:', error);
+  }
+}
+
+export async function loadConversation(): Promise<StoredMessage[]> {
+  try {
+    const jsonValue = await AsyncStorage.getItem(CONVERSATION_KEY);
+    if (jsonValue != null) {
+      return JSON.parse(jsonValue);
+    }
+    return [];
+  } catch (error) {
+    console.error('Error loading conversation:', error);
+    return [];
+  }
+}
+
+export async function clearConversation(): Promise<void> {
+  try {
+    await AsyncStorage.removeItem(CONVERSATION_KEY);
+  } catch (error) {
+    console.error('Error clearing conversation:', error);
+  }
+}
+
+// === Mental Load Items Storage ===
+
+export async function saveMentalLoadItems(items: StoredCapturedItem[]): Promise<void> {
+  try {
+    const jsonValue = JSON.stringify(items);
+    await AsyncStorage.setItem(MENTAL_LOAD_KEY, jsonValue);
+  } catch (error) {
+    console.error('Error saving mental load items:', error);
+  }
+}
+
+export async function loadMentalLoadItems(): Promise<StoredCapturedItem[]> {
+  try {
+    const jsonValue = await AsyncStorage.getItem(MENTAL_LOAD_KEY);
+    if (jsonValue != null) {
+      return JSON.parse(jsonValue);
+    }
+    return [];
+  } catch (error) {
+    console.error('Error loading mental load items:', error);
+    return [];
+  }
+}
+
+export async function addMentalLoadItem(item: StoredCapturedItem): Promise<void> {
+  try {
+    const existing = await loadMentalLoadItems();
+    const isDuplicate = existing.some(
+      i => i.content.toLowerCase() === item.content.toLowerCase() && !i.resolved
+    );
+    if (!isDuplicate) {
+      await saveMentalLoadItems([...existing, item]);
+    }
+  } catch (error) {
+    console.error('Error adding mental load item:', error);
+  }
+}
+
+export async function updateMentalLoadItem(
+  id: string,
+  updates: Partial<StoredCapturedItem>
+): Promise<void> {
+  try {
+    const items = await loadMentalLoadItems();
+    const updatedItems = items.map(item =>
+      item.id === id ? { ...item, ...updates } : item
+    );
+    await saveMentalLoadItems(updatedItems);
+  } catch (error) {
+    console.error('Error updating mental load item:', error);
+  }
+}
+
+// Conversation summary for context window management
+export function summarizeOldMessages(
+  messages: StoredMessage[],
+  keepRecent: number = 20
+): StoredMessage[] {
+  if (messages.length <= keepRecent) {
+    return messages;
+  }
+
+  const recentMessages = messages.slice(-keepRecent);
+  const olderMessages = messages.slice(0, -keepRecent);
+  const topicsDiscussed = new Set<string>();
+
+  olderMessages.forEach(msg => {
+    const content = msg.content.toLowerCase();
+    if (content.includes('work') || content.includes('meeting')) topicsDiscussed.add('work');
+    if (content.includes('kid') || content.includes('child')) topicsDiscussed.add('parenting');
+    if (content.includes('stress') || content.includes('overwhelm')) topicsDiscussed.add('stress');
+    if (content.includes('sleep')) topicsDiscussed.add('sleep');
+    if (content.includes('guilt')) topicsDiscussed.add('mom guilt');
+  });
+
+  const summaryMessage: StoredMessage = {
+    id: 'summary',
+    role: 'alpha',
+    content: `[Previous conversation summary: We've discussed ${Array.from(topicsDiscussed).join(', ')}.]`,
+    timestamp: new Date().toISOString(),
+  };
+
+  return [summaryMessage, ...recentMessages];
+}
