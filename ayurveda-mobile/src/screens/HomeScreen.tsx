@@ -6,6 +6,7 @@ import {
   ScrollView,
   TouchableOpacity,
   Dimensions,
+  Image,
 } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { useFocusEffect } from '@react-navigation/native';
@@ -555,7 +556,11 @@ export default function HomeScreen() {
         // NEW USER - Welcome message
         <View style={styles.hero}>
           <View style={styles.heroIconContainer}>
-            <MaterialCommunityIcons name="spa" size={56} color={ManuscriptColors.vermillion} />
+            <Image
+              source={require('../../assets/icon.png')}
+              style={styles.heroLogoImage}
+              resizeMode="contain"
+            />
           </View>
           <Text style={styles.welcomeTitle}>Welcome{userData.name ? `, ${userData.name}` : ''}!</Text>
           <Text style={styles.subtitle}>
@@ -810,15 +815,19 @@ const styles = StyleSheet.create({
     color: ManuscriptColors.inkBlack,
   },
   heroIconContainer: {
-    width: 80,
-    height: 80,
-    borderRadius: 40,
+    width: 120,
+    height: 120,
+    borderRadius: 60,
     backgroundColor: ManuscriptColors.parchment,
     justifyContent: 'center',
     alignItems: 'center',
     marginBottom: 12,
     borderWidth: 2,
     borderColor: ManuscriptColors.goldLeaf,
+  },
+  heroLogoImage: {
+    width: 90,
+    height: 90,
   },
   title: {
     fontSize: ManuscriptFonts.titleSize,

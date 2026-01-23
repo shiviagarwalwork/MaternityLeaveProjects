@@ -1,7 +1,7 @@
 # AlphaMa App - Build Summary
 
 > **Date:** January 23, 2026
-> **Status:** Phase 1 Complete (Core MVP)
+> **Status:** Phase 2D Complete (Gmail Integration)
 > **Developer:** Claude Code (AI Partner)
 
 ---
@@ -15,6 +15,7 @@ AlphaMa is now a fully functional AI-powered mental health companion and executi
 - **Conversation persistence** across sessions
 - **Mental load capture** with shared state
 - **Sunday Reset** weekly planning feature
+- **Voice Mode** with Speech-to-Text and Text-to-Speech
 
 ---
 
@@ -244,9 +245,584 @@ MOD:  App.tsx                            (navigation update)
 
 ---
 
+## Phase 2A: Voice Integration ✅
+
+### What Was Built
+
+**1. Voice Service** (`src/services/voice.ts`)
+
+*Core Capabilities:*
+- **Text-to-Speech (TTS)** via `expo-speech`
+  - Natural voice selection (prefers female voices)
+  - Adjustable pitch and rate settings
+  - Start/stop/check speaking state
+- **Speech-to-Text (STT)**
+  - Web Speech API for browser support
+  - Native audio recording via `expo-av`
+  - Real-time interim transcription
+
+*Key Functions:*
+```typescript
+// TTS
+speak(text, settings?, onStart?, onDone?, onError?)
+stopSpeaking()
+isSpeaking()
+
+// STT
+startListening(onTranscription, onError?)
+stopListening()
+isVoiceInputAvailable()
+
+// Utilities
+initializeVoiceService()
+getVoiceCapabilities()
+cleanupVoiceService()
+```
+
+**2. Voice Hook** (`src/hooks/useVoice.ts`)
+
+*React hook for voice integration:*
+```typescript
+const {
+  // State
+  voiceState,      // 'idle' | 'listening' | 'processing' | 'speaking'
+  isListening,
+  isSpeakingNow,
+  transcription,
+  interimTranscription,
+  isInitialized,
+  capabilities,
+  error,
+
+  // Actions
+  startVoiceInput,
+  stopVoiceInput,
+  speakText,
+  stopSpeech,
+  toggleVoiceMode,
+
+  // Voice mode
+  voiceModeEnabled,
+  setVoiceModeEnabled,
+} = useVoice(options);
+```
+
+**3. Voice Mode Component** (`src/components/VoiceMode.tsx`)
+
+*Full-screen voice interaction UI:*
+- Large central microphone button with pulse animation
+- Waveform visualization during listening
+- Real-time transcription display
+- AlphaMa avatar with status indicator
+- Quick action buttons for common phrases
+- Auto-speak AI responses
+
+*UI States:*
+| State | Button Color | Icon | Status |
+|-------|-------------|------|--------|
+| Idle | Primary (pink) | 🎤 | "Tap to speak" |
+| Listening | Red | ⏹ | "Listening..." |
+| Processing | Gray | ⏳ | "Processing..." |
+| Speaking | Green | 🔊 | "AlphaMa is speaking" |
+
+**4. AlphaScreen Integration**
+- Voice mode button in header (🎙️)
+- VoiceMode modal overlay
+- Auto-speak new AI responses when in voice mode
+- Seamless message handling between text and voice
+
+### Files Created/Modified
+```
+NEW:  src/services/voice.ts       (340+ lines)
+NEW:  src/hooks/useVoice.ts       (200+ lines)
+NEW:  src/components/VoiceMode.tsx (400+ lines)
+MOD:  src/screens/AlphaScreen.tsx (voice mode integration)
+```
+
+### Dependencies Added
+```json
+{
+  "expo-speech": "^12.0.0",
+  "expo-av": "^15.0.0"
+}
+```
+
+### How to Test Voice Mode
+1. Open the app in a web browser (Chrome recommended for Web Speech API)
+2. Click the 🎙️ button in the header
+3. Click the large microphone button to start speaking
+4. Speak your message (e.g., "I'm feeling overwhelmed")
+5. Click again to stop and send
+6. AlphaMa will respond and speak the response aloud
+
+**Note:** Web Speech API requires HTTPS in production. For local testing, `localhost` works fine.
+
+---
+
+## Phase 2B: Memory & Personalization ✅
+
+### What Was Built
+
+**1. Memory Service** (`src/services/memory.ts`)
+
+*Fact Storage & Extraction:*
+```typescript
+interface UserFact {
+  id: string;
+  category: FactCategory;  // 'family' | 'work' | 'health' | 'schedule' | etc.
+  key: string;             // e.g., 'partner_name', 'child_age'
+  value: string;           // The actual value
+  confidence: number;      // 0-1 confidence score
+  source: 'explicit' | 'inferred' | 'onboarding';
+  mentions: number;        // Reinforcement counter
+}
+```
+
+*Auto-Extraction Patterns:*
+- Kids' names: "my son Lucas" → family:child_name = "Lucas"
+- Partner name: "my husband Jake" → family:partner_name = "Jake"
+- Job title: "I work as a product manager" → work:job_title = "product manager"
+- Allergies: "she's allergic to peanuts" → health:allergy = "peanuts"
+- Recurring schedules: "every Monday" → schedule:recurring_day = "Monday"
+
+*Pattern Detection:*
+```typescript
+interface UserPattern {
+  type: 'emotional' | 'scheduling' | 'delegation' | 'self_care' | 'parenting';
+  description: string;
+  frequency: number;
+  lastOccurred: string;
+}
+```
+
+Detects:
+- Frequent anxiety mentions → emotional pattern
+- Recurring overwhelm → scheduling pattern
+- Partner frustration → delegation pattern
+
+*Key Functions:*
+```typescript
+// Storage
+loadUserFacts() / saveUserFacts()
+addOrUpdateFact() / deleteFact()
+loadPatterns() / addOrUpdatePattern()
+
+// Extraction
+extractFacts(message)
+detectPatterns(messages)
+
+// Context Building
+buildMemoryContext()  // For AI prompts
+processMessageForMemory(message, role)
+```
+
+**2. Memory Hook** (`src/hooks/useMemory.ts`)
+
+React hook for memory integration:
+```typescript
+const {
+  facts,
+  patterns,
+  preferences,
+  isLoading,
+
+  addFact,
+  removeFact,
+  getFactsForCategory,
+
+  processMessage,
+  analyzeConversation,
+
+  clearMemory,
+  exportData,
+} = useMemory();
+```
+
+**3. AI Integration**
+
+Memory context is now automatically included in AI prompts:
+```
+[MEMORY CONTEXT - What I know about you:]
+
+Family:
+- partner name: Jake
+- child name: Lucas
+- Lucas age: 5
+
+Work:
+- job title: product manager
+
+Patterns I've noticed:
+- Frequently experiences anxious feelings (observed 3x)
+
+Communication preference: balanced
+```
+
+**4. Profile Screen Updates**
+
+New "AlphaMa Memory" section with:
+- **What I Know About You** - View all stored facts
+- **Patterns Detected** - View identified patterns
+- **Clear All Memory** - Full data reset option
+
+Memory management modal features:
+- Grouped facts by category with icons
+- Confidence percentage display
+- Long-press to delete individual facts
+- Empty state messaging for new users
+
+### Files Created/Modified
+```
+NEW:  src/services/memory.ts      (400+ lines)
+NEW:  src/hooks/useMemory.ts      (200+ lines)
+MOD:  src/services/ai.ts          (memory context integration)
+MOD:  src/screens/ProfileScreen.tsx (memory management UI)
+```
+
+### How Memory Works
+
+1. **Automatic Learning**: As you chat, AlphaMa extracts facts from your messages
+2. **Confidence Building**: Facts mentioned multiple times get higher confidence scores
+3. **Context Injection**: High-confidence facts are included in AI prompts
+4. **Pattern Recognition**: Over time, emotional and behavioral patterns are identified
+5. **User Control**: View, manage, and delete memories from Profile > AlphaMa Memory
+
+### Privacy Notes
+- All memory is stored locally on device (AsyncStorage)
+- No data is sent to external servers beyond Claude API calls
+- Users can clear all memory at any time
+- Export functionality available for data portability
+
+---
+
+## Phase 2C: Calendar & Email Integration ✅
+
+### What Was Built
+
+**1. Calendar Service** (`src/services/calendar.ts`)
+
+*Event Management:*
+```typescript
+interface CalendarEvent {
+  id: string;
+  title: string;
+  startTime: string;
+  endTime: string;
+  isAllDay: boolean;
+  category: EventCategory;  // 'work' | 'kids' | 'health' | etc.
+  source: 'google' | 'outlook' | 'manual';
+  location?: string;
+  attendees?: string[];
+}
+```
+
+*Auto-Categorization:*
+- Meeting/presentation → work
+- School/playdate → kids
+- Doctor/gym → health
+- Dinner/party → social
+- Repair/delivery → household
+
+*Key Functions:*
+```typescript
+// Event CRUD
+addEvent() / updateEvent() / deleteEvent()
+loadEvents() / saveEvents()
+
+// Queries
+getTodayEvents()
+getWeekEvents()
+getUpcomingEvents(days)
+getEventsInRange(start, end)
+
+// Context
+buildCalendarContext()  // For AI prompts
+```
+
+**2. Email Draft Management:**
+```typescript
+interface DraftEmail {
+  id: string;
+  to: string;
+  subject: string;
+  body: string;
+  context: string;
+  status: 'draft' | 'sent' | 'discarded';
+}
+```
+
+Functions: `saveDraft()`, `updateDraftStatus()`, `deleteDraft()`
+
+**3. Calendar Hook** (`src/hooks/useCalendar.ts`)
+
+React hook for calendar integration:
+```typescript
+const {
+  events,
+  todayEvents,
+  weekEvents,
+  drafts,
+  settings,
+
+  addNewEvent,
+  editEvent,
+  removeEvent,
+
+  createDraft,
+  markDraftSent,
+  discardDraft,
+
+  getCalendarContext,
+} = useCalendar();
+```
+
+**4. AI Integration**
+
+Calendar context is now included in AI prompts:
+```
+[CALENDAR CONTEXT - Upcoming events:]
+
+TODAY:
+- 9:00 AM: Board meeting @ Conference Room A
+- 3:30 PM: Kids dentist appointment
+
+COMING UP THIS WEEK:
+- Wed Jan 25 2:00 PM: Team standup
+- Sat Jan 28 All day: Emma's birthday party
+```
+
+**5. OAuth Preparation**
+
+Structure ready for Google/Outlook OAuth:
+- `initGoogleCalendar(config)` - Google Calendar OAuth placeholder
+- `initOutlookCalendar()` - Microsoft Graph API placeholder
+- Token storage structure in place
+- Sync settings management
+
+### Files Created/Modified
+```
+NEW:  src/services/calendar.ts    (400+ lines)
+NEW:  src/hooks/useCalendar.ts    (250+ lines)
+MOD:  src/services/ai.ts          (calendar context integration)
+```
+
+### How Calendar Works
+
+1. **Manual Events**: Add events directly in the app
+2. **Auto-Categorization**: Events are tagged by type automatically
+3. **AI Context**: Today's schedule and upcoming week inform AI responses
+4. **Draft Management**: AI-generated email drafts are saved for review/send
+5. **Future OAuth**: Ready for Google/Outlook calendar sync
+
+### Implementation Notes
+
+Full OAuth integration requires:
+- `expo-auth-session` for OAuth flow
+- Backend proxy for token exchange (security)
+- Native calendar permissions on mobile
+
+The current implementation provides:
+- Local event management
+- AI-aware calendar context
+- Draft email workflow
+- Ready-to-activate OAuth structure
+
+---
+
+## Phase 2D: Gmail Integration ✅
+
+### What Was Built
+
+**1. Gmail Service** (`src/services/gmail.ts`)
+
+*OAuth Flow:*
+```typescript
+// Uses expo-auth-session for Google OAuth 2.0
+// Scopes requested:
+// - gmail.readonly (read emails)
+// - gmail.send (send emails)
+// - gmail.compose (create drafts)
+// - userinfo.email/profile (user info)
+```
+
+*Email Operations:*
+```typescript
+// Authentication
+exchangeCodeForTokens(code, codeVerifier, redirectUri)
+refreshAccessToken()
+getValidAccessToken()
+
+// Email reading
+listEmails({ maxResults, query, labelIds })
+getEmailById(messageId)
+getUnreadCount()
+
+// Email sending
+sendEmail(draft: EmailDraft)
+
+// Smart features
+getImportantEmails()
+getSchoolEmails()
+getActionRequiredEmails()
+getEmailSummary()
+```
+
+*Email Types:*
+```typescript
+interface EmailMessage {
+  id: string;
+  threadId: string;
+  from: string;
+  to: string[];
+  subject: string;
+  snippet: string;
+  body?: string;
+  date: string;
+  isRead: boolean;
+  labels: string[];
+  hasAttachments: boolean;
+}
+
+interface EmailDraft {
+  to: string;
+  subject: string;
+  body: string;
+  cc?: string[];
+  bcc?: string[];
+}
+```
+
+**2. Gmail Hook** (`src/hooks/useGmail.ts`)
+
+React hook for Gmail integration:
+```typescript
+const {
+  // Auth state
+  isConnected,
+  isAuthenticating,
+  profile,
+
+  // Emails
+  emails,
+  unreadCount,
+  emailSummary,
+
+  // Actions
+  connectGmail,
+  disconnect,
+  fetchEmails,
+  send,
+  refreshEmails,
+
+  // AI context
+  getContext,
+} = useGmail();
+```
+
+**3. AI Integration**
+
+Email context is now included in AI prompts:
+```
+[EMAIL CONTEXT - Gmail summary:]
+
+Unread emails: 12
+
+ACTION REQUIRED:
+- "RSVP Needed: Emma's Birthday" from emma.mom@email.com
+- "Permission Slip Due Friday" from school@district.edu
+
+SCHOOL/KIDS:
+- "Weekly Newsletter" from teacher@school.edu
+- "Picture Day Reminder" from pta@school.edu
+
+IMPORTANT:
+- "Q4 Review Meeting" from boss@company.com
+```
+
+**4. Profile Screen Integration**
+
+New "Integrations" section:
+- Connect Gmail button with OAuth flow
+- Shows connected email when linked
+- Disconnect option available
+- Calendar connect placeholder
+
+**5. Smart Email Detection**
+
+Auto-categorizes emails:
+- **Action Required**: RSVP, deadline, urgent keywords
+- **School/Kids**: from .edu domains, teacher, school keywords
+- **Important**: Gmail's important label
+
+### Files Created/Modified
+```
+NEW:  src/services/gmail.ts       (500+ lines)
+NEW:  src/hooks/useGmail.ts       (250+ lines)
+MOD:  src/services/ai.ts          (email context integration)
+MOD:  src/screens/ProfileScreen.tsx (Gmail connect UI)
+MOD:  .env.example                (Google OAuth variables)
+```
+
+### Dependencies Added
+```json
+{
+  "expo-auth-session": "^6.0.0",
+  "expo-crypto": "^14.0.0",
+  "expo-web-browser": "^14.0.0"
+}
+```
+
+### How to Set Up Gmail Integration
+
+1. **Create Google Cloud Project:**
+   ```
+   https://console.cloud.google.com/
+   ```
+
+2. **Enable Gmail API:**
+   - Go to APIs & Services > Library
+   - Search for "Gmail API"
+   - Click Enable
+
+3. **Configure OAuth Consent Screen:**
+   - Go to APIs & Services > OAuth consent screen
+   - Choose "External" user type
+   - Fill in app name: "AlphaMa"
+   - Add scopes: gmail.readonly, gmail.send, gmail.compose
+   - Add test users (your email)
+
+4. **Create OAuth Credentials:**
+   - Go to APIs & Services > Credentials
+   - Create OAuth 2.0 Client ID
+   - Application type: Web application
+   - Add authorized redirect URIs:
+     - `http://localhost:8082/oauth/google` (development)
+     - `https://auth.expo.io/@your-username/alphama` (Expo Go)
+
+5. **Add to .env.local:**
+   ```
+   EXPO_PUBLIC_GOOGLE_CLIENT_ID=your_client_id
+   EXPO_PUBLIC_GOOGLE_WEB_CLIENT_ID=your_web_client_id
+   ```
+
+6. **Test in app:**
+   - Go to Profile > Integrations > Connect Gmail
+   - Complete OAuth flow
+   - AlphaMa now has email context
+
+### Privacy & Security
+
+- OAuth tokens stored locally (AsyncStorage)
+- Access can be revoked anytime
+- Only requested scopes are accessed
+- Tokens auto-refresh when expired
+- User controls what emails AI sees
+
+---
+
 ## Technical Architecture
 
-### File Structure (Final)
+### File Structure (Current)
 ```
 mental-health-app/
 ├── App.tsx                              # Entry + 4-tab navigation
@@ -255,24 +831,37 @@ mental-health-app/
 │
 ├── src/
 │   ├── screens/
-│   │   ├── AlphaScreen.tsx              # Main chat (persistence)
+│   │   ├── AlphaScreen.tsx              # Main chat + voice mode
 │   │   ├── MindScreen.tsx               # Mental load (real data)
-│   │   ├── SundayResetScreen.tsx        # Weekly planning ⭐ NEW
-│   │   ├── ProfileScreen.tsx            # Settings
+│   │   ├── SundayResetScreen.tsx        # Weekly planning
+│   │   ├── ProfileScreen.tsx            # Settings + memory management
 │   │   └── OnboardingScreen.tsx         # First-time flow
 │   │
+│   ├── components/
+│   │   └── VoiceMode.tsx                # Voice interaction UI
+│   │
 │   ├── services/
-│   │   ├── ai.ts                        # Claude API + Three Brains
-│   │   ├── modeDetection.ts             # Intent classification ⭐ NEW
-│   │   ├── emotionalBrain.ts            # CBT techniques ⭐ NEW
-│   │   ├── logisticBrain.ts             # Task/draft logic ⭐ NEW
-│   │   ├── growthBrain.ts               # Coaching frameworks ⭐ NEW
-│   │   ├── sundayReset.ts               # Weekly processing ⭐ NEW
+│   │   ├── ai.ts                        # Claude API + context injection
+│   │   ├── modeDetection.ts             # Intent classification
+│   │   ├── emotionalBrain.ts            # CBT techniques
+│   │   ├── logisticBrain.ts             # Task/draft logic
+│   │   ├── growthBrain.ts               # Coaching frameworks
+│   │   ├── sundayReset.ts               # Weekly processing
+│   │   ├── voice.ts                     # TTS/STT services
+│   │   ├── memory.ts                    # Fact storage/patterns
+│   │   ├── calendar.ts                  # Calendar/drafts
+│   │   ├── gmail.ts                     # Gmail OAuth/API ⭐ NEW
 │   │   └── storage.ts                   # Persistence layer
+│   │
+│   ├── hooks/
+│   │   ├── useVoice.ts                  # Voice React hook
+│   │   ├── useMemory.ts                 # Memory React hook
+│   │   ├── useCalendar.ts               # Calendar React hook
+│   │   └── useGmail.ts                  # Gmail React hook ⭐ NEW
 │   │
 │   ├── contexts/
 │   │   ├── UserContext.tsx              # User state
-│   │   └── MentalLoadContext.tsx        # Shared mental load ⭐ NEW
+│   │   └── MentalLoadContext.tsx        # Shared mental load
 │   │
 │   ├── config/
 │   │   └── env.ts                       # Environment config
@@ -287,6 +876,8 @@ mental-health-app/
 ### Dependencies Added
 - `@react-native-async-storage/async-storage` (already present)
 - `react-dom`, `react-native-web` (for web testing)
+- `expo-speech` (TTS)
+- `expo-av` (audio recording)
 
 ---
 
@@ -331,24 +922,21 @@ Try these messages to trigger different brains:
 
 ---
 
-## What's Next (Phase 2)
+## What's Next (Phase 3)
 
-### Phase 2A: Voice Integration
-- Speech-to-Text for hands-free input
-- Text-to-Speech for audio responses
-- Requires: `expo-speech` or native voice libraries
+### Phase 3: Advanced Features
+- **Apple Watch Integration** - Heart rate, stress detection
+- **Autonomous Agents** - Book appointments, order groceries
+- **AI-Matched Mom Squads** - Community matching
+- **10-Year Parenting Roadmap** - Personalized long-term planning
+- **HIPAA Compliance** - Healthcare partnerships
 
-### Phase 2B: Memory & Personalization
-- Vector database for long-term memory
-- RAG for coaching content
-- User pattern detection
-- Requires: ChromaDB or Pinecone
-
-### Phase 2C: Calendar & Email Integration
-- Google/Outlook OAuth
-- Calendar event reading
-- Draft email sending
-- Requires: OAuth flows, API integrations
+### Production Readiness
+- Backend API for secure token management
+- Full OAuth implementation for Google/Outlook
+- Push notifications for reminders
+- Analytics and monitoring
+- App Store deployment
 
 ---
 
@@ -361,6 +949,35 @@ Try these messages to trigger different brains:
 - [x] Three Brains routing messages correctly
 - [x] Sunday Reset generates useful weekly plans
 - [x] No TypeScript errors
+
+✅ **Phase 2A Complete:**
+- [x] Voice input working (Web Speech API + native recording)
+- [x] Voice output working (expo-speech TTS)
+- [x] Full-screen voice mode UI
+- [x] Auto-speak AI responses
+- [x] Voice mode toggle in header
+
+✅ **Phase 2B Complete:**
+- [x] Memory service with fact extraction
+- [x] Pattern detection from conversations
+- [x] Memory context in AI prompts
+- [x] Memory management UI in Profile
+- [x] Privacy-first local storage
+
+✅ **Phase 2C Complete:**
+- [x] Calendar service with event management
+- [x] Auto-categorization of events
+- [x] Calendar context in AI prompts
+- [x] Email draft management
+- [x] OAuth structure ready for activation
+
+✅ **Phase 2D Complete:**
+- [x] Gmail OAuth flow with expo-auth-session
+- [x] Email reading (list, search, get by ID)
+- [x] Email sending with MIME encoding
+- [x] Smart email detection (school, action, important)
+- [x] Email context in AI prompts
+- [x] Profile integration with connect/disconnect
 
 ---
 

@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import Image from 'next/image';
 import {
   MessageCircle, Brain, Calendar, Users, Sparkles,
   Mic, CheckCircle2, Mail, Clock, Heart
@@ -242,8 +243,14 @@ export default function AppPage() {
                   {/* App Header */}
                   <div className="p-5 bg-white/50">
                     <div className="flex items-center gap-3">
-                      <div className="w-12 h-12 rounded-full bg-[var(--primary)] flex items-center justify-center">
-                        <span className="text-white text-xl font-bold">A</span>
+                      <div className="w-12 h-12 rounded-full overflow-hidden">
+                        <Image
+                          src="/images/Alpha Mothers vision and logo.jpeg"
+                          alt="AlphaMa"
+                          width={48}
+                          height={48}
+                          className="w-full h-full object-cover"
+                        />
                       </div>
                       <div>
                         <p className="font-semibold text-[var(--foreground)]">AlphaMa</p>
@@ -390,8 +397,14 @@ export default function AppPage() {
                   {convo.exchanges.map((exchange, i) => (
                     <div key={i} className={`flex ${exchange.role === 'user' ? 'justify-end' : 'justify-start'}`}>
                       {exchange.role === 'alpha' && (
-                        <div className="w-8 h-8 rounded-full bg-[var(--primary)] flex items-center justify-center mr-3 flex-shrink-0 mt-1">
-                          <span className="text-white text-xs font-bold">A</span>
+                        <div className="w-8 h-8 rounded-full overflow-hidden mr-3 flex-shrink-0 mt-1">
+                          <Image
+                            src="/images/Alpha Mothers vision and logo.jpeg"
+                            alt="AlphaMa"
+                            width={32}
+                            height={32}
+                            className="w-full h-full object-cover"
+                          />
                         </div>
                       )}
                       <div className={`rounded-2xl px-5 py-3 max-w-[85%] ${

@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { getArticleBySlug, articles } from '@/data/articles';
+import ReactMarkdown from 'react-markdown';
 
 // Generate static params for all articles
 export async function generateStaticParams() {
@@ -109,22 +110,23 @@ export default async function ArticlePage({ params }: { params: Promise<{ slug: 
           <div className="grid lg:grid-cols-[1fr_280px] gap-12">
             {/* Main Content */}
             <article className="article-content max-w-none">
-              <div
-                dangerouslySetInnerHTML={{
-                  __html: article.content
-                    .replace(/\n## /g, '<h2>')
-                    .replace(/\n### /g, '<h3>')
-                    .replace(/\n#### /g, '<h4>')
-                    .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
-                    .replace(/\n- /g, '<li>')
-                    .replace(/\n\n/g, '</p><p>')
-                    .replace(/<li>/g, '</p><ul><li>')
-                    .replace(/<\/li>\n(?!<li>)/g, '</li></ul><p>')
-                    .split('</h2>').join('</h2><p>')
-                    .split('</h3>').join('</h3><p>')
-                    .split('</h4>').join('</h4><p>')
+              <ReactMarkdown
+                components={{
+                  h2: ({ children }) => <h2>{children}</h2>,
+                  h3: ({ children }) => <h3>{children}</h3>,
+                  h4: ({ children }) => <h4>{children}</h4>,
+                  p: ({ children }) => <p>{children}</p>,
+                  strong: ({ children }) => <strong>{children}</strong>,
+                  em: ({ children }) => <em>{children}</em>,
+                  ul: ({ children }) => <ul>{children}</ul>,
+                  ol: ({ children }) => <ol>{children}</ol>,
+                  li: ({ children }) => <li>{children}</li>,
+                  blockquote: ({ children }) => <blockquote>{children}</blockquote>,
+                  a: ({ href, children }) => <a href={href} target="_blank" rel="noopener noreferrer">{children}</a>,
                 }}
-              />
+              >
+                {article.content}
+              </ReactMarkdown>
             </article>
 
             {/* Sidebar */}

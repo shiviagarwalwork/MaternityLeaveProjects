@@ -9,7 +9,9 @@ import {
   Alert,
   ActivityIndicator,
   Linking,
+  Modal,
 } from 'react-native';
+import PaywallScreen from './PaywallScreen';
 import { MaterialCommunityIcons, Feather, Ionicons } from '@expo/vector-icons';
 import { ManuscriptColors } from '../components/ManuscriptConstants';
 import { useAuth } from '../context/AuthContext';
@@ -39,6 +41,7 @@ export default function SettingsScreen() {
   const [isActivating, setIsActivating] = useState(false);
   const [backendConnected, setBackendConnected] = useState(false);
   const [isCheckingBackend, setIsCheckingBackend] = useState(true);
+  const [showPaywall, setShowPaywall] = useState(false);
 
   useEffect(() => {
     checkBackendConnection();
@@ -92,12 +95,7 @@ export default function SettingsScreen() {
   };
 
   const handleUpgrade = () => {
-    // TODO: Implement Apple/Google IAP
-    Alert.alert(
-      'Premium Coming Soon',
-      'In-app purchases will be available when the app launches on the App Store. For now, use a developer code for unlimited access.',
-      [{ text: 'OK' }]
-    );
+    setShowPaywall(true);
   };
 
   const getTierBadgeColor = () => {
@@ -113,6 +111,18 @@ export default function SettingsScreen() {
   };
 
   return (
+    <>
+    <Modal
+      visible={showPaywall}
+      animationType="slide"
+      presentationStyle="pageSheet"
+      onRequestClose={() => setShowPaywall(false)}
+    >
+      <PaywallScreen
+        onClose={() => setShowPaywall(false)}
+        onSuccess={() => setShowPaywall(false)}
+      />
+    </Modal>
     <ScrollView style={styles.container} contentContainerStyle={styles.content}>
       <Text style={styles.title}>Settings</Text>
 
@@ -309,13 +319,14 @@ export default function SettingsScreen() {
           </View>
           <View style={styles.aboutRow}>
             <Text style={styles.aboutLabel}>Build</Text>
-            <Text style={styles.aboutValue}>2024.01</Text>
+            <Text style={styles.aboutValue}>2026.01</Text>
           </View>
         </View>
       </View>
 
       <View style={styles.bottomPadding} />
     </ScrollView>
+    </>
   );
 }
 

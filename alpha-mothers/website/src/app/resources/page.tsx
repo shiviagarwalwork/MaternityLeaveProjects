@@ -70,7 +70,7 @@ const posts = [
     categorySlug: 'gen-alpha',
     slug: 'parenting-for-2035',
     date: 'January 16, 2025',
-    image: 'https://alphamothers.com/wp-content/uploads/2025/01/Designer-1.jpeg',
+    image: '/images/milleniakls and alpha gen.jpeg',
     featured: false,
   },
   {
@@ -80,7 +80,7 @@ const posts = [
     categorySlug: 'return-to-work',
     slug: 'welcome-back',
     date: 'January 6, 2025',
-    image: 'https://alphamothers.com/wp-content/uploads/2025/01/1731349944136.jpeg',
+    image: '/images/Uncertainity of motherhood.jpeg',
     featured: false,
   },
   {
@@ -90,7 +90,7 @@ const posts = [
     categorySlug: 'career',
     slug: 'know-your-worth',
     date: 'January 6, 2025',
-    image: 'https://alphamothers.com/wp-content/uploads/2025/01/1731524235265.jpeg',
+    image: '/images/communicate goals.jpeg',
     featured: false,
   },
   {
@@ -120,7 +120,7 @@ const posts = [
     categorySlug: 'vision',
     slug: 'letter-to-my-younger-self',
     date: 'January 2025',
-    image: 'https://alphamothers.com/wp-content/uploads/2025/01/1731349944136.jpeg',
+    image: '/images/Becoming parent.jpeg',
     featured: false,
   },
   {
@@ -190,7 +190,7 @@ const posts = [
     categorySlug: 'career',
     slug: 'women-in-ai',
     date: 'January 2025',
-    image: '/images/Alpha Mothers vision and logo.jpeg',
+    image: '/images/womeninAI.png',
     featured: false,
   },
   {
@@ -200,7 +200,7 @@ const posts = [
     categorySlug: 'gen-alpha',
     slug: 'teaching-fail-forward',
     date: 'January 2025',
-    image: '/images/Alpha Mothers vision and logo.jpeg',
+    image: '/images/failure.png',
     featured: false,
   },
   {
@@ -210,7 +210,7 @@ const posts = [
     categorySlug: 'vision',
     slug: 'guilt-trap-perfect-motherhood',
     date: 'January 2025',
-    image: '/images/Alpha Mothers vision and logo.jpeg',
+    image: '/images/PerfectMom.png',
     featured: false,
   },
   {
@@ -220,7 +220,7 @@ const posts = [
     categorySlug: 'gen-alpha',
     slug: 'screen-time-boundaries',
     date: 'January 2025',
-    image: '/images/Alpha Mothers vision and logo.jpeg',
+    image: '/images/balancedComposition.png',
     featured: false,
   },
   {
@@ -230,7 +230,7 @@ const posts = [
     categorySlug: 'vision',
     slug: 'identity-beyond-motherhood',
     date: 'January 2025',
-    image: '/images/Alpha Mothers vision and logo.jpeg',
+    image: '/images/IdentityBeyondMotherhood.png',
     featured: false,
   },
   {
@@ -240,7 +240,7 @@ const posts = [
     categorySlug: 'gen-alpha',
     slug: 'emotional-intelligence-digital-world',
     date: 'January 2025',
-    image: '/images/Alpha Mothers vision and logo.jpeg',
+    image: '/images/emotiotionalIntelligence.png',
     featured: false,
   },
   {
@@ -250,7 +250,7 @@ const posts = [
     categorySlug: 'career',
     slug: 'power-of-saying-no',
     date: 'January 2025',
-    image: '/images/Alpha Mothers vision and logo.jpeg',
+    image: '/images/BOUNDARIES.png',
     featured: false,
   },
   {
@@ -260,7 +260,7 @@ const posts = [
     categorySlug: 'vision',
     slug: 'building-your-village',
     date: 'January 2025',
-    image: '/images/Alpha Mothers vision and logo.jpeg',
+    image: '/images/community.png',
     featured: false,
   },
 ];

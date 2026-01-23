@@ -247,8 +247,14 @@ export default function HomePage() {
                 <div className="flex justify-start">
                   <div className="bg-[var(--cream)] rounded-2xl rounded-bl-md px-5 py-3 max-w-[80%]">
                     <div className="flex items-center gap-2 mb-2">
-                      <div className="w-6 h-6 rounded-full bg-[var(--primary)] flex items-center justify-center">
-                        <span className="text-white text-xs font-bold">A</span>
+                      <div className="w-6 h-6 rounded-full overflow-hidden">
+                        <Image
+                          src="/images/Alpha Mothers vision and logo.jpeg"
+                          alt="AlphaMa"
+                          width={24}
+                          height={24}
+                          className="w-full h-full object-cover"
+                        />
                       </div>
                       <span className="text-xs font-medium text-[var(--primary)]">AlphaMa</span>
                     </div>

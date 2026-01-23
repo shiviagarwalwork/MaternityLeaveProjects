@@ -307,7 +307,9 @@ export default function CommunityPage() {
                 instant connection.
               </p>
               <a
-                href="#"
+                href="https://chat.whatsapp.com/H0cLCmq7ijg1NpdXpZPwN9"
+                target="_blank"
+                rel="noopener noreferrer"
                 className="block w-full py-3 px-6 bg-[#25D366] text-white font-medium rounded-full hover:bg-[#20BD5A] transition-colors"
               >
                 Join WhatsApp Community
@@ -327,7 +329,9 @@ export default function CommunityPage() {
                 Great for deeper conversations.
               </p>
               <a
-                href="#"
+                href="https://join.slack.com/t/alphamothers/shared_invite/zt-3o7uufjia-FMc7EDMNgL47uQDqm~eZLw"
+                target="_blank"
+                rel="noopener noreferrer"
                 className="block w-full py-3 px-6 bg-[#4A154B] text-white font-medium rounded-full hover:bg-[#3D1140] transition-colors"
               >
                 Join Slack Workspace

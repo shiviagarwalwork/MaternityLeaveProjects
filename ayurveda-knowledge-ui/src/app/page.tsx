@@ -267,7 +267,7 @@ export default function Home() {
                 <span className="text-[var(--faded-ink)] text-sm italic" style={{fontFamily: 'Georgia, serif'}}>Where Charaka Samhita meets AI</span>
               </div>
               <p className="text-sm text-[var(--faded-ink)] text-center md:text-right">
-                &copy; 2024 NayaVed AI
+                &copy; 2026 NayaVed AI
                 <span className="mx-2">•</span>
                 <span className="italic">Ancient wisdom, modern wellness</span>
               </p>

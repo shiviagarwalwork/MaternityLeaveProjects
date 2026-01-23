@@ -9,6 +9,7 @@ import {
   Platform,
   ScrollView,
   ActivityIndicator,
+  Image,
 } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { MaterialCommunityIcons, Ionicons } from '@expo/vector-icons';
@@ -148,12 +149,18 @@ export default function LoginScreen({ onLoginSuccess }: LoginScreenProps) {
         {/* Logo/Icon */}
         <View style={styles.logoContainer}>
           <View style={styles.logoCircle}>
-            <MaterialCommunityIcons name="spa" size={48} color={ManuscriptColors.vermillion} />
+            <Image
+              source={require('../../assets/icon.png')}
+              style={styles.logoImage}
+              resizeMode="contain"
+            />
           </View>
         </View>
 
         {/* Title */}
-        <Text style={styles.title}>NayaVed AI</Text>
+        <Text style={styles.title}>
+          NayaVed <Text style={styles.titleAI}>AI</Text>
+        </Text>
         <Text style={styles.subtitle}>Ancient Wisdom for Modern Life</Text>
 
         {/* Exclusive message */}
@@ -345,9 +352,9 @@ const styles = StyleSheet.create({
     marginBottom: 16,
   },
   logoCircle: {
-    width: 100,
-    height: 100,
-    borderRadius: 50,
+    width: 120,
+    height: 120,
+    borderRadius: 60,
     backgroundColor: '#FFFFFF',
     justifyContent: 'center',
     alignItems: 'center',
@@ -359,12 +366,21 @@ const styles = StyleSheet.create({
     shadowRadius: 8,
     elevation: 8,
   },
+  logoImage: {
+    width: 90,
+    height: 90,
+  },
   title: {
     fontSize: 36,
     fontWeight: 'bold',
     color: ManuscriptColors.inkBlack,
     textAlign: 'center',
     fontFamily: Platform.OS === 'ios' ? 'Georgia' : 'serif',
+  },
+  titleAI: {
+    color: '#B87333',
+    fontSize: 36,
+    fontWeight: 'bold',
   },
   subtitle: {
     fontSize: 16,

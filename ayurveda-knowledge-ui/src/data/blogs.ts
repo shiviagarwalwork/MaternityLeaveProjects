@@ -15,7 +15,7 @@ export const blogPosts: BlogPost[] = [
   {
     id: 'prajnaparadha-digital-age',
     title: '📱 Why You Keep Scrolling (Even Though You Know It Hurts)',
-    excerpt: "The Charaka Samhita identified the root of all disease 2,000 years ago: doing what you know harms you. Sound familiar?",
+    excerpt: "The Charaka Samhita identified the root of all disease 5,000 years ago: doing what you know harms you. Sound familiar?",
     content: `You know scrolling at 2 AM destroys your sleep. You do it anyway.
 
 You know comparing yourself on Instagram makes you miserable. You keep opening the app.
@@ -296,7 +296,7 @@ Your battery is rechargeable. You just have to plug it in.`,
   {
     id: 'screen-fatigue-senses',
     title: '👁️ Your Eyes Are Exhausted: Ancient Wisdom for Screen Fatigue',
-    excerpt: '2,000 years ago, Ayurveda warned about sensory overload. Endless scrolling is exactly what they meant.',
+    excerpt: '5,000 years ago, Ayurveda warned about sensory overload. Endless scrolling is exactly what they meant.',
     content: `Your eyes hurt. Your brain feels fried. You can't focus.
 
 Welcome to sensory overload - or what the Charaka Samhita called "unwholesome contact with sense objects."

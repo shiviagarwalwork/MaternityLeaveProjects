@@ -70,7 +70,7 @@ export default function AboutPage() {
           </p>
           <p className="text-[var(--foreground)] italic border-l-4 border-[var(--accent-primary)] pl-4">
             This isn't a new problem. It's THE root cause of disease according to the Charaka Samhita,
-            written 2,000 years ago.
+            written 5,000 years ago.
           </p>
         </div>
       </section>

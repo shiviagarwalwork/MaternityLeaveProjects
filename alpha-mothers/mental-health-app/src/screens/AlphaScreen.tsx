@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef, useEffect, useCallback } from 'react';
 import {
   View,
   Text,
@@ -21,6 +21,8 @@ import { getAlphaMaResponse, getSimulatedResponse, Message as AIMessage } from '
 import { USE_SIMULATED_RESPONSES } from '../config/env';
 import { useMentalLoad } from '../contexts/MentalLoadContext';
 import { saveConversation, loadConversation, StoredMessage } from '../services/storage';
+import VoiceMode from '../components/VoiceMode';
+import { useVoice } from '../hooks/useVoice';
 
 const { width, height } = Dimensions.get('window');
 
@@ -68,6 +70,8 @@ export default function AlphaScreen() {
   const [isRecording, setIsRecording] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [isLoadingHistory, setIsLoadingHistory] = useState(true);
+  const [voiceModeVisible, setVoiceModeVisible] = useState(false);
+  const [lastAIResponse, setLastAIResponse] = useState<string>('');
   const scrollViewRef = useRef<ScrollView>(null);
   const pulseAnim = useRef(new Animated.Value(1)).current;
   const fadeAnim = useRef(new Animated.Value(0)).current;
@@ -75,6 +79,9 @@ export default function AlphaScreen() {
   const userName = user?.name || 'there';
   const userStage = user?.stage || 'new_mom';
   const greeting = getGreeting();
+
+  // Voice hook for TTS on new messages
+  const { speakText, stopSpeech, voiceModeEnabled, setVoiceModeEnabled } = useVoice();
 
   // Load conversation history on mount
   useEffect(() => {
@@ -214,6 +221,7 @@ export default function AlphaScreen() {
       };
 
       setMessages(prev => [...prev, alphaMessage]);
+      setLastAIResponse(responseText);
 
       // Add captured items to shared mental load context
       if (newItems && newItems.length > 0) {
@@ -232,6 +240,7 @@ export default function AlphaScreen() {
         timestamp: new Date(),
       };
       setMessages(prev => [...prev, errorMessage]);
+      setLastAIResponse(errorMessage.content);
     } finally {
       setIsLoading(false);
       setTimeout(() => {
@@ -239,6 +248,11 @@ export default function AlphaScreen() {
       }, 100);
     }
   };
+
+  // Voice mode message handler
+  const handleVoiceMessage = useCallback(async (text: string) => {
+    await handleSend(text);
+  }, [messages, userName, userStage, user]);
 
   const handleSuggestionPress = (text: string) => {
     handleSend(text);
@@ -277,9 +291,17 @@ export default function AlphaScreen() {
               </View>
             </View>
           </View>
-          <TouchableOpacity style={styles.menuButton}>
-            <Text style={styles.menuIcon}>⚙️</Text>
-          </TouchableOpacity>
+          <View style={styles.headerButtons}>
+            <TouchableOpacity
+              style={[styles.voiceModeButton, voiceModeEnabled && styles.voiceModeButtonActive]}
+              onPress={() => setVoiceModeVisible(true)}
+            >
+              <Text style={styles.voiceModeIcon}>🎙️</Text>
+            </TouchableOpacity>
+            <TouchableOpacity style={styles.menuButton}>
+              <Text style={styles.menuIcon}>⚙️</Text>
+            </TouchableOpacity>
+          </View>
         </View>
       </LinearGradient>
 
@@ -465,6 +487,15 @@ export default function AlphaScreen() {
           )}
         </View>
       </KeyboardAvoidingView>
+
+      {/* Voice Mode Modal */}
+      <VoiceMode
+        visible={voiceModeVisible}
+        onClose={() => setVoiceModeVisible(false)}
+        onSendMessage={handleVoiceMessage}
+        lastResponse={lastAIResponse}
+        isProcessing={isLoading}
+      />
     </SafeAreaView>
   );
 }
@@ -526,6 +557,26 @@ const styles = StyleSheet.create({
   alphaStatus: {
     fontSize: FontSizes.sm,
     color: Colors.muted,
+  },
+  headerButtons: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: Spacing.sm,
+  },
+  voiceModeButton: {
+    width: 44,
+    height: 44,
+    borderRadius: 22,
+    backgroundColor: Colors.card,
+    alignItems: 'center',
+    justifyContent: 'center',
+    ...Shadows.sm,
+  },
+  voiceModeButtonActive: {
+    backgroundColor: Colors.primary50,
+  },
+  voiceModeIcon: {
+    fontSize: 20,
   },
   menuButton: {
     width: 44,

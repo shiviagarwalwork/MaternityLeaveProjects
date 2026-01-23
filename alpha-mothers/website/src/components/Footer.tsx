@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import Image from 'next/image';
 
 const footerLinks = {
   product: [
@@ -35,8 +36,14 @@ export default function Footer() {
           {/* Brand */}
           <div className="col-span-2 md:col-span-1">
             <div className="flex items-center space-x-2 mb-4">
-              <div className="w-10 h-10 rounded-full bg-[var(--primary)] flex items-center justify-center">
-                <span className="text-white font-bold text-lg">A</span>
+              <div className="w-10 h-10 rounded-full overflow-hidden">
+                <Image
+                  src="/images/Alpha Mothers vision and logo.jpeg"
+                  alt="Alpha Mothers"
+                  width={40}
+                  height={40}
+                  className="w-full h-full object-cover"
+                />
               </div>
               <span className="text-xl font-semibold">Alpha Mothers</span>
             </div>

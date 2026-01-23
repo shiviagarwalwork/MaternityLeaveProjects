@@ -67,7 +67,7 @@ The first step is awareness. Try to consciously notice your thoughts today. What
     category: 'Mental Health',
     readTime: '3 min read',
     excerpt: 'Writing a letter to my younger self made me realize how far I\'ve come and how much I\'ve learned. Trust your gut—it knows what you truly want, even when you\'re not sure.',
-    image: 'https://alphamothers.com/wp-content/uploads/2025/01/1731349944136.jpeg',
+    image: '/images/Becoming parent.jpeg',
     content: `
 Yesterday, I participated in an activity where I wrote a letter to my younger self, remembering about a time of pure joy and freedom as a child. It was such a powerful experience that I wanted to share it with all of you.
 
@@ -469,7 +469,7 @@ Together.
     category: 'Raising Gen Alpha',
     readTime: '7 min read',
     excerpt: 'Fast forward 10 years. What will life be like for our Alpha Generation kids? It\'s a wild future, right? But how do we prepare our kids for a world that\'s changing so fast?',
-    image: 'https://alphamothers.com/wp-content/uploads/2025/01/Designer-1.jpeg',
+    image: '/images/milleniakls and alpha gen.jpeg',
     content: `
 Fast forward 10 years. What will life be like for our Alpha Generation kids?
 
@@ -530,7 +530,7 @@ We're not just raising kids for 2035. We're raising humans who will continue to 
     category: 'Return to Work',
     readTime: '4 min read',
     excerpt: 'Today I met a new mom returning to work after mat leave, and it took me right back to my own experience two years ago. It\'s not about going back. It\'s about moving forward.',
-    image: 'https://alphamothers.com/wp-content/uploads/2025/01/1731349944136.jpeg',
+    image: '/images/Becoming parent.jpeg',
     content: `
 Today I met a new mom returning to work after mat leave, and it took me right back to my own experience two years ago.
 
@@ -583,7 +583,7 @@ Welcome back. The world needs what you have to offer.
     category: 'Career & Leadership',
     readTime: '5 min read',
     excerpt: 'The conversation about your value doesn\'t start when you walk back through those office doors. It starts with how you see yourself.',
-    image: 'https://alphamothers.com/wp-content/uploads/2025/01/1731524235265.jpeg',
+    image: '/images/communicate goals.jpeg',
     content: `
 The conversation about your value doesn't start when you walk back through those office doors. It starts with how you see yourself.
 

@@ -86,7 +86,7 @@ export default function AppShowcase({ onNavigate }: AppShowcaseProps) {
 
             <p className="text-[var(--ink-brown)] mb-6 leading-relaxed">
               Unlike generic wellness apps, NayaVed AI is built on <strong>authenticated translations of the Charaka Samhita</strong> -
-              a 2,000+ year old medical text that documented everything from digital-age problems (yes, they existed!)
+              a 5,000+ year old medical text that documented everything from digital-age problems (yes, they existed!)
               to personalized treatment protocols. Our AI doesn't guess - it references actual sutras.
             </p>
 

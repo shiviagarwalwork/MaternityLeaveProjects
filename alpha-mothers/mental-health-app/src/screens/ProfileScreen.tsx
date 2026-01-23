@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   View,
   Text,
@@ -7,11 +7,16 @@ import {
   TouchableOpacity,
   Switch,
   Alert,
+  Modal,
+  FlatList,
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { LinearGradient } from 'expo-linear-gradient';
 import { Colors, Spacing, BorderRadius, FontSizes, FontWeights, Shadows } from '../constants/theme';
 import { useUser } from '../contexts/UserContext';
+import { useMemory } from '../hooks/useMemory';
+import { UserFact, UserPattern } from '../services/memory';
+import { useGmail } from '../hooks/useGmail';
 
 interface MenuItem {
   id: string;
@@ -35,6 +40,21 @@ const menuSections: MenuSection[] = [
       { id: 'profile', label: 'Edit Profile', icon: '👤', hasArrow: true },
       { id: 'subscription', label: 'Subscription', icon: '⭐', hasArrow: true, badge: 'Free Trial' },
       { id: 'privacy', label: 'Privacy Settings', icon: '🔒', hasArrow: true },
+    ],
+  },
+  {
+    title: 'AlphaMa Memory',
+    items: [
+      { id: 'memory', label: 'What I Know About You', icon: '🧠', hasArrow: true },
+      { id: 'patterns', label: 'Patterns Detected', icon: '📊', hasArrow: true },
+      { id: 'clear-memory', label: 'Clear All Memory', icon: '🗑️', hasArrow: true },
+    ],
+  },
+  {
+    title: 'Integrations',
+    items: [
+      { id: 'gmail', label: 'Connect Gmail', icon: '📧', hasArrow: true },
+      { id: 'calendar-connect', label: 'Connect Calendar', icon: '📅', hasArrow: true },
     ],
   },
   {
@@ -74,14 +94,125 @@ const stageLabels: { [key: string]: string } = {
 
 export default function ProfileScreen() {
   const { user, resetOnboarding } = useUser();
+  const { facts, patterns, clearMemory, removeFact, isLoading: memoryLoading } = useMemory();
+  const {
+    isConnected: isGmailConnected,
+    isAuthenticating,
+    profile: gmailProfile,
+    unreadCount,
+    connectGmail,
+    disconnect: disconnectGmail,
+    error: gmailError,
+  } = useGmail();
   const [notificationsEnabled, setNotificationsEnabled] = useState(true);
+  const [memoryModalVisible, setMemoryModalVisible] = useState(false);
+  const [patternsModalVisible, setPatternsModalVisible] = useState(false);
 
   const userName = user?.name || 'there';
   const userInitial = userName.charAt(0).toUpperCase();
   const userStage = user?.stage ? stageLabels[user.stage] || user.stage : 'Mom';
 
+  const getCategoryIcon = (category: string): string => {
+    const icons: Record<string, string> = {
+      family: '👨‍👩‍👧',
+      work: '💼',
+      health: '💊',
+      schedule: '📅',
+      preferences: '⚙️',
+      stressors: '😰',
+      goals: '🎯',
+      other: '📝',
+    };
+    return icons[category] || '📝';
+  };
+
+  const getPatternIcon = (type: string): string => {
+    const icons: Record<string, string> = {
+      emotional: '💜',
+      scheduling: '📅',
+      delegation: '🤝',
+      self_care: '🧘',
+      parenting: '👶',
+    };
+    return icons[type] || '📊';
+  };
+
+  const handleClearMemory = () => {
+    Alert.alert(
+      'Clear All Memory',
+      'This will delete everything AlphaMa has learned about you. This action cannot be undone.',
+      [
+        { text: 'Cancel', style: 'cancel' },
+        {
+          text: 'Clear All',
+          style: 'destructive',
+          onPress: async () => {
+            await clearMemory();
+            Alert.alert('Memory Cleared', 'AlphaMa will start fresh with learning about you.');
+          },
+        },
+      ]
+    );
+  };
+
+  const handleDeleteFact = (factId: string, factContent: string) => {
+    Alert.alert(
+      'Delete This Memory?',
+      `Remove: ${factContent}`,
+      [
+        { text: 'Cancel', style: 'cancel' },
+        {
+          text: 'Delete',
+          style: 'destructive',
+          onPress: () => removeFact(factId),
+        },
+      ]
+    );
+  };
+
+  const handleGmailConnect = async () => {
+    if (isGmailConnected) {
+      Alert.alert(
+        'Disconnect Gmail',
+        `Disconnect ${gmailProfile?.email || 'Gmail'}? AlphaMa will no longer have access to your emails.`,
+        [
+          { text: 'Cancel', style: 'cancel' },
+          {
+            text: 'Disconnect',
+            style: 'destructive',
+            onPress: async () => {
+              await disconnectGmail();
+              Alert.alert('Disconnected', 'Gmail has been disconnected.');
+            },
+          },
+        ]
+      );
+    } else {
+      try {
+        await connectGmail();
+      } catch (err) {
+        Alert.alert('Connection Failed', 'Could not connect to Gmail. Please try again.');
+      }
+    }
+  };
+
   const handleMenuPress = (itemId: string) => {
     switch (itemId) {
+      case 'memory':
+        setMemoryModalVisible(true);
+        break;
+      case 'patterns':
+        setPatternsModalVisible(true);
+        break;
+      case 'clear-memory':
+        handleClearMemory();
+        break;
+      case 'gmail':
+        handleGmailConnect();
+        break;
+      case 'calendar-connect':
+        Alert.alert('Coming Soon', 'Calendar connection will be available after you set up Google Cloud credentials.');
+        break;
       case 'crisis':
         Alert.alert(
           'Crisis Resources',
@@ -101,6 +232,32 @@ export default function ProfileScreen() {
         break;
     }
   };
+
+  const renderFactItem = ({ item }: { item: UserFact }) => (
+    <TouchableOpacity
+      style={styles.memoryItem}
+      onLongPress={() => handleDeleteFact(item.id, item.value)}
+    >
+      <Text style={styles.memoryIcon}>{getCategoryIcon(item.category)}</Text>
+      <View style={styles.memoryContent}>
+        <Text style={styles.memoryKey}>{item.key.replace(/_/g, ' ')}</Text>
+        <Text style={styles.memoryValue}>{item.value}</Text>
+      </View>
+      <View style={styles.confidenceBadge}>
+        <Text style={styles.confidenceText}>{Math.round(item.confidence * 100)}%</Text>
+      </View>
+    </TouchableOpacity>
+  );
+
+  const renderPatternItem = ({ item }: { item: UserPattern }) => (
+    <View style={styles.patternItem}>
+      <Text style={styles.patternIcon}>{getPatternIcon(item.type)}</Text>
+      <View style={styles.patternContent}>
+        <Text style={styles.patternDescription}>{item.description}</Text>
+        <Text style={styles.patternMeta}>Observed {item.frequency}x</Text>
+      </View>
+    </View>
+  );
 
   const handleLogout = () => {
     Alert.alert(
@@ -225,6 +382,78 @@ export default function ProfileScreen() {
 
         <View style={styles.bottomPadding} />
       </ScrollView>
+
+      {/* Memory Modal */}
+      <Modal
+        visible={memoryModalVisible}
+        animationType="slide"
+        transparent={false}
+        onRequestClose={() => setMemoryModalVisible(false)}
+      >
+        <SafeAreaView style={styles.modalContainer}>
+          <View style={styles.modalHeader}>
+            <Text style={styles.modalTitle}>What AlphaMa Knows</Text>
+            <TouchableOpacity onPress={() => setMemoryModalVisible(false)}>
+              <Text style={styles.modalClose}>✕</Text>
+            </TouchableOpacity>
+          </View>
+          <Text style={styles.modalSubtitle}>
+            Facts learned from our conversations. Long press to delete.
+          </Text>
+          {facts.length === 0 ? (
+            <View style={styles.emptyState}>
+              <Text style={styles.emptyIcon}>🧠</Text>
+              <Text style={styles.emptyText}>No memories yet</Text>
+              <Text style={styles.emptySubtext}>
+                As we chat, I'll learn about your family, work, and preferences to better support you.
+              </Text>
+            </View>
+          ) : (
+            <FlatList
+              data={facts}
+              renderItem={renderFactItem}
+              keyExtractor={(item) => item.id}
+              contentContainerStyle={styles.memoryList}
+            />
+          )}
+        </SafeAreaView>
+      </Modal>
+
+      {/* Patterns Modal */}
+      <Modal
+        visible={patternsModalVisible}
+        animationType="slide"
+        transparent={false}
+        onRequestClose={() => setPatternsModalVisible(false)}
+      >
+        <SafeAreaView style={styles.modalContainer}>
+          <View style={styles.modalHeader}>
+            <Text style={styles.modalTitle}>Patterns Detected</Text>
+            <TouchableOpacity onPress={() => setPatternsModalVisible(false)}>
+              <Text style={styles.modalClose}>✕</Text>
+            </TouchableOpacity>
+          </View>
+          <Text style={styles.modalSubtitle}>
+            Trends and patterns I've noticed in our conversations.
+          </Text>
+          {patterns.length === 0 ? (
+            <View style={styles.emptyState}>
+              <Text style={styles.emptyIcon}>📊</Text>
+              <Text style={styles.emptyText}>No patterns detected yet</Text>
+              <Text style={styles.emptySubtext}>
+                Over time, I'll identify recurring themes and stressors to proactively help you.
+              </Text>
+            </View>
+          ) : (
+            <FlatList
+              data={patterns}
+              renderItem={renderPatternItem}
+              keyExtractor={(item) => item.id}
+              contentContainerStyle={styles.memoryList}
+            />
+          )}
+        </SafeAreaView>
+      </Modal>
     </SafeAreaView>
   );
 }
@@ -431,5 +660,125 @@ const styles = StyleSheet.create({
   },
   bottomPadding: {
     height: 100,
+  },
+
+  // Memory Modal Styles
+  modalContainer: {
+    flex: 1,
+    backgroundColor: Colors.background,
+  },
+  modalHeader: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    paddingHorizontal: Spacing.lg,
+    paddingVertical: Spacing.md,
+    borderBottomWidth: 1,
+    borderBottomColor: Colors.border,
+  },
+  modalTitle: {
+    fontSize: FontSizes.xl,
+    fontWeight: FontWeights.bold,
+    color: Colors.foreground,
+  },
+  modalClose: {
+    fontSize: 24,
+    color: Colors.muted,
+    padding: Spacing.sm,
+  },
+  modalSubtitle: {
+    fontSize: FontSizes.sm,
+    color: Colors.muted,
+    paddingHorizontal: Spacing.lg,
+    paddingVertical: Spacing.sm,
+  },
+  memoryList: {
+    padding: Spacing.lg,
+  },
+  memoryItem: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    backgroundColor: Colors.card,
+    padding: Spacing.md,
+    borderRadius: BorderRadius.lg,
+    marginBottom: Spacing.sm,
+    borderWidth: 1,
+    borderColor: Colors.border,
+  },
+  memoryIcon: {
+    fontSize: 24,
+    marginRight: Spacing.md,
+  },
+  memoryContent: {
+    flex: 1,
+  },
+  memoryKey: {
+    fontSize: FontSizes.xs,
+    color: Colors.muted,
+    textTransform: 'capitalize',
+  },
+  memoryValue: {
+    fontSize: FontSizes.md,
+    color: Colors.foreground,
+    marginTop: 2,
+  },
+  confidenceBadge: {
+    backgroundColor: Colors.primary + '20',
+    paddingHorizontal: Spacing.sm,
+    paddingVertical: 2,
+    borderRadius: BorderRadius.sm,
+  },
+  confidenceText: {
+    fontSize: FontSizes.xs,
+    color: Colors.primary,
+    fontWeight: '600',
+  },
+  patternItem: {
+    flexDirection: 'row',
+    alignItems: 'flex-start',
+    backgroundColor: Colors.card,
+    padding: Spacing.md,
+    borderRadius: BorderRadius.lg,
+    marginBottom: Spacing.sm,
+    borderWidth: 1,
+    borderColor: Colors.border,
+  },
+  patternIcon: {
+    fontSize: 24,
+    marginRight: Spacing.md,
+  },
+  patternContent: {
+    flex: 1,
+  },
+  patternDescription: {
+    fontSize: FontSizes.md,
+    color: Colors.foreground,
+  },
+  patternMeta: {
+    fontSize: FontSizes.xs,
+    color: Colors.muted,
+    marginTop: 4,
+  },
+  emptyState: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    padding: Spacing.xl,
+  },
+  emptyIcon: {
+    fontSize: 48,
+    marginBottom: Spacing.md,
+  },
+  emptyText: {
+    fontSize: FontSizes.lg,
+    fontWeight: FontWeights.semibold,
+    color: Colors.foreground,
+    marginBottom: Spacing.sm,
+  },
+  emptySubtext: {
+    fontSize: FontSizes.sm,
+    color: Colors.muted,
+    textAlign: 'center',
+    lineHeight: 20,
   },
 });

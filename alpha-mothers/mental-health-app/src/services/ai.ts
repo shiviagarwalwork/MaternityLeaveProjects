@@ -4,6 +4,9 @@ import { detectMode, getModeContext, ModeDetectionResult } from './modeDetection
 import { getEmotionalPromptEnhancement } from './emotionalBrain';
 import { getLogisticPromptEnhancement } from './logisticBrain';
 import { getGrowthPromptEnhancement } from './growthBrain';
+import { buildMemoryContext, processMessageForMemory } from './memory';
+import { buildCalendarContext } from './calendar';
+import { buildEmailContext } from './gmail';
 
 // Initialize the Anthropic client
 const anthropic = new Anthropic({
@@ -285,6 +288,27 @@ export async function getAlphaMaResponse(
         contextAddition += `\nTheir main concerns: ${userContext.concerns.join(', ')}.`;
       }
     }
+
+    // Build memory context (facts, patterns, preferences)
+    const memoryContext = await buildMemoryContext();
+    if (memoryContext) {
+      contextAddition += memoryContext;
+    }
+
+    // Build calendar context (today's events, upcoming week)
+    const calendarContext = await buildCalendarContext();
+    if (calendarContext) {
+      contextAddition += calendarContext;
+    }
+
+    // Build email context (unread, important, action required)
+    const emailContext = await buildEmailContext();
+    if (emailContext) {
+      contextAddition += emailContext;
+    }
+
+    // Process the user message to extract and store facts
+    await processMessageForMemory(userMessage, 'user');
 
     // Combine base prompt with mode-specific enhancements
     const systemPrompt = ALPHAMA_SYSTEM_PROMPT + contextAddition + '\n\n---\n' + modeEnhancement;
