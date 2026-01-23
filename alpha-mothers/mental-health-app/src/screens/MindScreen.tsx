@@ -5,7 +5,7 @@ import {
   StyleSheet,
   ScrollView,
   TouchableOpacity,
-  Animated,
+  Image,
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { LinearGradient } from 'expo-linear-gradient';
@@ -24,7 +24,7 @@ interface MindItem {
   priority?: 'low' | 'medium' | 'high';
 }
 
-// Mock data - will be replaced with actual captured items from conversations
+// Mock data - organized by type
 const mockMindItems: MindItem[] = [
   {
     id: '1',
@@ -36,13 +36,20 @@ const mockMindItems: MindItem[] = [
   },
   {
     id: '2',
-    type: 'worry',
-    content: 'Worried about daycare transition next week',
+    type: 'todo',
+    content: 'Buy diapers',
     resolved: false,
     createdAt: new Date(),
   },
   {
     id: '3',
+    type: 'worry',
+    content: 'Daycare transition next week',
+    resolved: false,
+    createdAt: new Date(),
+  },
+  {
+    id: '4',
     type: 'appointment',
     content: 'Team meeting - Thursday 2pm',
     resolved: false,
@@ -50,34 +57,33 @@ const mockMindItems: MindItem[] = [
     dueDate: new Date(Date.now() + 2 * 24 * 60 * 60 * 1000),
   },
   {
-    id: '4',
+    id: '5',
     type: 'delegation',
-    content: 'Ask partner to handle grocery shopping this week',
+    content: 'Grocery shopping',
     resolved: false,
     createdAt: new Date(),
     assignedTo: 'Partner',
   },
   {
-    id: '5',
+    id: '6',
     type: 'idea',
-    content: 'Try the 5-minute calm technique before big meetings',
+    content: '5-minute calm technique before meetings',
     resolved: false,
     createdAt: new Date(),
   },
 ];
 
-const typeConfig = {
-  todo: { icon: '✓', label: 'To-Do', color: Colors.primary },
-  worry: { icon: '💭', label: 'On Your Mind', color: '#E8A87C' },
-  appointment: { icon: '📅', label: 'Coming Up', color: '#7B68EE' },
-  delegation: { icon: '🤝', label: 'Delegate', color: '#20B2AA' },
-  idea: { icon: '💡', label: 'Ideas', color: '#FFB347' },
+const sectionConfig = {
+  todo: { title: 'To-Do', icon: '✓', color: Colors.primary, emptyText: 'No tasks right now' },
+  appointment: { title: 'Coming Up', icon: '📅', color: '#7B68EE', emptyText: 'Nothing scheduled' },
+  delegation: { title: 'For Partner', icon: '🤝', color: '#20B2AA', emptyText: 'Nothing to delegate' },
+  worry: { title: 'On Your Mind', icon: '💭', color: '#E8A87C', emptyText: 'Mind is clear' },
+  idea: { title: 'Ideas & Self-Care', icon: '💡', color: '#FFB347', emptyText: 'No ideas saved' },
 };
 
 export default function MindScreen() {
   const { user } = useUser();
   const [items, setItems] = useState<MindItem[]>(mockMindItems);
-  const [selectedFilter, setSelectedFilter] = useState<string | null>(null);
 
   const toggleResolved = (id: string) => {
     setItems(prev =>
@@ -87,14 +93,76 @@ export default function MindScreen() {
     );
   };
 
-  const filteredItems = selectedFilter
-    ? items.filter(item => item.type === selectedFilter)
-    : items;
+  const getItemsByType = (type: string) => items.filter(item => item.type === type && !item.resolved);
+  const resolvedItems = items.filter(item => item.resolved);
+  const totalUnresolved = items.filter(item => !item.resolved).length;
 
-  const unresolvedCount = items.filter(item => !item.resolved).length;
-  const resolvedCount = items.filter(item => item.resolved).length;
+  const renderSection = (type: keyof typeof sectionConfig) => {
+    const config = sectionConfig[type];
+    const sectionItems = getItemsByType(type);
 
-  const filters = ['todo', 'worry', 'appointment', 'delegation', 'idea'];
+    return (
+      <View key={type} style={styles.section}>
+        <View style={styles.sectionHeader}>
+          <View style={[styles.sectionIconBg, { backgroundColor: `${config.color}20` }]}>
+            <Text style={styles.sectionIcon}>{config.icon}</Text>
+          </View>
+          <Text style={styles.sectionTitle}>{config.title}</Text>
+          {sectionItems.length > 0 && (
+            <View style={[styles.badge, { backgroundColor: config.color }]}>
+              <Text style={styles.badgeText}>{sectionItems.length}</Text>
+            </View>
+          )}
+        </View>
+
+        {sectionItems.length === 0 ? (
+          <Text style={styles.emptyText}>{config.emptyText}</Text>
+        ) : (
+          <View style={styles.itemsContainer}>
+            {sectionItems.map(item => (
+              <TouchableOpacity
+                key={item.id}
+                style={styles.itemCard}
+                onPress={() => toggleResolved(item.id)}
+                activeOpacity={0.7}
+              >
+                <View style={[styles.checkbox, { borderColor: config.color }]} />
+                <View style={styles.itemContent}>
+                  <Text style={styles.itemText}>{item.content}</Text>
+                  {item.assignedTo && (
+                    <TouchableOpacity style={styles.assignedTag}>
+                      <Text style={styles.assignedText}>→ {item.assignedTo}</Text>
+                      <Text style={styles.calendarHint}>Add to calendar</Text>
+                    </TouchableOpacity>
+                  )}
+                  {item.dueDate && (
+                    <Text style={styles.dueText}>
+                      {item.dueDate.toLocaleDateString('en-US', {
+                        weekday: 'short',
+                        month: 'short',
+                        day: 'numeric',
+                      })}
+                    </Text>
+                  )}
+                  {item.type === 'idea' && item.content.toLowerCase().includes('calm') && (
+                    <TouchableOpacity style={styles.actionButton}>
+                      <Text style={styles.actionIcon}>🧘</Text>
+                      <Text style={styles.actionText}>Try now</Text>
+                    </TouchableOpacity>
+                  )}
+                  {item.priority === 'high' && (
+                    <View style={styles.priorityTag}>
+                      <Text style={styles.priorityText}>Priority</Text>
+                    </View>
+                  )}
+                </View>
+              </TouchableOpacity>
+            ))}
+          </View>
+        )}
+      </View>
+    );
+  };
 
   return (
     <SafeAreaView style={styles.container} edges={['top']}>
@@ -104,135 +172,57 @@ export default function MindScreen() {
         style={styles.headerGradient}
       >
         <View style={styles.header}>
-          <Text style={styles.title}>Your Mind</Text>
+          <View style={styles.headerTop}>
+            <Image
+              source={require('../../assets/logo.jpeg')}
+              style={styles.headerLogo}
+            />
+            <Text style={styles.title}>Your Mind</Text>
+          </View>
           <Text style={styles.subtitle}>
-            {unresolvedCount > 0
-              ? `${unresolvedCount} things on your mind`
-              : 'Your mind is clear ✨'}
+            {totalUnresolved > 0
+              ? `${totalUnresolved} things I'm keeping track of for you`
+              : "Your mind is clear ✨"}
           </Text>
         </View>
       </LinearGradient>
 
-      {/* Filter Pills */}
-      <ScrollView
-        horizontal
-        showsHorizontalScrollIndicator={false}
-        style={styles.filterContainer}
-        contentContainerStyle={styles.filterContent}
-      >
-        <TouchableOpacity
-          style={[
-            styles.filterPill,
-            !selectedFilter && styles.filterPillActive,
-          ]}
-          onPress={() => setSelectedFilter(null)}
-        >
-          <Text
-            style={[
-              styles.filterText,
-              !selectedFilter && styles.filterTextActive,
-            ]}
-          >
-            All
-          </Text>
-        </TouchableOpacity>
-        {filters.map(filter => {
-          const config = typeConfig[filter as keyof typeof typeConfig];
-          const count = items.filter(i => i.type === filter && !i.resolved).length;
-          return (
-            <TouchableOpacity
-              key={filter}
-              style={[
-                styles.filterPill,
-                selectedFilter === filter && styles.filterPillActive,
-                selectedFilter === filter && { backgroundColor: config.color },
-              ]}
-              onPress={() =>
-                setSelectedFilter(selectedFilter === filter ? null : filter)
-              }
-            >
-              <Text style={styles.filterIcon}>{config.icon}</Text>
-              <Text
-                style={[
-                  styles.filterText,
-                  selectedFilter === filter && styles.filterTextActive,
-                ]}
-              >
-                {config.label}
-              </Text>
-              {count > 0 && (
-                <View
-                  style={[
-                    styles.filterBadge,
-                    { backgroundColor: selectedFilter === filter ? 'white' : config.color },
-                  ]}
-                >
-                  <Text
-                    style={[
-                      styles.filterBadgeText,
-                      { color: selectedFilter === filter ? config.color : 'white' },
-                    ]}
-                  >
-                    {count}
-                  </Text>
-                </View>
-              )}
-            </TouchableOpacity>
-          );
-        })}
-      </ScrollView>
+      <ScrollView style={styles.scrollView} showsVerticalScrollIndicator={false}>
+        {/* Main Sections */}
+        {renderSection('todo')}
+        {renderSection('appointment')}
+        {renderSection('delegation')}
+        {renderSection('worry')}
+        {renderSection('idea')}
 
-      {/* Items List */}
-      <ScrollView style={styles.itemsList} showsVerticalScrollIndicator={false}>
-        {/* Unresolved Items */}
-        {filteredItems
-          .filter(item => !item.resolved)
-          .map(item => (
-            <MindItemCard
-              key={item.id}
-              item={item}
-              onToggle={() => toggleResolved(item.id)}
-            />
-          ))}
-
-        {/* Resolved Section */}
-        {resolvedCount > 0 && (
+        {/* Resolved Items */}
+        {resolvedItems.length > 0 && (
           <View style={styles.resolvedSection}>
             <Text style={styles.resolvedHeader}>
-              Resolved ({resolvedCount})
+              Done ({resolvedItems.length})
             </Text>
-            {filteredItems
-              .filter(item => item.resolved)
-              .map(item => (
-                <MindItemCard
-                  key={item.id}
-                  item={item}
-                  onToggle={() => toggleResolved(item.id)}
-                />
-              ))}
+            {resolvedItems.map(item => (
+              <TouchableOpacity
+                key={item.id}
+                style={styles.resolvedItem}
+                onPress={() => toggleResolved(item.id)}
+              >
+                <View style={[styles.checkbox, styles.checkboxDone]}>
+                  <Text style={styles.checkmark}>✓</Text>
+                </View>
+                <Text style={styles.resolvedText}>{item.content}</Text>
+              </TouchableOpacity>
+            ))}
           </View>
         )}
 
-        {/* Empty State */}
-        {filteredItems.length === 0 && (
-          <View style={styles.emptyState}>
-            <Text style={styles.emptyIcon}>🧘</Text>
-            <Text style={styles.emptyTitle}>Mind is clear</Text>
-            <Text style={styles.emptySubtitle}>
-              Talk to AlphaMa to capture what's on your mind
-            </Text>
-          </View>
-        )}
-
-        {/* Bottom Info */}
+        {/* How It Works Card */}
         <View style={styles.infoCard}>
           <Text style={styles.infoIcon}>💬</Text>
           <View style={styles.infoContent}>
             <Text style={styles.infoTitle}>How this works</Text>
             <Text style={styles.infoText}>
-              As you talk with AlphaMa, I'll automatically capture your to-dos,
-              worries, and important things so you don't have to remember
-              everything yourself.
+              As you chat with me, I'll automatically capture tasks, worries, and ideas so you don't have to hold everything in your head.
             </Text>
           </View>
         </View>
@@ -243,84 +233,27 @@ export default function MindScreen() {
   );
 }
 
-// Individual Item Card
-function MindItemCard({
-  item,
-  onToggle,
-}: {
-  item: MindItem;
-  onToggle: () => void;
-}) {
-  const config = typeConfig[item.type];
-
-  return (
-    <TouchableOpacity
-      style={[styles.itemCard, item.resolved && styles.itemCardResolved]}
-      onPress={onToggle}
-      activeOpacity={0.7}
-    >
-      <View
-        style={[
-          styles.itemCheckbox,
-          item.resolved && styles.itemCheckboxChecked,
-          { borderColor: config.color },
-          item.resolved && { backgroundColor: config.color },
-        ]}
-      >
-        {item.resolved && <Text style={styles.checkmark}>✓</Text>}
-      </View>
-
-      <View style={styles.itemContent}>
-        <View style={styles.itemHeader}>
-          <View style={[styles.itemTypeBadge, { backgroundColor: `${config.color}20` }]}>
-            <Text style={styles.itemTypeIcon}>{config.icon}</Text>
-            <Text style={[styles.itemTypeLabel, { color: config.color }]}>
-              {config.label}
-            </Text>
-          </View>
-          {item.priority === 'high' && (
-            <View style={styles.priorityBadge}>
-              <Text style={styles.priorityText}>Priority</Text>
-            </View>
-          )}
-        </View>
-
-        <Text
-          style={[styles.itemText, item.resolved && styles.itemTextResolved]}
-        >
-          {item.content}
-        </Text>
-
-        {item.assignedTo && (
-          <Text style={styles.itemAssigned}>→ {item.assignedTo}</Text>
-        )}
-
-        {item.dueDate && (
-          <Text style={styles.itemDue}>
-            {item.dueDate.toLocaleDateString('en-US', {
-              weekday: 'short',
-              month: 'short',
-              day: 'numeric',
-            })}
-          </Text>
-        )}
-      </View>
-    </TouchableOpacity>
-  );
-}
-
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: Colors.background,
   },
   headerGradient: {
-    paddingBottom: Spacing.sm,
+    paddingBottom: Spacing.md,
   },
   header: {
     paddingHorizontal: Spacing.lg,
     paddingTop: Spacing.md,
-    paddingBottom: Spacing.sm,
+  },
+  headerTop: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: Spacing.sm,
+  },
+  headerLogo: {
+    width: 32,
+    height: 32,
+    borderRadius: 16,
   },
   title: {
     fontSize: FontSizes.xxl,
@@ -330,210 +263,201 @@ const styles = StyleSheet.create({
   subtitle: {
     fontSize: FontSizes.sm,
     color: Colors.muted,
-    marginTop: 4,
+    marginTop: Spacing.xs,
+    marginLeft: 40,
   },
 
-  // Filters
-  filterContainer: {
-    maxHeight: 50,
+  scrollView: {
+    flex: 1,
+    paddingHorizontal: Spacing.lg,
   },
-  filterContent: {
-    paddingHorizontal: 16,
-    gap: 8,
-    flexDirection: 'row',
+
+  // Sections
+  section: {
+    marginTop: Spacing.lg,
   },
-  filterPill: {
+  sectionHeader: {
     flexDirection: 'row',
     alignItems: 'center',
-    paddingHorizontal: 14,
-    paddingVertical: 8,
-    backgroundColor: Colors.card,
-    borderRadius: 20,
-    borderWidth: 1,
-    borderColor: Colors.border,
-    gap: 6,
+    marginBottom: Spacing.sm,
   },
-  filterPillActive: {
-    backgroundColor: Colors.primary,
-    borderColor: Colors.primary,
-  },
-  filterIcon: {
-    fontSize: 14,
-  },
-  filterText: {
-    fontSize: 14,
-    color: Colors.muted,
-    fontWeight: '500',
-  },
-  filterTextActive: {
-    color: 'white',
-  },
-  filterBadge: {
-    minWidth: 18,
-    height: 18,
-    borderRadius: 9,
+  sectionIconBg: {
+    width: 28,
+    height: 28,
+    borderRadius: 8,
     alignItems: 'center',
     justifyContent: 'center',
-    marginLeft: 2,
   },
-  filterBadgeText: {
-    fontSize: 11,
-    fontWeight: '600',
+  sectionIcon: {
+    fontSize: 14,
   },
-
-  // Items List
-  itemsList: {
+  sectionTitle: {
+    fontSize: FontSizes.md,
+    fontWeight: FontWeights.semibold,
+    color: Colors.foreground,
+    marginLeft: Spacing.sm,
     flex: 1,
-    paddingHorizontal: 16,
-    paddingTop: 16,
+  },
+  badge: {
+    minWidth: 20,
+    height: 20,
+    borderRadius: 10,
+    alignItems: 'center',
+    justifyContent: 'center',
+    paddingHorizontal: 6,
+  },
+  badgeText: {
+    color: 'white',
+    fontSize: 11,
+    fontWeight: FontWeights.bold,
+  },
+  emptyText: {
+    fontSize: FontSizes.sm,
+    color: Colors.muted,
+    fontStyle: 'italic',
+    marginLeft: 36,
   },
 
-  // Item Card
+  // Items
+  itemsContainer: {
+    gap: Spacing.sm,
+  },
   itemCard: {
     flexDirection: 'row',
     backgroundColor: Colors.card,
-    borderRadius: 16,
-    padding: 16,
-    marginBottom: 12,
-    borderWidth: 1,
-    borderColor: Colors.border,
+    borderRadius: BorderRadius.lg,
+    padding: Spacing.md,
+    ...Shadows.sm,
   },
-  itemCardResolved: {
-    opacity: 0.6,
-  },
-  itemCheckbox: {
-    width: 24,
-    height: 24,
-    borderRadius: 12,
+  checkbox: {
+    width: 22,
+    height: 22,
+    borderRadius: 11,
     borderWidth: 2,
-    alignItems: 'center',
-    justifyContent: 'center',
-    marginRight: 12,
+    marginRight: Spacing.md,
     marginTop: 2,
   },
-  itemCheckboxChecked: {
-    borderWidth: 0,
+  checkboxDone: {
+    backgroundColor: Colors.accent,
+    borderColor: Colors.accent,
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   checkmark: {
     color: 'white',
-    fontSize: 14,
-    fontWeight: '700',
+    fontSize: 12,
+    fontWeight: FontWeights.bold,
   },
   itemContent: {
     flex: 1,
   },
-  itemHeader: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    marginBottom: 8,
-    gap: 8,
-  },
-  itemTypeBadge: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    paddingHorizontal: 8,
-    paddingVertical: 4,
-    borderRadius: 8,
-    gap: 4,
-  },
-  itemTypeIcon: {
-    fontSize: 12,
-  },
-  itemTypeLabel: {
-    fontSize: 12,
-    fontWeight: '600',
-  },
-  priorityBadge: {
-    backgroundColor: '#FFE4E4',
-    paddingHorizontal: 8,
-    paddingVertical: 4,
-    borderRadius: 8,
-  },
-  priorityText: {
-    fontSize: 11,
-    fontWeight: '600',
-    color: '#D32F2F',
-  },
   itemText: {
-    fontSize: 16,
+    fontSize: FontSizes.md,
     color: Colors.foreground,
     lineHeight: 22,
   },
-  itemTextResolved: {
-    textDecorationLine: 'line-through',
-    color: Colors.muted,
+  assignedTag: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginTop: Spacing.xs,
+    gap: Spacing.sm,
   },
-  itemAssigned: {
-    fontSize: 13,
+  assignedText: {
+    fontSize: FontSizes.sm,
     color: '#20B2AA',
-    marginTop: 6,
-    fontWeight: '500',
+    fontWeight: FontWeights.medium,
   },
-  itemDue: {
-    fontSize: 13,
+  calendarHint: {
+    fontSize: FontSizes.xs,
+    color: Colors.primary,
+    textDecorationLine: 'underline',
+  },
+  dueText: {
+    fontSize: FontSizes.sm,
     color: '#7B68EE',
-    marginTop: 6,
-    fontWeight: '500',
+    marginTop: Spacing.xs,
+    fontWeight: FontWeights.medium,
+  },
+  actionButton: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    backgroundColor: Colors.accent + '20',
+    paddingHorizontal: Spacing.sm,
+    paddingVertical: Spacing.xs,
+    borderRadius: BorderRadius.full,
+    alignSelf: 'flex-start',
+    marginTop: Spacing.sm,
+    gap: 4,
+  },
+  actionIcon: {
+    fontSize: 14,
+  },
+  actionText: {
+    fontSize: FontSizes.xs,
+    color: Colors.accent,
+    fontWeight: FontWeights.semibold,
+  },
+  priorityTag: {
+    backgroundColor: '#FFE4E4',
+    paddingHorizontal: Spacing.sm,
+    paddingVertical: 2,
+    borderRadius: BorderRadius.sm,
+    alignSelf: 'flex-start',
+    marginTop: Spacing.xs,
+  },
+  priorityText: {
+    fontSize: FontSizes.xs,
+    fontWeight: FontWeights.semibold,
+    color: '#D32F2F',
   },
 
   // Resolved Section
   resolvedSection: {
-    marginTop: 24,
-    paddingTop: 16,
+    marginTop: Spacing.xl,
+    paddingTop: Spacing.md,
     borderTopWidth: 1,
     borderTopColor: Colors.border,
   },
   resolvedHeader: {
-    fontSize: 14,
-    fontWeight: '600',
+    fontSize: FontSizes.sm,
+    fontWeight: FontWeights.medium,
     color: Colors.muted,
-    marginBottom: 12,
+    marginBottom: Spacing.md,
   },
-
-  // Empty State
-  emptyState: {
+  resolvedItem: {
+    flexDirection: 'row',
     alignItems: 'center',
-    paddingVertical: 60,
+    paddingVertical: Spacing.sm,
   },
-  emptyIcon: {
-    fontSize: 48,
-    marginBottom: 16,
-  },
-  emptyTitle: {
-    fontSize: 20,
-    fontWeight: '600',
-    color: Colors.foreground,
-    marginBottom: 8,
-  },
-  emptySubtitle: {
-    fontSize: 15,
+  resolvedText: {
+    fontSize: FontSizes.md,
     color: Colors.muted,
-    textAlign: 'center',
+    textDecorationLine: 'line-through',
   },
 
   // Info Card
   infoCard: {
     flexDirection: 'row',
     backgroundColor: `${Colors.primary}10`,
-    borderRadius: 16,
-    padding: 16,
-    marginTop: 24,
+    borderRadius: BorderRadius.lg,
+    padding: Spacing.md,
+    marginTop: Spacing.xl,
   },
   infoIcon: {
     fontSize: 24,
-    marginRight: 12,
+    marginRight: Spacing.md,
   },
   infoContent: {
     flex: 1,
   },
   infoTitle: {
-    fontSize: 15,
-    fontWeight: '600',
+    fontSize: FontSizes.md,
+    fontWeight: FontWeights.semibold,
     color: Colors.foreground,
-    marginBottom: 4,
+    marginBottom: Spacing.xs,
   },
   infoText: {
-    fontSize: 14,
+    fontSize: FontSizes.sm,
     color: Colors.muted,
     lineHeight: 20,
   },

@@ -11,6 +11,7 @@ import {
   KeyboardAvoidingView,
   Platform,
   ActivityIndicator,
+  Image,
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { LinearGradient } from 'expo-linear-gradient';
@@ -83,10 +84,17 @@ export default function AlphaScreen() {
   // Initial greeting when no messages
   useEffect(() => {
     if (messages.length === 0) {
+      const greetings = [
+        `Hey ${userName} 💜\n\nHow's it going today? I'm here whenever you need to talk, vent, or just think out loud.`,
+        `Hi ${userName}!\n\nHow are you holding up? No pressure to be "fine" here - you can be real with me.`,
+        `${greeting}, ${userName} 💜\n\nWhat's on your mind today? I'm all ears.`,
+      ];
+      const randomGreeting = greetings[Math.floor(Math.random() * greetings.length)];
+
       const initialMessage: Message = {
         id: 'initial',
         role: 'alpha',
-        content: `${greeting}, ${userName}. 💜\n\nHow are you feeling today? I'm here to listen - whether you need to vent, need help figuring something out, or just need someone to talk to.`,
+        content: randomGreeting,
         timestamp: new Date(),
       };
       setMessages([initialMessage]);
@@ -214,12 +222,10 @@ export default function AlphaScreen() {
       >
         <View style={styles.header}>
           <View style={styles.headerLeft}>
-            <LinearGradient
-              colors={[Colors.primary, Colors.primaryDark]}
+            <Image
+              source={require('../../assets/logo.jpeg')}
               style={styles.alphaAvatar}
-            >
-              <Text style={styles.alphaAvatarText}>α</Text>
-            </LinearGradient>
+            />
             <View>
               <Text style={styles.alphaName}>AlphaMa</Text>
               <View style={styles.statusRow}>
@@ -257,9 +263,10 @@ export default function AlphaScreen() {
                 ]}
               >
                 {message.role === 'alpha' && (
-                  <View style={styles.miniAvatar}>
-                    <Text style={styles.miniAvatarText}>α</Text>
-                  </View>
+                  <Image
+                    source={require('../../assets/logo.jpeg')}
+                    style={styles.miniAvatar}
+                  />
                 )}
                 <View
                   style={[
@@ -299,9 +306,10 @@ export default function AlphaScreen() {
             {/* Typing indicator */}
             {isLoading && (
               <View style={[styles.messageWrapper, styles.alphaWrapper]}>
-                <View style={styles.miniAvatar}>
-                  <Text style={styles.miniAvatarText}>α</Text>
-                </View>
+                <Image
+                  source={require('../../assets/logo.jpeg')}
+                  style={styles.miniAvatar}
+                />
                 <View style={[styles.messageBubble, styles.alphaBubble, styles.typingBubble]}>
                   <View style={styles.typingIndicator}>
                     <View style={styles.typingDots}>

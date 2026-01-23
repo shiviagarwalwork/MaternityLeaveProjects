@@ -270,50 +270,6 @@ export default function AboutPage() {
         </div>
       </section>
 
-      {/* Credentials */}
-      <section className="py-20 bg-[var(--cream)]">
-        <div className="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8">
-          <h2 className="text-3xl font-bold text-[var(--foreground)] mb-8 text-center">
-            Background
-          </h2>
-
-          <div className="grid md:grid-cols-2 gap-8">
-            <div>
-              <h3 className="font-bold text-[var(--foreground)] mb-4">Courses</h3>
-              <ul className="space-y-2 text-[var(--muted)]">
-                <li>Stanford — NLP with Deep Learning</li>
-              </ul>
-            </div>
-
-            <div>
-              <h3 className="font-bold text-[var(--foreground)] mb-4">Certifications</h3>
-              <ul className="space-y-2 text-[var(--muted)]">
-                <li>Salesforce AI Associate</li>
-                <li>Mulesoft Platform Architect</li>
-                <li>Microsoft Azure Fundamentals</li>
-              </ul>
-            </div>
-
-            <div>
-              <h3 className="font-bold text-[var(--foreground)] mb-4">Work</h3>
-              <ul className="space-y-2 text-[var(--muted)]">
-                <li>Salesforce, Canada (2024–present)</li>
-                <li>Deloitte, Hyderabad (2017–2024)</li>
-                <li>Infosys, Mysore & Pune (2014–2017)</li>
-              </ul>
-            </div>
-
-            <div>
-              <h3 className="font-bold text-[var(--foreground)] mb-4">Writing</h3>
-              <ul className="space-y-2 text-[var(--muted)]">
-                <li>Published articles on AI and parenting</li>
-                <li>Thought leadership on raising Gen Alpha</li>
-              </ul>
-            </div>
-          </div>
-        </div>
-      </section>
-
       {/* Connect */}
       <section className="py-20">
         <div className="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8 text-center">

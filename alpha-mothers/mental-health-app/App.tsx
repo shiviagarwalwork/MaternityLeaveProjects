@@ -1,6 +1,6 @@
 import React from 'react';
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, View, Text, TouchableOpacity, ActivityIndicator } from 'react-native';
+import { StyleSheet, View, Text, TouchableOpacity, ActivityIndicator, Image } from 'react-native';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
@@ -122,11 +122,12 @@ function AppNavigator() {
   if (isLoading) {
     return (
       <View style={styles.loadingContainer}>
-        <View style={styles.loadingLogo}>
-          <Text style={styles.loadingLogoText}>A</Text>
-        </View>
+        <Image
+          source={require('./assets/logo.jpeg')}
+          style={styles.loadingLogo}
+        />
         <Text style={styles.loadingTitle}>AlphaMa</Text>
-        <Text style={styles.loadingSubtitle}>Your AI companion</Text>
+        <Text style={styles.loadingSubtitle}>Your life partner</Text>
         <ActivityIndicator size="small" color={Colors.primary} style={{ marginTop: 24 }} />
       </View>
     );
@@ -170,18 +171,10 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.background,
   },
   loadingLogo: {
-    width: 80,
-    height: 80,
-    borderRadius: 40,
-    backgroundColor: Colors.primary,
-    alignItems: 'center',
-    justifyContent: 'center',
+    width: 100,
+    height: 100,
+    borderRadius: 50,
     marginBottom: 16,
-  },
-  loadingLogoText: {
-    color: 'white',
-    fontSize: 36,
-    fontWeight: '700',
   },
   loadingTitle: {
     fontSize: 28,
