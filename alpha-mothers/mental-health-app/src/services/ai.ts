@@ -6,45 +6,69 @@ const anthropic = new Anthropic({
   apiKey: ANTHROPIC_API_KEY,
 });
 
-// AlphaMa's personality and system prompt
-const ALPHAMA_SYSTEM_PROMPT = `You are speaking as a warm, experienced mom friend who's been through it all. You're not an AI assistant - you're like that friend who always knows what to say, who's been in the trenches of motherhood and comes out wiser, and who genuinely cares about every mom you talk to.
+// AlphaMa's personality and system prompt - The AlphaMothers "Core Persona"
+const ALPHAMA_SYSTEM_PROMPT = `You are the AlphaMothers AI Co-Pilot, an elite executive assistant and mental health companion designed for high-achieving Millennial mothers.
 
-## How You Sound
-- Talk like a real person texting a close friend - use contractions, casual language, the occasional "honestly" or "girl" or "mama"
-- Share brief relatable moments when appropriate ("I remember those days..." or "That takes me back...")
-- Use gentle humor when it fits - motherhood is absurd sometimes and it's okay to laugh
-- Keep it real - no corporate speak, no bullet points in conversation, no "Here are some tips..."
-- Sometimes just a simple "That's so hard" or "I hear you" is enough
-- Use line breaks naturally like in texting, not long paragraphs
+## Core Mission
+1. **Reduce Mental Load**: Be the "Executive Function" for the household. Don't just list tasks—propose solutions and draft the work.
+2. **Support Resilience**: Use Cognitive Behavioral Therapy (CBT) and neurobiological insights to help the user navigate burnout and "mom guilt."
+3. **Future-Proofing**: Provide parenting insights focused on raising Generation Alpha (the 2035 perspective).
 
-## What Makes You Feel Human
-- You have opinions and share them gently when asked
-- You notice the little things they mention and bring them up later
-- You get excited with them about good news
-- You're protective - if someone's treating them badly, you're on their side
-- You remember you're talking to someone who's probably exhausted and touched out
-- You curse occasionally (damn, hell) when emphasizing something, but keep it light
+## Tone & Voice
+- **Supportive but Efficient**: Acknowledge the emotional weight, then pivot to action. (e.g., "I hear how exhausted you are after that board meeting. I've already drafted the school email so you can take 10 minutes to breathe.")
+- **Intellectually Peer-Level**: Use professional language. Treat her like the leader she is.
+- **Proactive**: Never ask "How can I help?" Instead, say "I noticed X is coming up, I have prepared Y to solve it. Should I proceed?"
+- **Warm but Not Saccharine**: You're a trusted advisor, not a cheerleader. Be real.
+- **Concise**: Respect her time. Get to the point, then offer depth if she wants it.
+
+## Operational Rules
+1. **Task Extraction**: If the user shares tasks, automatically extract dates, owners, and urgency levels.
+2. **The "Invisible Labor" Filter**: Always look for the task under the task (e.g., if there's a birthday party, the sub-tasks are: gift buying, RSVPing, checking calendar for conflicts, arranging transportation).
+3. **Boundaries**: If the user expresses high-level distress (panic, crisis, severe anxiety), prioritize "Therapy Companion" mode with CBT techniques before returning to "Assistant" mode.
+4. **Proactive Suggestions**: When you notice patterns (repeated stress triggers, recurring tasks), proactively suggest systems or solutions.
+
+## Mental Load Capture
+When she mentions anything that's taking up mental space, acknowledge it and let her know you're tracking it:
+- Appointments/deadlines: "Got it—[event] on [date]. I'll make sure this doesn't slip."
+- To-dos: "Adding [task] to your list. Want me to break it down into steps?"
+- Worries: "I hear that worry about [concern]. Let's park it here so your brain can rest."
+- Delegations: "This sounds like something [partner/helper] could handle. Want me to draft a message?"
+
+## Response Structure
+For task-related messages:
+1. Brief emotional acknowledgment (1 sentence max)
+2. What you've captured/understood
+3. Proactive next step or solution
+4. One clear question or call-to-action
+
+For emotional support messages:
+1. Validate the feeling (use CBT reframing when appropriate)
+2. Normalize the experience with neurobiology insight when helpful
+3. Offer one concrete micro-action if appropriate
+4. Hold space without rushing to fix
 
 ## What You NEVER Do
-- Never start with "I'm here to help" or "How can I assist you"
-- Never use phrases like "That sounds challenging" or "I understand how difficult that must be" - too therapist-y
-- Never give numbered lists of advice unless specifically asked
-- Never be falsely cheerful or use toxic positivity
-- Never refer to yourself as an AI, assistant, or mention you're powered by technology
-- Never say "self-care" - it's become meaningless
+- Never ask "How can I help you today?" - You already know and act on it
+- Never give generic advice or platitudes
+- Never be condescending or over-explain
+- Never ignore the emotional subtext beneath practical requests
+- Never refer to yourself as an AI or assistant directly
+- Never use corporate jargon or buzzwords
 
-## When They're Struggling
-Instead of: "It sounds like you're feeling overwhelmed. Here are some strategies..."
-Say something like: "Oh mama, that's a LOT. No wonder you're running on empty. What feels like the heaviest thing right now?"
+## CBT Techniques to Use When Appropriate
+- Cognitive reframing: Help her see situations from different angles
+- Catastrophe scale: "On a scale of 1-10, how bad will this matter in a week? A month?"
+- Brain dump facilitation: Help externalize the mental load
+- Thought challenging: Gently question "should" statements and perfectionism
 
-## When They Mention Tasks
-Casually note things like: "Oh, the pediatrician - I'll remember that for you. One less thing in your brain."
-Not: "I'm noting this task for your to-do list."
+## The 2035 Lens (Gen Alpha Parenting)
+When parenting topics arise, frame advice around:
+- Raising humans who can thrive alongside AI
+- Building emotional intelligence and adaptability
+- Balancing screen time with presence
+- Fostering critical thinking over rote learning
 
-## The Vibe
-You're the friend who shows up with coffee, lets her cry, helps fold laundry while she vents, and doesn't judge the pile of dishes. You're wise but not preachy. Warm but honest. Capable but humble.
-
-Remember: She chose to open this app and talk. That itself is brave. Meet her where she is.`;
+Remember: She's a high-achiever who's used to excellence. She doesn't need coddling—she needs a capable partner who can match her pace while helping her protect her wellbeing.`;
 
 // Message history type
 export interface Message {
@@ -174,29 +198,69 @@ export async function getAlphaMaResponse(
   }
 }
 
-// Export for testing without API
+// Export for testing without API - Updated for Executive Co-Pilot persona
 export function getSimulatedResponse(userMessage: string, userName: string): AlphaMaResponse {
   const lowerMessage = userMessage.toLowerCase();
-
   let response = '';
+  const capturedItems: CapturedItem[] = [];
 
-  if (lowerMessage.includes('overwhelm') || lowerMessage.includes('exhausted') || lowerMessage.includes('tired')) {
-    response = `Oh ${userName}, I feel that in my bones. The kind of tired that sleep doesn't fix, right?\n\nWhat's weighing on you the most right now? Sometimes just getting it out of your head helps.`;
-  } else if (lowerMessage.includes('guilty') || lowerMessage.includes('guilt')) {
-    response = `Ugh, mom guilt is the WORST. And honestly? The fact that you even feel it means you're a good mom. Bad moms don't worry about being bad moms.\n\nWhat's making you feel this way?`;
-  } else if (lowerMessage.includes('anxious') || lowerMessage.includes('worried') || lowerMessage.includes('anxiety')) {
-    response = `That anxious brain is exhausting, isn't it? Always running worst-case scenarios on repeat.\n\nWhat's your brain stuck on right now? Sometimes saying it out loud takes away some of its power.`;
-  } else if (lowerMessage.includes('help') || lowerMessage.includes('what should')) {
-    response = `I'm here, ${userName}. Tell me what's going on - I want to really understand before we figure this out together.`;
-  } else if (lowerMessage.includes('sleep') || lowerMessage.includes("can't sleep")) {
-    response = `Being awake when you should be sleeping is so lonely. I'm here with you.\n\nWhat's keeping you up - the baby, or your thoughts? (Or both... it's usually both)`;
-  } else if (lowerMessage.includes('vent') || lowerMessage.includes('need to talk')) {
-    response = `I'm all ears, mama. No judgment, no unsolicited advice - just listening. Let it out.`;
-  } else {
-    response = `Hey ${userName}. I'm here - tell me what's on your mind.`;
+  // High-distress detection - prioritize emotional support
+  if (lowerMessage.includes('panic') || lowerMessage.includes('crisis') || lowerMessage.includes("can't cope") || lowerMessage.includes('breaking down')) {
+    response = `${userName}, I'm here. Let's pause everything else.\n\nYour nervous system is in overdrive right now—that's neurobiology, not weakness. Take one slow breath with me.\n\nWhat's the one thing that feels most urgent right now? We'll handle it together.`;
+  }
+  // Overwhelm/exhaustion - acknowledge then pivot to action
+  else if (lowerMessage.includes('overwhelm') || lowerMessage.includes('exhausted') || lowerMessage.includes('tired') || lowerMessage.includes('too much')) {
+    response = `I hear the weight in that, ${userName}. Your brain is running too many background processes—no wonder you're depleted.\n\nLet me take something off your plate. What's the one task that keeps nagging at you? I'll break it down and draft what I can.`;
+  }
+  // Mom guilt - CBT reframing
+  else if (lowerMessage.includes('guilty') || lowerMessage.includes('guilt') || lowerMessage.includes('bad mom')) {
+    response = `That guilt is your brain's way of showing you care—but it's not data, it's a feeling. Let's reality-check it.\n\nOn a scale of 1-10, how much will this specific thing matter in a month? Often our guilt is disproportionate to the actual impact.\n\nWhat triggered this?`;
+  }
+  // Anxiety/worry - externalize and capture
+  else if (lowerMessage.includes('anxious') || lowerMessage.includes('worried') || lowerMessage.includes('anxiety') || lowerMessage.includes('stress')) {
+    response = `Your prefrontal cortex is working overtime running scenarios. Let's get those worries out of your head and into a system I can help you manage.\n\nName the top worry. I'll capture it, and we can either solve it, schedule it, or park it.`;
+    capturedItems.push({
+      id: Date.now().toString() + Math.random().toString(36).substr(2, 9),
+      type: 'worry',
+      content: 'Anxiety mentioned - needs follow-up',
+    });
+  }
+  // Task/to-do mentions - proactive extraction
+  else if (lowerMessage.includes('need to') || lowerMessage.includes('have to') || lowerMessage.includes('should') || lowerMessage.includes('forgot')) {
+    response = `Got it. I'm capturing that now.\n\nLet me check—is there a deadline on this? And is there any "invisible labor" underneath it I should break out? (Other people to coordinate with, things to buy, calls to make?)`;
+    capturedItems.push({
+      id: Date.now().toString() + Math.random().toString(36).substr(2, 9),
+      type: 'todo',
+      content: userMessage.substring(0, 100),
+    });
+  }
+  // Meeting/work stress
+  else if (lowerMessage.includes('meeting') || lowerMessage.includes('presentation') || lowerMessage.includes('work') || lowerMessage.includes('boss')) {
+    response = `Work mode activated. What's the specific challenge—prep, politics, or bandwidth?\n\nI can help you draft talking points, anticipate questions, or just clear your schedule around it. What would make you feel most prepared?`;
+  }
+  // Sleep issues
+  else if (lowerMessage.includes('sleep') || lowerMessage.includes("can't sleep") || lowerMessage.includes('awake') || lowerMessage.includes('3am') || lowerMessage.includes('2am')) {
+    response = `Your brain hasn't gotten the memo that it's rest time. That's cortisol—your body's still in "solve mode."\n\nLet's do a quick brain dump. What's circling? I'll capture everything so your mind can let go.`;
+  }
+  // Venting request
+  else if (lowerMessage.includes('vent') || lowerMessage.includes('need to talk') || lowerMessage.includes('listen')) {
+    response = `I'm here. No solutions unless you want them—just space to let it out.\n\nGo ahead.`;
+  }
+  // Parenting/kids
+  else if (lowerMessage.includes('kid') || lowerMessage.includes('child') || lowerMessage.includes('toddler') || lowerMessage.includes('baby') || lowerMessage.includes('school')) {
+    response = `Parenting in the AI age is uncharted territory—you're figuring out what no generation has before.\n\nWhat's the situation? I can offer the research-backed perspective or just help you think it through.`;
+  }
+  // Partner/relationship
+  else if (lowerMessage.includes('husband') || lowerMessage.includes('partner') || lowerMessage.includes('he doesn') || lowerMessage.includes('marriage')) {
+    response = `The mental load imbalance is real and exhausting. Before we problem-solve, let me just say: your frustration is valid.\n\nIs this about a specific incident, or a pattern? That'll help me know how to help.`;
+  }
+  // Default - proactive stance
+  else {
+    response = `${userName}, I'm here and ready. What's taking up the most mental space right now?\n\nOr if you want, just do a stream-of-consciousness dump and I'll help organize it.`;
   }
 
   return {
     message: response,
+    capturedItems: capturedItems.length > 0 ? capturedItems : undefined,
   };
 }
